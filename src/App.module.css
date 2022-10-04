@@ -1,0 +1,8 @@
+.MainContainer {
+  min-height: calc(100vh - 198px);
+}
+.globalContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
