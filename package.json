@@ -3,23 +3,37 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.4.5",
+    "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "antd": "^4.23.4",
+    "antd-notifications-messages": "1.5.6",
+    "axios": "^1.0.0",
+    "craco-less": "^2.0.0",
+    "json-server": "^0.17.0",
+    "json-server-auth": "^2.1.0",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
+    "redux-saga": "^1.2.1",
+    "redux-saga-effects": "^1.1.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
+    "server": "node ./src/server.js"
   },
   "eslintConfig": {
     "extends": [

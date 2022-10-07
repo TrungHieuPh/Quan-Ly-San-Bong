@@ -1,9 +1,9 @@
 import styles from "../TrangChu/style.module.css";
 function TrangChu() {
   return (
-    <section id="banner">
+    <div id="banner">
       <div className={styles.Images}></div>
-    </section>
+    </div>
   );
 }
 export default TrangChu;

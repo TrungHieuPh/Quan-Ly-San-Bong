@@ -1,0 +1,82 @@
+{
+  "pitchs": [
+    {
+      "name": "Sân a",
+      "title": "Đến với sân a",
+      "price": "200000",
+      "adress": "quang nam",
+      "content": "san da bong",
+      "date": "2022-10-25T11:53:45.000Z",
+      "id": 1
+    },
+    {
+      "name": "Sân a",
+      "title": "Đến với sân a",
+      "price": "200000",
+      "adress": "quang nam",
+      "content": "san da bong",
+      "date": "2022-10-25T11:53:45.000Z",
+      "id": 2
+    },
+    {
+      "name": "san b",
+      "title": "San b",
+      "price": "2000000",
+      "adress": "dn",
+      "content": "den voi san b",
+      "date": "2022-10-20T11:58:09.000Z",
+      "id": 3
+    },
+    {
+      "name": "san d",
+      "title": "den voi san f",
+      "price": "100000",
+      "adress": "q",
+      "content": "n",
+      "date": "2022-11-01T12:00:43.000Z",
+      "id": 4
+    }
+  ],
+  "accounts": [
+    {
+      "id": 1,
+      "acountName": "user 1",
+      "password": "123",
+      "userName": "Ten 1",
+      "sex": "Nam",
+      "date": "01/01/2000",
+      "useAdress": "Quang Nam",
+      "phone": "123456",
+      "email": "user1@gmail.com",
+      "accountType": 1,
+      "accountStatus": 1,
+      "typeaccountId": 2
+    },
+    {
+      "id": 2,
+      "acountName": "user 2",
+      "password": "1234",
+      "userName": "Ten 2",
+      "sex": "Nam",
+      "date": "01/01/2000",
+      "useAdress": "Quang Nam",
+      "phone": "1234567",
+      "email": "user2@gmail.com",
+      "accountType": 2,
+      "accountStatus": 2,
+      "typeaccountId": 1
+    }
+  ],
+  "typeaccounts": [
+    {
+      "id": 1,
+      "accountType": 1,
+      "nameTypeAccount": "Admin"
+    },
+    {
+      "id": 2,
+      "accountType": 2,
+      "nameTypeAccount": "user"
+    }
+  ]
+}
