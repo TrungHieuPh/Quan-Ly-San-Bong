@@ -1,31 +1,36 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { Col, Row } from "antd";
 
 import * as S from "./styles";
 
 function Header() {
   const { pathname } = useLocation();
   return (
-    <S.WrapperHeader>
-      <S.HeaderLogo>LOGO</S.HeaderLogo>
-      <section id="path">
+    <S.header>
+      <S.topBar>
+        <S.HeaderLogo>SOCCER</S.HeaderLogo>
         <S.HeaderContainer>
           <S.HeaderContent>
-            <S.HeaderItem to="/trangchu" active={pathname === "/trangchu"}>
-              Trang chủ
-            </S.HeaderItem>
-            <S.HeaderItem to="/datsan" active={pathname === "/datsan"}>
-              Đặt Sân
-            </S.HeaderItem>
-            <S.HeaderItem to="/lichsu" active={pathname === "/lichsu"}>
-              Lịch sử
-            </S.HeaderItem>
-            <S.HeaderItem to="/about" active={pathname === "/about"}>
-              about
-            </S.HeaderItem>
+            <div className=" text-center">
+              <S.HeaderItem to="/trangchu" active={pathname === "/trangchu"}>
+                Trang chủ
+              </S.HeaderItem>
+              <S.HeaderItem to="/datsan" active={pathname === "/datsan"}>
+                Đặt Sân
+              </S.HeaderItem>
+            </div>
+            <div className=" text-center">
+              <S.HeaderItem to="/lichsu" active={pathname === "/lichsu"}>
+                Lịch sử
+              </S.HeaderItem>
+              <S.HeaderItem to="/about" active={pathname === "/about"}>
+                about
+              </S.HeaderItem>
+            </div>
           </S.HeaderContent>
         </S.HeaderContainer>
-      </section>
-    </S.WrapperHeader>
+      </S.topBar>
+    </S.header>
   );
 }
 export default Header;

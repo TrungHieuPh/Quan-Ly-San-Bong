@@ -10,12 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import * as S from "./styles";
 import "antd-notifications-messages/lib/styles/style.css";
 
-import {
-  getPitchListAction,
-  createPitchAction,
-  updatePitchAction,
-  deletePitchAction,
-} from "../../../redux/actions";
+import { createPitchAction } from "../../../redux/actions";
 
 const CreatePitch = () => {
   const navigate = useNavigate();
@@ -25,6 +20,7 @@ const CreatePitch = () => {
   const handleCreatePitch = (values) => {
     dispatch(createPitchAction({ values: values }));
   };
+  const { createPitchData } = useSelector((state) => state.product);
   /* Notifi */
   const show = (type) => {
     notification({
@@ -38,7 +34,7 @@ const CreatePitch = () => {
     <S.Wrapper>
       <S.TopWrapper>
         <h3>Create Task</h3>
-        <Button onClick={() => navigate(`/datsan`)}>Back</Button>
+        <Button onClick={() => navigate(-1)}>Back</Button>
       </S.TopWrapper>
       <S.FormWrapper>
         <Card size="small">
@@ -144,8 +140,9 @@ const CreatePitch = () => {
               htmlType="submit"
               block
               onClick={() => show("success")}
+              loading={createPitchData.loading}
             >
-              Submit
+              Them San
             </Button>
           </Form>
         </Card>

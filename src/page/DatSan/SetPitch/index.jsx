@@ -14,10 +14,7 @@ function SetPitch() {
   const navigate = useNavigate();
   const { pitch } = useSelector((state) => state.product);
 
-  /*  useEffect(() => {
-    dispatch(getPitchListAction());
-  }, []); */
-  const detailPitch = pitch.find((item, index) => {
+  const detailPitch = pitch.data.find((item, index) => {
     return item.id.toString() === id;
   });
   const show = (type) => {
@@ -61,7 +58,7 @@ function SetPitch() {
           </S.DetailsTr>
         </S.DetailsTBody>
       </S.Details>
-      <Button onClick={() => navigate(`/datsan`)}>Back</Button>
+      <Button onClick={() => navigate(-1)}>Back</Button>
       <div>
         <Card size="small">
           <Button

@@ -14,3 +14,48 @@
   color: transparent;
   background-image: url("../../Images/banner_soccer.png");
 }
+video {
+  width: 100%;
+  height: 90vh;
+  object-fit: cover;
+}
+/* main {
+  position: absolute;
+} */
+img {
+  height: 200px;
+  width: 200px;
+  display: block;
+  opacity: 1;
+}
+.gifs {
+  position: fixed;
+  right: 0.5208333333vw;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  text-decoration: none;
+}
+.gifs > h3 {
+  font-size: 30px;
+  color: red;
+  text-align: center;
+  border: 2px solid red;
+  margin-top: -12px;
+}
+.main {
+  position: relative;
+}
+.imgList {
+  height: 100px;
+  width: 100px;
+}
+
+ol,
+li {
+  list-style-type: none;
+}
+.contentCenter {
+  float: right;
+  width: 568px;
+}
