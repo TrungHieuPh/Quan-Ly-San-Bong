@@ -24,7 +24,7 @@ function* createPitchSaga(action) {
   try {
     const { values } = action.payload;
     const result = yield axios.post("http://localhost:4000/pitchs", values);
-
+    yield put({ type: "GET_PITCH_LIST_REQUEST" });
     yield put({
       type: "CREATE_PITCH_SUCCESS",
       payload: {

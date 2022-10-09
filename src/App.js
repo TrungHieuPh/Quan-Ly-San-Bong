@@ -20,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to={"/trangchu"} />} />
           <Route path="/trangchu" element={<TrangChu />} />
+          <Route path="/header" element={<Header />} />
           <Route path="/about" element={<About />} />
           <Route path="/datsan" element={<DatSan />} />
           <Route path="/lichsu" element={<LichSu />} />

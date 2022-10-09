@@ -1,6 +1,7 @@
 import { Form, Button, Input, Card, Space } from "antd";
+
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getPitchListAction } from "../../../redux/actions";
@@ -11,16 +12,17 @@ function DatSan() {
   const dispatch = useDispatch();
 
   const { pitch } = useSelector((state) => state.product);
-  console.log("pitch", pitch);
+
   useEffect(() => {
     dispatch(getPitchListAction());
   }, []);
   const renderPitch = () => {
-    return pitch.map((item, index) => {
+    if (pitch.loading) return <div>Loading...</div>;
+    return pitch.data.map((item, index) => {
       return (
         <Card size="small" style={{ marginTop: 16 }}>
           <Space style={{ marginTop: 8 }}>
-            <h5>{item.name}</h5>
+            <h3>{item.name}</h3>
             <h5>{item.title}</h5>
           </Space>
           <Button onClick={() => navigate(`/datsan/${item.id}/setPitch`)}>
