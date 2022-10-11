@@ -14,3 +14,6 @@ export const TopWrapper = styled.div`
 export const FormWrapper = styled.div`
   margin-top: 16px;
 `;
+export const formItemLayout = styled.div`
+  margin-top: 16px;
+`;

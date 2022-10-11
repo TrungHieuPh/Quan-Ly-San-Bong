@@ -1,11 +1,12 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { Button, Form, Input, Card, notification } from "antd";
-import { SmileOutlined } from "@ant-design/icons";
+import { useState, useEffect } from "react";
+import { Button, Form, Input, Card, notification, Upload, message } from "antd";
+import ImgCrop from "antd-img-crop";
+import { UploadOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import DatePicker from "react-datepicker";
+
+import "antd/dist/antd.css";
 import "react-datepicker/dist/react-datepicker.css";
 import * as S from "./styles";
 import "antd-notifications-messages/lib/styles/style.css";
@@ -29,6 +30,8 @@ const CreatePitch = () => {
       message: `This is a notification type ${type}`,
     });
   };
+
+  /* upload image */
 
   return (
     <S.Wrapper>
@@ -135,6 +138,10 @@ const CreatePitch = () => {
                 value={startDate}
               />
             </Form.Item>
+            <Form.Item name="Upload" label="Upload">
+              <Input type="file" />
+            </Form.Item>
+
             <Button
               type="primary"
               htmlType="submit"
