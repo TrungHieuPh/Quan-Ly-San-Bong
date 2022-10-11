@@ -23,25 +23,26 @@ video {
   position: absolute;
 } */
 img {
-  height: 200px;
-  width: 200px;
+  height: 130px;
+  width: 130px;
   display: block;
   opacity: 1;
 }
 .gifs {
   position: fixed;
   right: 0.5208333333vw;
-  top: 50%;
+  top: 30%;
   transform: translateY(-50%);
   z-index: 20;
   text-decoration: none;
 }
 .gifs > h3 {
-  font-size: 30px;
+  font-size: 14px;
   color: red;
   text-align: center;
-  border: 2px solid red;
   margin-top: -12px;
+  text-decoration-line: underline;
+  font-weight: 700;
 }
 .main {
   position: relative;
@@ -55,7 +56,15 @@ ol,
 li {
   list-style-type: none;
 }
-.contentCenter {
+/* .contentCenter {
   float: right;
   width: 568px;
+} */
+tbody > tr > td {
+  max-width: 10ch;
+}
+.titlePitch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

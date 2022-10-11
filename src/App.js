@@ -10,12 +10,13 @@ import LichSu from "./page/LichSu";
 import DatSan from "./page/DatSan/HomePitch";
 import SetPitch from "./page/DatSan/SetPitch";
 import CreatePitch from "./page/DatSan/CreatePitch";
+import BreadCrumbs from "./LayOut/BreadCrumbs/BreadCrumbs";
 
 function App() {
   return (
     <div className={styles.globalContainer}>
       <Header />
-
+      <BreadCrumbs />
       <main className={styles.MainContainer}>
         <Routes>
           <Route path="/" element={<Navigate to={"/trangchu"} />} />
@@ -26,6 +27,7 @@ function App() {
           <Route path="/lichsu" element={<LichSu />} />
           <Route path="/datsan/createpitch" element={<CreatePitch />} />
           <Route path="/datsan/:id/setpitch" element={<SetPitch />} />
+          {/* <Route path="/datsan/breadCrumb" element={<BreadCrumbs />} /> */}
         </Routes>
       </main>
 

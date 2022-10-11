@@ -1,9 +1,7 @@
-import { Space, Card, Button } from "antd";
+import { Space, Card, Button, Descriptions, Table, Pagination } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link, Navigate } from "react-router-dom";
-import { useEffect } from "react";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 
 import styles from "../TrangChu/style.module.css";
 import video from "../../videobg.mp4";
@@ -15,37 +13,99 @@ function TrangChu() {
   const { pitch } = useSelector((state) => state.product);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getPitchListAction());
   }, []);
-  const renderPitch = () => {
+
+  /* ================================ */
+  const columns = [
+    {
+      title: "Tên Sân",
+      dataIndex: "name",
+      filters: [
+        {
+          text: "Joe",
+          value: "Joe",
+        },
+        {
+          text: "Jim",
+          value: "Jim",
+        },
+        {
+          text: "Submenu",
+          value: "Submenu",
+          children: [
+            {
+              text: "Green",
+              value: "Green",
+            },
+            {
+              text: "Black",
+              value: "Black",
+            },
+          ],
+        },
+      ],
+      // specify the condition of filtering result
+      // here is that finding the name started with `value`
+      onFilter: (value, record) => record.name.indexOf(value) === 0,
+      sorter: (a, b) => a.name.length - b.name.length,
+      sortDirections: ["descend"],
+    },
+    {
+      title: "Tiêu đề ",
+      dataIndex: "title",
+      defaultSortOrder: "descend",
+    },
+
+    {
+      title: "Giá tiền",
+      dataIndex: "price",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.price - b.price,
+    },
+    {
+      title: "Địa chỉ",
+      dataIndex: "adress",
+      filters: [],
+      onFilter: (value, record) => record.address.indexOf(value) === 0,
+    },
+    {
+      title: "Chọn",
+      dataIndex: "operation",
+
+      /* onClick: () => navigate(`/datsan/${id}/setPitch`), */
+    },
+  ];
+
+  const onChange = (filters, sorter, extra) => {
+    console.log("params", filters, sorter, extra);
+  };
+  /* ================================= */
+  /* const renderPitch = () => {
     if (pitch.loading) return <div>Loading...</div>;
     return pitch.data.map((item, index) => {
       return (
-        <div ClassName="itemPitch" style={{ borderBottom: " 1px solid #ddd" }}>
-          {/*  <a to={navigate(`/datsan/${item.id}/setPitch`)} replace></a> */}
-
-          <h3
-            style={{ textDecoration: "underline" }}
+        <Card>
+          <Button
+            type="link"
             onClick={() => navigate(`/datsan/${item.id}/setPitch`)}
+            block
+            primary
           >
             {item.name}
-          </h3>
-          <ol>
-            <li>
-              <i class="fa-solid fa-calendar-day"></i>
-              <span>
-                Ngày đăng: <span class="timesetdefault">{item.date}</span>
-              </span>
-            </li>
-            <li>
-              <span>Địa điểm: {item.adress}</span>
-            </li>
-          </ol>
-        </div>
+          </Button>
+          <Descriptions.Item label="Ngày đăng: ">{item.date}</Descriptions.Item>
+          <Descriptions.Item label="Địa điểm: ">
+            {item.adress}
+          </Descriptions.Item>
+        </Card>
       );
     });
-  };
+  }; */
+  const [current, setCurrent] = useState(3);
+
   return (
     <div className="wrapper">
       <div id="banner">
@@ -57,38 +117,26 @@ function TrangChu() {
           <video src={video} autoPlay loop muted></video>
         </div>
       </div>
-
       <div className={styles.content}>
-        <div
-          className="main"
-          style={{ display: "flex", justifyContent: "space-around " }}
-        >
-          {/*   <div className="left">
-            <h2>left</h2>
-          </div> */}
+        <div className="main">
           <div className={styles.contentCenter}>
-            {/*  <section id="contentTitle"> */}
-            <Space
-              style={{
-                marginTop: 8,
-                display: "flex",
-                justifyContent: "center",
-                borderBottom: "2px solid #ddd",
-              }}
-            >
+            <div className={styles.titlePitch}>
               <img src={checklist} className={styles.imgList} />
               <h2>Danh sách Sân</h2>
-            </Space>
-            <Card size="small" style={{ marginTop: 16 }}>
-              {renderPitch()}
-            </Card>
+            </div>
           </div>
-
+          {/* 
           <div className="right">
             <h2>right</h2>
-          </div>
+          </div> */}
         </div>
       </div>
+      <Table
+        columns={columns}
+        dataSource={pitch.data}
+        onChange={onChange}
+        pagination={false}
+      />
     </div>
   );
 }
