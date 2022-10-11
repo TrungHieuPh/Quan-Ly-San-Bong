@@ -1,8 +1,9 @@
 .contentStyle {
   color: #fff;
-  line-height: 160px;
+  line-height: 40px;
   text-align: center;
-  background: #364d79;
+
+  padding: 0 170px;
 }
 .Images {
   /* position: absolute; */
@@ -67,4 +68,30 @@ tbody > tr > td {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  font-size: 15px;
+  border-bottom: 1px solid black;
+}
+.itemTitle {
+  color: black;
+  display: flex;
+}
+.itemTitle img {
+  position: relative;
+  top: 5px;
+  width: 40px !important;
+  height: 40px !important;
+}
+.itemTitle :hover {
+  background-color: bluebird;
+  text-decoration: underline 0.5px;
+  font-weight: 600;
+
+  transition: width 0.35s ease-in-out;
 }

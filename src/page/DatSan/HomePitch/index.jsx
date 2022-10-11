@@ -9,6 +9,7 @@ import { FaCalendarPlus } from "react-icons/fa";
 import { getPitchListAction } from "../../../redux/actions";
 import * as S from "./styles";
 import goal from "../../../Images/goal.gif";
+import ball from "../../../Images/ball.gif";
 
 function DatSan() {
   const navigate = useNavigate();
@@ -23,18 +24,6 @@ function DatSan() {
     </Space>
   );
 
-  const data = Array.from({
-    length: 23,
-  }).map(() => ({
-    href: "https://ant.design",
-    title: `ant design part `,
-    avatar: "https://joeschmoe.io/api/v1/random",
-    description:
-      "Ant Design, a design language for background applications, is refined by Ant UED Team.",
-    content:
-      "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
-  }));
-
   useEffect(() => {
     dispatch(getPitchListAction());
   }, []);
@@ -44,6 +33,7 @@ function DatSan() {
       return (
         <Card size="small" style={{ marginTop: 16 }}>
           <S.TitleItem>
+            <img src={ball} style={{ width: 35, height: 35 }} />
             <Button
               type="link"
               onClick={() => navigate(`/datsan/${item.id}/setPitch`)}

@@ -38,9 +38,14 @@ export const TitleContent = styled.div`
   }
 `;
 export const TitleItem = styled.div`
+  display: flex;
+  align-items: baseline;
   & > Button {
     font-size: 27px;
     color: black;
     font-weight: 600;
+    top: -10px;
+    position: relative;
+    right: 15px;
   }
 `;

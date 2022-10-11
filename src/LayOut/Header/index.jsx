@@ -1,10 +1,13 @@
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { Col, Row } from "antd";
+import { useSelector } from "react-redux";
+import { FaUser } from "react-icons/fa";
 
 import styles from "./styles.module.css";
 
 function Header() {
   const { pathname } = useLocation();
+  const { userInfo } = useSelector((state) => state.user);
+
   return (
     <div>
       <div className={styles.header}>
@@ -12,6 +15,7 @@ function Header() {
           <div>Logo</div>
         </div>
       </div>
+
       <div className={styles.navigation}>
         <div className={styles.fixNav}>
           <div className={styles.moveNav}>
@@ -54,6 +58,10 @@ function Header() {
                   </Link>
                 </li>
               </ul>
+            </div>
+            <div className={styles.userNav}>
+              <FaUser />
+              <h4>{userInfo.data.fullName}</h4>
             </div>
           </div>
         </div>

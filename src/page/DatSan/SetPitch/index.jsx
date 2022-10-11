@@ -39,8 +39,8 @@ function SetPitch() {
     });
   };
   const handleSetPitch = () => {
-    show();
-    navigate("/datsan");
+    /*   show(); */
+    navigate("/datsan/:id/setpitch/detail");
   };
 
   return (
