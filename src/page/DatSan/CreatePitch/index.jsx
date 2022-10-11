@@ -32,7 +32,9 @@ const CreatePitch = () => {
   };
 
   /* upload image */
-
+  /*  var someDate = new Date();
+  var date = someDate.getDate(); */
+  /*  var date = someDate.getDate(someDate.getDate()); */
   return (
     <S.Wrapper>
       <S.TopWrapper>
@@ -131,13 +133,24 @@ const CreatePitch = () => {
             >
               <Input />
             </Form.Item>
-            <Form.Item label="Ngay Tao san" name="date">
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                value={startDate}
+            {/* <Form.Item
+              label="Ngay Tao san"
+              name="date"
+              rules={[
+                {
+                  required: true,
+                  whitespace: true,
+                  message: "Required!",
+                },
+              ]}
+            >
+              <input
+                id="dateRequired"
+                type="hidden"
+                name="dateRequired"
+                defaultValue={date}
               />
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item name="Upload" label="Upload">
               <Input type="file" />
             </Form.Item>

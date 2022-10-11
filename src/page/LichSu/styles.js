@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  padding: 45px;
+  /*  padding: 45px;
   max-width: 1250px;
   left: 115px;
-  position: relative;
+  position: relative; */
+  padding: 0 170px;
 `;
 
 export const TopWrapper = styled.div`

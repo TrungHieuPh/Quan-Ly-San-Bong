@@ -1,93 +1,103 @@
 {
   "pitchs": [
     {
-      "name": "Sân a",
-      "title": "Đến với sân aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "price": "200000",
-      "adress": "quang nam",
-      "content": "san da bong",
-      "date": "2022-10-25T11:53:45.000Z",
-      "id": 1
-    },
-    {
-      "name": "san 10",
-      "title": "hay den day",
-      "price": "100000",
-      "adress": "43 dan nantg",
-      "content": "acahsbbasb",
-      "date": "2022-10-14T09:00:51.000Z",
-      "Upload": "C:\\fakepath\\banner_soccer.png",
-      "id": 2
-    },
-    {
       "name": "san bong da quang nam",
       "title": "[Thứ Năm, 13/10, 21: 00- | Một số người thiên về thi đấu | Sân cỏ nhân tạo] Tuyển một vài người cho bóng đá 11 người tham gia cá nhân!",
       "price": "200000",
-      "adress": "45 nui thanh",
-      "content": "[Thứ Năm, 13/10, 21: 00- | Một số người thiên về thi đấu | Sân cỏ nhân tạo] Tuyển một vài người cho bóng đá 11 người tham gia cá nhân!",
-      "date": "2022-10-29T15:29:06.000Z",
-      "Upload": "C:\\fakepath\\video (2).mp4",
-      "id": 3
+      "adress": "quang binh",
+      "content": "[Địa điểm] Phòng tập thể dục của trường trung học cơ sở Harakita  [Cảm ơn]  Cảm ơn bạn đã tham gia với chúng tôi ngày hôm nay!  Thật là vui khi hôm nay được chơi một mini game nhỏ chỉ với 6 người.",
+      "date": "2022-10-11",
+      "createdAt": 1665505561201,
+      "updatedAt": 1665505561201,
+      "id": 1
     },
     {
-      "name": "san bong da suoi tien",
-      "title": "[Thứ Năm, 13/10, 21: 00- | Một số người thiên về thi đấu | Sân cỏ nhân tạo] Tuyển một vài người cho bóng đá 11 người tham gia cá nhân!",
+      "name": "san g",
+      "title": "chao mung den voiw san ccc",
       "price": "200000",
-      "adress": "45 nui thanh",
-      "content": "[Thứ Năm, 13/10, 21: 00- | Một số người thiên về thi đấu | Sân cỏ nhân tạo] Tuyển một vài người cho bóng đá 11 người tham gia cá nhân!",
-      "date": "2022-10-29T15:29:06.000Z",
-      "Upload": "C:\\fakepath\\video (2).mp4",
-      "id": 4
-    },
-    {
-      "name": "san bong da suoi tien",
-      "title": "[Thứ Năm, 13/10, 21: 00- | Một số người thiên về thi đấu | Sân cỏ nhân tạo] Tuyển một vài người cho bóng đá 11 người tham gia cá nhân!",
-      "price": "200000",
-      "adress": "45 nui thanh",
-      "content": "[Thứ Năm, 13/10, 21: 00- | Một số người thiên về thi đấu | Sân cỏ nhân tạo] Tuyển một vài người cho bóng đá 11 người tham gia cá nhân!",
-      "date": "2022-10-29T15:29:06.000Z",
-      "Upload": "C:\\fakepath\\video (2).mp4",
-      "id": 5
-    },
-    {
-      "name": "san bong da suoi tien",
-      "title": "[Thứ Năm, 13/10, 21: 00- | Một số người thiên về thi đấu | Sân cỏ nhân tạo] Tuyển một vài người cho bóng đá 11 người tham gia cá nhân!",
-      "price": "200000",
-      "adress": "45 nui thanh",
-      "content": "[Thứ Năm, 13/10, 21: 00- | Một số người thiên về thi đấu | Sân cỏ nhân tạo] Tuyển một vài người cho bóng đá 11 người tham gia cá nhân!",
-      "date": "2022-10-29T15:29:06.000Z",
-      "Upload": "C:\\fakepath\\video (2).mp4",
-      "id": 6
+      "adress": "43 da nang",
+      "content": " san cho hoc sinh",
+      "date": "2022-10-11",
+      "createdAt": 1665505721049,
+      "updatedAt": 1665505721049,
+      "id": 2
     }
   ],
-  "accounts": [
+  "hisbooking": [
     {
       "id": 1,
-      "acountName": "user 1",
-      "password": "123",
-      "userName": "Ten 1",
-      "sex": "Nam",
-      "date": "01/01/2000",
-      "useAdress": "Quang Nam",
-      "phone": "123456",
-      "email": "user1@gmail.com",
-      "accountType": 1,
-      "accountStatus": 1,
-      "typeaccountId": 2
+      "timestart": "10/10/2000",
+      "timeend": "10/10/2000"
     },
     {
       "id": 2,
-      "acountName": "user 2",
-      "password": "1234",
-      "userName": "Ten 2",
-      "sex": "Nam",
-      "date": "01/01/2000",
-      "useAdress": "Quang Nam",
-      "phone": "1234567",
-      "email": "user2@gmail.com",
       "accountType": 2,
-      "accountStatus": 2,
-      "typeaccountId": 1
+      "nameTypeAccount": "user"
+    }
+  ],
+  "users": [
+    {
+      "email": "abc@gmail.com",
+      "password": "$2a$10$a3AKzbRDShN2XNAFScOJOeN6sbngLOEqB.v/7GvBydVLif5IPX.8m",
+      "fullName": "1111111111111",
+      "role": "user",
+      "createdAt": 1665480008619,
+      "updatedAt": 1665480008620,
+      "id": 1
+    },
+    {
+      "email": "abc@gmail.com",
+      "password": "$2a$10$rh7X8VrL2ofZtKUVtcirs.u84QhQ0wqrDRecBEvzhwQivnd9xqlFy",
+      "fullName": "1111111111111",
+      "role": "user",
+      "createdAt": 1665480008703,
+      "updatedAt": 1665480008703,
+      "id": 2
+    },
+    {
+      "email": "absc@gmail.com",
+      "password": "$2a$10$52HGgrAZnAuZI/DYyJjln.G46ymVJmye/J5W9oTuDcv7JiUZ0TVeG",
+      "fullName": "hieu",
+      "role": "user",
+      "createdAt": 1665490935476,
+      "updatedAt": 1665490935476,
+      "id": 3
+    },
+    {
+      "email": "aabc@gmail.com",
+      "password": "$2a$10$.LSZ3LStbhJv5mY4pEwyoehxaP0SDYfqIMKjP6JeABOi0YDp5G5AS",
+      "fullName": "hieu",
+      "role": "user",
+      "createdAt": 1665491212848,
+      "updatedAt": 1665491212848,
+      "id": 4
+    },
+    {
+      "email": "abch@gmail.com",
+      "password": "$2a$10$///B2A/GRGxogrzX0Nyn/Od6w6OARrzqvSysWrHKZONvMjopb3zjy",
+      "fullName": "hieu",
+      "role": "user",
+      "createdAt": 1665492210863,
+      "updatedAt": 1665492210863,
+      "id": 5
+    },
+    {
+      "email": "hieupc@gmail.com",
+      "password": "$2a$10$P6Ovo9rfZt.KLSc1hyN.vekV.uvFuhnBBbVNFCA1hjcpB0CDFEHFe",
+      "fullName": "hieu",
+      "role": "admin",
+      "createdAt": 1665492436829,
+      "updatedAt": 1665492436829,
+      "id": 6
+    },
+    {
+      "email": "hieuphan112000@gmail.com",
+      "password": "$2a$10$DLriqJFV1mOhbNkuHV9NzOi2LV3bUGBoWT05UgIoHQBirFsjchHKa",
+      "fullName": "phan trung Hieu",
+      "role": "user",
+      "createdAt": 1665495433382,
+      "updatedAt": 1665495433382,
+      "id": 7
     }
   ],
   "typeaccounts": [

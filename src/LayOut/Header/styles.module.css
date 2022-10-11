@@ -30,6 +30,9 @@
   width: 1165px;
   height: 38px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .nav {
@@ -57,7 +60,7 @@
 /*Begin Hover header */
 
 .nav li a:hover,
-.nav .is-active {
+.nav .isActive {
   color: #1c6cc1;
 }
 
@@ -92,4 +95,10 @@ a {
   font-size: 100%;
   vertical-align: baseline;
   background: transparent;
+}
+.userNav {
+  display: flex;
+  align-items: baseline;
+  font-size: 15px;
+  color: #e84749;
 }
