@@ -2,7 +2,7 @@ import { notification } from "antd";
 import { takeEvery, put } from "redux-saga/effects";
 import axios from "axios";
 
-import { USER_ACTION, REQUEST, SUCCESS, FAIL } from "../constand";
+import { USER_ACTION, REQUEST, SUCCESS, FAIL } from "../constants";
 
 function* loginSaga(action) {
   try {

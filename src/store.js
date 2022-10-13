@@ -13,7 +13,10 @@ const store = configureStore({
     product: pitchReducers,
   },
   middleware: (getDefaultMiddleware) => [
-    ...getDefaultMiddleware({ thunk: false }),
+    ...getDefaultMiddleware({
+      thunk: false,
+      serializableCheck: false,
+    }),
     sagaMiddleware,
   ],
 });

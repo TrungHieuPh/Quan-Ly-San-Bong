@@ -4,17 +4,9 @@
   margin: 0 auto;
 }
 
-.logo {
-  width: 1165px;
-  height: 60px;
-  padding: 10px;
-  font-size: 20px;
-  margin: 0 auto;
-}
-
 .navigation {
   position: sticky;
-  height: 38px;
+  height: 50px;
   z-index: 5;
   top: -1px;
   width: 100%;
@@ -27,17 +19,19 @@
 
 .fixNav,
 .moveNav {
-  width: 1165px;
-  height: 38px;
+  width: 100%;
+  height: 42px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0 35px;
 }
 
 .nav {
   display: inline-block;
-  height: 38px;
+  height: 15px;
 }
 
 .nav li {
@@ -97,6 +91,32 @@ a {
   background: transparent;
 }
 .userNav {
+  display: flex;
+  align-items: baseline;
+  font-size: 15px;
+  color: #e84749;
+}
+
+.HeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  height: 56px;
+  background-color: #00474f;
+}
+.logo {
+  width: max-content;
+  height: 60px;
+  padding: 10px;
+  font-size: 20px;
+  margin: 0 auto;
+}
+.logo img {
+  width: 45px !important;
+  height: 45px !important;
+}
+.useNav {
   display: flex;
   align-items: baseline;
   font-size: 15px;

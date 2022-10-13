@@ -3,21 +3,25 @@ import { useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
 
-import styles from "./App.module.css";
-import Header from "./LayOut/Header";
-import TrangChu from "./page/TrangChu";
-import About from "./page/About";
-import LichSu from "./page/LichSu";
-import DatSan from "./page/DatSan/HomePitch";
-import SetPitch from "./page/DatSan/SetPitch";
-import CreatePitch from "./page/DatSan/CreatePitch";
-import DetailSetPitch from "./page/DatSan/SetPitch/detailSetPitch";
-import LoginPage from "./page/LoginPage";
-import RegisterPage from "./page/RegisterPage";
 import AdminLayout from "./LayOut/AdminLayout";
 import LoginLayout from "./LayOut/LoginLayout";
+
+import AdminPitchListPage from "./page/Admin/PitchList";
+import PitchListPage from "./page/User/PitchListPage";
+
+import HomePage from "./page/HomePage";
+import About from "./page/About";
+import PitchHistory from "./page/PitchHistory";
+import SetPitch from "./page/SetPitchList/SetPitch";
+import HomePitch from "./page/SetPitchList/HomePitch";
+import CreatePitch from "./page/Admin/PitchList/CreatePitch";
+import DetailSetPitch from "./page/SetPitchList/SetPitch/detailSetPitch";
+import LoginPage from "./page/LoginPage";
+import RegisterPage from "./page/RegisterPage";
 import { ROUTES } from "./constants/routers";
 import { getUserInfoAction } from "./redux/actions";
+import UserLayout from "./LayOut/UserLayout";
+import styles from "./App.module.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,29 +36,30 @@ function App() {
     <div className={styles.globalContainer}>
       <Routes>
         <Route element={<AdminLayout />}>
-          <Route path="/" element={<Navigate to={ROUTES.LOGIN} />} />
-          <Route path="/trangchu" element={<TrangChu />} />
-          <Route path="/header" element={<Header />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/datsan" element={<DatSan />} />
-          <Route path="/lichsu" element={<LichSu />} />
-          <Route path="/datsan/createpitch" element={<CreatePitch />} />
-          <Route path="/datsan/:id/setpitch" element={<SetPitch />} />
+          <Route path={ROUTES.ADMIN.DASHBOARD} element={<div>Dashboard</div>} />
+          <Route
+            path={ROUTES.ADMIN.PITCH_LIST}
+            element={<AdminPitchListPage />}
+          />
+        </Route>
+        <Route element={<UserLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path={ROUTES.USER.HOME} element={<HomePage />} />
+          <Route path={ROUTES.USER.PITCH_LIST} element={<HomePitch />} />
+          <Route path={ROUTES.USER.PITCH_HISTORY} element={<PitchHistory />} />
+          <Route path={ROUTES.USER.PITCH_ABOUT} element={<About />} />
+          <Route path={ROUTES.USER.SET_PITCH} element={<SetPitch />} />
+          <Route path={ROUTES.USER.CREATE_PITCH} element={<CreatePitch />} />
+          <Route
+            path={ROUTES.USER.PRODUCT_LIST_PAGE}
+            element={<PitchListPage />}
+          />
           <Route
             path="/datsan/:id/setpitch/detail"
             element={<DetailSetPitch />}
           />
         </Route>
-
         <Route element={<LoginLayout />}>
-          {/*   <Route
-                path={ROUTES.ADMIN.DASHBOARD}
-                element={<div>dasboard</div>}
-              ></Route>
-              <Route
-                path={ROUTES.ADMIN.PRODUCT_LIST}
-                element={<TrangChu />}
-              ></Route> */}
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
         </Route>

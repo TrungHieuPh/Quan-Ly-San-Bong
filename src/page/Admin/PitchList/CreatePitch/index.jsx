@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import * as S from "./styles";
 import "antd-notifications-messages/lib/styles/style.css";
 
-import { createPitchAction } from "../../../redux/actions";
+import { createPitchAction } from "../../../../redux/actions";
 
 const CreatePitch = () => {
   const navigate = useNavigate();
@@ -20,10 +20,11 @@ const CreatePitch = () => {
 
   const handleCreatePitch = (values) => {
     dispatch(createPitchAction({ values: values }));
+    navigate(-1);
   };
   const { createPitchData } = useSelector((state) => state.product);
   /* Notifi */
-  const show = (type) => {
+  const showNotification = (type) => {
     notification({
       type,
       title: "This is a Title",
@@ -50,7 +51,7 @@ const CreatePitch = () => {
               name: "",
               title: "",
               price: "",
-              adress: "",
+              address: "",
               content: "",
               date: "",
             }}
@@ -159,7 +160,7 @@ const CreatePitch = () => {
               type="primary"
               htmlType="submit"
               block
-              onClick={() => show("success")}
+              onClick={() => showNotification("success")}
               loading={createPitchData.loading}
             >
               Them San

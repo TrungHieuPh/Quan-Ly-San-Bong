@@ -1,18 +1,34 @@
 import { takeEvery, put } from "redux-saga/effects";
 import axios from "axios";
 
-function* getPitchListSaga() {
-  const result = yield axios.get("http://localhost:4000/pitchs");
-  yield put({
-    type: "GET_PITCH_LIST_SUCCESS",
-    payload: {
-      data: result.data,
-    },
-  });
+import { PITCH_ACTION, REQUEST, SUCCESS, FAIL } from "../constants";
+
+function* getPitchListSaga(action) {
   try {
+    const { params, more } = action.payload;
+    const result = yield axios.get("http://localhost:4000/pitchs", {
+      params: {
+        _page: params.page,
+        _limit: params.limit,
+      },
+    });
+    console.log(result, "result");
+
+    yield put({
+      type: SUCCESS(PITCH_ACTION.GET_PITCH_LIST),
+      payload: {
+        data: result.data,
+        meta: {
+          total: parseInt(result.headers["x-total-count"]),
+          page: params.page,
+          limit: params.limit,
+        },
+        more: more,
+      },
+    });
   } catch (e) {
     yield put({
-      type: "GET_PITCH_LIST_FAIL",
+      type: FAIL(PITCH_ACTION.GET_PITCH_LIST),
       payload: {
         error: "Đã có lỗi xảy ra!",
       },
@@ -70,7 +86,7 @@ function* deletePitchSaga(action) {
 }
 
 export default function* pitchSaga() {
-  yield takeEvery("GET_PITCH_LIST_REQUEST", getPitchListSaga);
+  yield takeEvery(REQUEST(PITCH_ACTION.GET_PITCH_LIST), getPitchListSaga);
   yield takeEvery("CREATE_PITCH_REQUEST", createPitchSaga);
   yield takeEvery("UPDATE_PITCH_REQUEST", updatePitchSaga);
   yield takeEvery("DELETE_PITCH_REQUEST", deletePitchSaga);

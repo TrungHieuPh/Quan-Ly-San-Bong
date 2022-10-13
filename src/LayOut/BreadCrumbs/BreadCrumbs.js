@@ -15,7 +15,7 @@ const BreadCrumbs = () => {
         <Breadcrumb>
           {pathnames.length > 0 ? (
             <Breadcrumb.Item>
-              <Link to="/trangchu">Home</Link>
+              <Link to="/Home">Home</Link>
             </Breadcrumb.Item>
           ) : (
             <Breadcrumb.Item>Home</Breadcrumb.Item>
