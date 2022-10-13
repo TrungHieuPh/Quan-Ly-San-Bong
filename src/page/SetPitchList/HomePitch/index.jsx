@@ -8,7 +8,6 @@ import { FaCalendarPlus } from "react-icons/fa";
 
 import { getPitchListAction } from "../../../redux/actions";
 import * as S from "./styles";
-import goal from "../../../Images/goal.gif";
 import ball from "../../../Images/ball.gif";
 
 function DatSan() {
@@ -30,13 +29,14 @@ function DatSan() {
   const renderPitch = () => {
     if (pitch.loading) return <div>Loading...</div>;
     return pitch.data.map((item, index) => {
+      console.log(pitch.data, "HOmePitch");
       return (
         <Card size="small" style={{ marginTop: 16 }}>
           <S.TitleItem>
             <img src={ball} style={{ width: 35, height: 35 }} />
             <Button
               type="link"
-              onClick={() => navigate(`/datsan/${item.id}/setPitch`)}
+              onClick={() => navigate(`/pitch/${item.id}/setPitch`)}
             >
               {item.name}
             </Button>
@@ -44,7 +44,7 @@ function DatSan() {
 
           <hr></hr>
           <h5>{item.title}</h5>
-          <h6>{item.adress}</h6>
+          <h6>{item.address}</h6>
           <h6>{item.date}</h6>
 
           {/* <Button onClick={() => navigate(`/datsan/${item.id}/setPitch`)}>
@@ -62,9 +62,6 @@ function DatSan() {
         <S.TitleContent>
           <FaCalendarPlus />
           <h1>Thông tin Sân</h1>
-          <Button onClick={() => navigate(`/datsan/createpitch`)}>
-            Create
-          </Button>
         </S.TitleContent>
         <div style={{ display: "flex" }}>
           <S.ListWrapper> {renderPitch()}</S.ListWrapper>

@@ -50,3 +50,8 @@ export const LoadingWrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
+export const Wrapper = styled.div`
+  max-width: 1250px;
+  margin: 0 auto;
+  min-height: calc(100% - 198px);
+`;

@@ -9,40 +9,38 @@ import { FaBook } from "react-icons/fa";
 import * as S from "./styles";
 /* import goal from "../../../Images/goal.gif"; */
 
-function LichSu() {
+function PitchHistory() {
   return (
     <S.Wrapper>
       <S.TopWrapper></S.TopWrapper>
 
-      <Card size="small">
-        <div
-          style={{
-            marginTop: 16,
-            wordWrap: "break-word",
-            display: "flex",
-            justifyContent: " space-around",
-            alignItems: "center",
-          }}
-        >
-          <S.TitleContent>
-            <FaBook />
-            <h1>Lịch Sử Đặt Sân</h1>
-            {/* <Button onClick={() => navigate(`/datsan/createpitch`)}>
+      <div
+        style={{
+          marginTop: 16,
+          wordWrap: "break-word",
+          display: "flex",
+          justifyContent: " space-around",
+          alignItems: "center",
+        }}
+      >
+        <S.TitleContent>
+          <FaBook />
+          <h1>Lịch Sử Đặt Sân</h1>
+          {/* <Button onClick={() => navigate(`/datsan/createpitch`)}>
             Create
           </Button> */}
-          </S.TitleContent>
-          <div>
-            {/*  <S.ListWrapper> {renderPitch()}</S.ListWrapper> */}
-            <div>abc</div>
-          </div>
+        </S.TitleContent>
+        <div>
+          {/*  <S.ListWrapper> {renderPitch()}</S.ListWrapper> */}
+          <div>abc</div>
         </div>
-        {/* <Space style={{ marginTop: 8 }}>
+      </div>
+      {/* <Space style={{ marginTop: 8 }}>
           <Button onClick={() => navigate(`/product/${item.id}`)}>
             Chi tiết
           </Button>
         </Space> */}
-      </Card>
     </S.Wrapper>
   );
 }
-export default LichSu;
+export default PitchHistory;

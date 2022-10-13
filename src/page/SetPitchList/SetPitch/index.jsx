@@ -40,7 +40,7 @@ function SetPitch() {
   };
   const handleSetPitch = () => {
     /*   show(); */
-    navigate("/datsan/:id/setpitch/detail");
+    navigate("/pitch/:id/setpitch/detail");
   };
 
   return (
@@ -141,7 +141,7 @@ function SetPitch() {
               </S.DetailsTr>
               <S.DetailsTr>
                 <S.DetailsTh>Địa chỉ </S.DetailsTh>
-                <S.DetailsTd>{detailPitch?.adress}</S.DetailsTd>
+                <S.DetailsTd>{detailPitch?.address}</S.DetailsTd>
               </S.DetailsTr>
               <S.DetailsTr>
                 <S.DetailsTh>Nội dung </S.DetailsTh>
@@ -172,9 +172,9 @@ function SetPitch() {
             </Button>
           </div>
         </S.Center>
-        <S.RightMenu>
+        {/*  <S.RightMenu>
           <img src="https://cdn.tgdd.vn/2020/08/content/1-800x450-126.jpg"></img>
-        </S.RightMenu>
+        </S.RightMenu> */}
       </S.Main>
     </S.Wrapper>
   );

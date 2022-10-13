@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 
-import { REQUEST, SUCCESS, FAIL, USER_ACTION } from "../constand";
+import { REQUEST, SUCCESS, FAIL, USER_ACTION } from "../constants";
 
 const initialState = {
   userInfo: {
