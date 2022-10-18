@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   max-width: 1250px;
   margin: 0 auto;
+  position: relative;
 `;
 
 export const TopWrapper = styled.div`
@@ -25,8 +26,11 @@ export const BgTitle = styled.div`
   border: 1px solid #ddd;
   box-shadow: 4px 4px 0 rgb(0 0 0 / 10%);
   padding: 5px;
-  width: 200%;
+  width: 100%;
   text-align: center;
+  background: url("https://labola.jp/labostatic/img/cover/banner_top.png");
+  height: 134px;
+  background-size: contain;
 `;
 export const Items = styled.div`
   display: flex;
@@ -82,15 +86,18 @@ export const DetailsTd = styled.td`
 `;
 export const Main = styled.div`
   display: flex;
+  width: 90%;
+  justify-content: space-around;
 `;
 
 export const Center = styled.div`
   float: right;
-  width: 568px;
+  width: 55%;
 `;
 /* left */
 export const Left = styled.div`
   margin-right: 36px;
+  width: 20%;
 `;
 export const SideProfile = styled.section`
   margin: 0 0 12px;

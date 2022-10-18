@@ -8,6 +8,7 @@ const initialState = {
     error: "",
   },
   pitchDetail: {
+    data: {},
     loading: false,
     error: "",
   },
@@ -16,6 +17,7 @@ const initialState = {
     error: "",
   },
   updatePitchData: {
+    data: [],
     loading: false,
     error: "",
   },
@@ -24,7 +26,6 @@ const initialState = {
     error: "",
   },
 };
-console.log(initialState.pitch.meta, "pitch");
 
 const pitchReducers = createReducer(initialState, {
   [REQUEST(PITCH_ACTION.GET_PITCH_LIST)]: (state, action) => {
@@ -55,6 +56,39 @@ const pitchReducers = createReducer(initialState, {
       ...state,
       pitch: {
         ...state.pitch,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+  /* Detail */
+  [REQUEST(PITCH_ACTION.GET_PITCH_DETAIL)]: (state, action) => {
+    return {
+      ...state,
+      pitchDetail: {
+        ...state.pitchDetail,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(PITCH_ACTION.GET_PITCH_DETAIL)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      pitchDetail: {
+        ...state.pitchDetail,
+        data: data,
+        loading: false,
+      },
+    };
+  },
+  [FAIL(PITCH_ACTION.GET_PITCH_LIST)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      pitchDetail: {
+        ...state.pitchDetail,
         loading: false,
         error: error,
       },

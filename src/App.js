@@ -8,6 +8,7 @@ import LoginLayout from "./LayOut/LoginLayout";
 
 import AdminPitchListPage from "./page/Admin/PitchList";
 import PitchListPage from "./page/User/PitchListPage";
+import UpdatePitch from "./page/Admin/PitchList/UpdatePitch";
 
 import HomePage from "./page/HomePage";
 import About from "./page/About";
@@ -37,13 +38,14 @@ function App() {
       <Routes>
         <Route element={<AdminLayout />}>
           <Route path={ROUTES.ADMIN.DASHBOARD} element={<div>Dashboard</div>} />
+          <Route path={ROUTES.ADMIN.UPDATE_PITCH} element={<UpdatePitch />} />
           <Route
             path={ROUTES.ADMIN.PITCH_LIST}
             element={<AdminPitchListPage />}
           />
         </Route>
+
         <Route element={<UserLayout />}>
-          <Route path="/" element={<HomePage />} />
           <Route path={ROUTES.USER.HOME} element={<HomePage />} />
           <Route path={ROUTES.USER.PITCH_LIST} element={<HomePitch />} />
           <Route path={ROUTES.USER.PITCH_HISTORY} element={<PitchHistory />} />

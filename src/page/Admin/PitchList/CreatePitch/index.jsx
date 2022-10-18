@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
-import { Button, Form, Input, Card, notification, Upload, message } from "antd";
-import ImgCrop from "antd-img-crop";
-import { UploadOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Form,
+  Input,
+  Card,
+  notification,
+  DatePicker,
+  Upload,
+} from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
+import moment from "moment";
 
 import "antd/dist/antd.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,10 +22,17 @@ import { createPitchAction } from "../../../../redux/actions";
 const CreatePitch = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [startDate, setStartDate] = useState(new Date());
+  /* const { RangePicker } = DatePicker; */
 
+  const dateFormat = "YYYY-MM-DD";
+  const today = new Date();
+  console.log(today, "today");
   const handleCreatePitch = (values) => {
-    dispatch(createPitchAction({ values: values }));
+    dispatch(
+      createPitchAction({
+        values: values,
+      })
+    );
     navigate(-1);
   };
   const { createPitchData } = useSelector((state) => state.product);
@@ -33,13 +46,20 @@ const CreatePitch = () => {
   };
 
   /* upload image */
-  /*  var someDate = new Date();
-  var date = someDate.getDate(); */
-  /*  var date = someDate.getDate(someDate.getDate()); */
+
+  const handleChangeImage = (e) => {
+    const file = e.target.files;
+    const data = new FormData();
+    data.append("file", file[0]);
+    data.append("upload", "darwin");
+    file.preview = URL.createObjectURL(file);
+    console.log(URL.createObjectURL(file));
+  };
+  /*  */
   return (
     <S.Wrapper>
       <S.TopWrapper>
-        <h3>Create Task</h3>
+        <h3>Tạo Mới Sân</h3>
         <Button onClick={() => navigate(-1)}>Back</Button>
       </S.TopWrapper>
       <S.FormWrapper>
@@ -51,14 +71,13 @@ const CreatePitch = () => {
               name: "",
               title: "",
               price: "",
-              address: "",
               content: "",
-              date: "",
+              date: moment(today, dateFormat),
             }}
             onFinish={(values) => handleCreatePitch(values)}
           >
             <Form.Item
-              label="San"
+              label="Tên Sân"
               name="name"
               validateFirst
               rules={[
@@ -77,7 +96,7 @@ const CreatePitch = () => {
               <Input />
             </Form.Item>
             <Form.Item
-              label="Title"
+              label="Tiêu đề Sân"
               name="title"
               validateFirst
               rules={[
@@ -96,7 +115,7 @@ const CreatePitch = () => {
               <Input />
             </Form.Item>
             <Form.Item
-              label="gia"
+              label="Giá"
               name="price"
               rules={[
                 {
@@ -108,21 +127,9 @@ const CreatePitch = () => {
             >
               <Input />
             </Form.Item>
+
             <Form.Item
-              label="dia chi"
-              name="adress"
-              rules={[
-                {
-                  required: true,
-                  whitespace: true,
-                  message: "Required!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="noi dung san"
+              label="Nội dung Sân"
               name="content"
               rules={[
                 {
@@ -134,26 +141,16 @@ const CreatePitch = () => {
             >
               <Input />
             </Form.Item>
-            {/* <Form.Item
-              label="Ngay Tao san"
-              name="date"
-              rules={[
-                {
-                  required: true,
-                  whitespace: true,
-                  message: "Required!",
-                },
-              ]}
-            >
-              <input
-                id="dateRequired"
-                type="hidden"
-                name="dateRequired"
-                defaultValue={date}
-              />
-            </Form.Item> */}
+
+            <Form.Item label="Ngày Tạo" name="date">
+              <DatePicker defaultValue={moment(today, dateFormat)} />
+            </Form.Item>
             <Form.Item name="Upload" label="Upload">
-              <Input type="file" />
+              <input
+                type="file"
+                name="screenshot"
+                onChange={() => handleChangeImage}
+              />
             </Form.Item>
 
             <Button

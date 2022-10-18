@@ -1,0 +1,19 @@
+import styled from "styled-components";
+
+export const Wrapper = styled.div`
+  padding: 0;
+`;
+
+export const TopWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+`;
+
+export const FormWrapper = styled.div`
+  margin-top: 16px;
+`;
+export const formItemLayout = styled.div`
+  margin-top: 16px;
+`;

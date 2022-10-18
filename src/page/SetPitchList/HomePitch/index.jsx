@@ -1,80 +1,211 @@
-import { Form, Button, Input, Card, Space } from "antd";
+import {
+  Button,
+  Card,
+  Space,
+  Input,
+  Row,
+  Col,
+  Select,
+  Tag,
+  Slider,
+} from "antd";
 import React from "react";
 import { useEffect } from "react";
-import { useNavigate, Link, Navigate } from "react-router-dom";
+import { generatePath, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
-import { FaCalendarPlus } from "react-icons/fa";
-
+import { useState } from "react";
 import { getPitchListAction } from "../../../redux/actions";
 import * as S from "./styles";
-import ball from "../../../Images/ball.gif";
+import pitchs from "../../../Images/pitchs.jpg";
+import { PITCH_LIST_LIMIT } from "../../../constants/paginations";
+import { ROUTES } from "../../../constants/routers";
+import { FaCalendarPlus, FaCalendarMinus, FaDollarSign } from "react-icons/fa";
+import { SearchOutlined } from "@ant-design/icons";
+import Moment from "react-moment";
 
-function DatSan() {
+function HomePitch() {
+  const [filterParams, setFilterParams] = useState({
+    keyword: "",
+    price: [0, 10000000],
+    sortFilter: undefined,
+  });
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { pitch } = useSelector((state) => state.product);
 
-  const IconText = ({ icon, text }) => (
-    <Space>
-      {React.createElement(icon)}
-      {text}
-    </Space>
-  );
-
   useEffect(() => {
-    dispatch(getPitchListAction());
+    dispatch(
+      getPitchListAction({
+        params: {
+          page: 1,
+          limit: PITCH_LIST_LIMIT,
+        },
+      })
+    );
   }, []);
+
+  const handleFilter = (key, value) => {
+    setFilterParams({
+      ...filterParams,
+      [key]: value,
+    });
+    dispatch(
+      getPitchListAction({
+        params: {
+          ...filterParams,
+          [key]: value,
+          page: 1,
+          limit: PITCH_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
+  const handleShowMore = () => {
+    dispatch(
+      getPitchListAction({
+        params: {
+          ...filterParams,
+          page: pitch.meta.page + 1,
+          limit: PITCH_LIST_LIMIT,
+        },
+        more: true,
+      })
+    );
+  };
+
+  const handleClearKeywordFilter = () => {
+    setFilterParams({
+      ...filterParams,
+      keyword: "",
+    });
+    dispatch(
+      getPitchListAction({
+        params: {
+          ...filterParams,
+          keyword: "",
+          page: 1,
+          limit: PITCH_LIST_LIMIT,
+        },
+      })
+    );
+  };
+  const handleChangeSort = (value) => {
+    console.log(value);
+    setFilterParams({
+      ...filterParams,
+      sortFilter: value,
+    });
+    dispatch(
+      getPitchListAction({
+        ...filterParams,
+        limit: PITCH_LIST_LIMIT,
+        page: 1,
+        sortFilter: value,
+      })
+    );
+  };
   const renderPitch = () => {
-    if (pitch.loading) return <div>Loading...</div>;
-    return pitch.data.map((item, index) => {
-      console.log(pitch.data, "HOmePitch");
+    return pitch.data.map((item) => {
       return (
-        <Card size="small" style={{ marginTop: 16 }}>
-          <S.TitleItem>
-            <img src={ball} style={{ width: 35, height: 35 }} />
-            <Button
-              type="link"
-              onClick={() => navigate(`/pitch/${item.id}/setPitch`)}
+        <Col span={6} key={item.id}>
+          <Link to={generatePath(ROUTES.USER.SET_PITCH, { id: item.id })}>
+            <Card
+              size="small"
+              style={{ fontSize: "20px" }}
+              cover={<img alt="example" src={pitchs} />}
+              /*   actions={[
+                <SettingOutlined key="setting" />,
+                <EditOutlined key="edit" />,
+                <EllipsisOutlined key="ellipsis" />,
+              ]} */
             >
-              {item.name}
-            </Button>
-          </S.TitleItem>
-
-          <hr></hr>
-          <h5>{item.title}</h5>
-          <h6>{item.address}</h6>
-          <h6>{item.date}</h6>
-
-          {/* <Button onClick={() => navigate(`/datsan/${item.id}/setPitch`)}>
-            Dat san
-          </Button> */}
-        </Card>
+              <h3> {item.name}</h3>
+              <h5>
+                <FaDollarSign />
+                {parseFloat(item.price).toLocaleString()} VNĐ
+              </h5>
+              <h5>
+                <FaCalendarMinus />
+                <Moment format="DD/MM/YYYY" date={item.date} />
+              </h5>
+            </Card>
+          </Link>
+        </Col>
       );
     });
   };
+
   return (
     <S.Wrapper>
-      <S.TopWrapper></S.TopWrapper>
+      {/*  <S.TopWrapper></S.TopWrapper> */}
 
       <Card size="small" style={{ marginTop: 16, zwordWrap: "break-word" }}>
         <S.TitleContent>
           <FaCalendarPlus />
           <h1>Thông tin Sân</h1>
         </S.TitleContent>
-        <div style={{ display: "flex" }}>
-          <S.ListWrapper> {renderPitch()}</S.ListWrapper>
-          <div>abc</div>
-        </div>
-
-        {/* <Space style={{ marginTop: 8 }}>
-          <Button onClick={() => navigate(`/product/${item.id}`)}>
-            Chi tiết
-          </Button>
-        </Space> */}
+        <Row gutter={[16, 16]}>
+          <Col span={6}>
+            <Card size="small" title="Giá">
+              {/*  <S.FilterContainer>
+                <S.FilterTitle>Giá</S.FilterTitle>
+                <div style={{ padding: "0 8px" }}>
+                  <Slider
+                    range
+                    min={DEFAULT_PRICE_FILTER[0]}
+                    max={DEFAULT_PRICE_FILTER[1]}
+                    step={1000000}
+                    value={priceFilter}
+                    tipFormatter={(value) => value.toLocaleString()}
+                    onChange={(value) => handleChangePriceFilter(value)}
+                  />  
+                </div>
+              </S.FilterContainer> */}
+            </Card>
+          </Col>
+          <Col span={18}>
+            <Row gutter={[16, 16]}>
+              <Col span={16}>
+                <Input
+                  onChange={(e) => handleFilter("keyword", e.target.value)}
+                  value={filterParams.keyword}
+                  prefix={<SearchOutlined />}
+                />
+              </Col>
+              <Col span={8}>
+                <Select
+                  style={{ width: "100%" }}
+                  placeholder="Sắp xếp theo"
+                  allowClear
+                  onChange={(value) => handleChangeSort(value)}
+                >
+                  <Select.Option value="asc">Giá tăng dần </Select.Option>
+                  <Select.Option value="desc">Giá giảm dần</Select.Option>
+                </Select>
+              </Col>
+            </Row>
+            <Space style={{ marginBottom: 16 }}>
+              {filterParams.keyword && (
+                <Tag closable onClose={() => handleClearKeywordFilter()}>
+                  Keyword: {filterParams.keyword}
+                </Tag>
+              )}
+            </Space>
+            <Row gutter={[16, 16]}>{renderPitch()}</Row>
+            {pitch.data.length !== pitch.meta.total && (
+              <Row justify="center">
+                <Button style={{ margin: 16 }} onClick={() => handleShowMore()}>
+                  Xem Thêm
+                </Button>
+              </Row>
+            )}
+          </Col>
+        </Row>
       </Card>
     </S.Wrapper>
   );
 }
-export default DatSan;
+export default HomePitch;

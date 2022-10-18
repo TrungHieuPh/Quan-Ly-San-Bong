@@ -2,14 +2,14 @@ export const ROUTES = {
   LOGIN: "/login",
   REGISTER: "/register",
   USER: {
-    HOME: "/home",
+    HOME: "/",
     PITCH_LIST: "/pitch",
     PITCH_DETAIL: "/pitch/:id/setpitch",
     PITCH_ABOUT: "/about",
     PITCH_HISTORY: "/history",
     SET_PITCH: "/pitch/:id/setpitch",
     CREATE_PITCH: "/pitch/createpitch",
-    PRODUCT_LIST_PAGE: "/productlistPage",
+    PRODUCT_LIST_PAGE: "/product",
   },
   ADMIN: {
     DASHBOARD: "/admin/dashboard",

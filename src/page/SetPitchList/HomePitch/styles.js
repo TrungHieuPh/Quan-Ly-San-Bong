@@ -1,8 +1,11 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Wrapper = styled.div`
   width: 1250px;
   margin: 0 auto;
+  position: relative;
+  min-height: calc(100vh - 310px);
 `;
 
 export const TopWrapper = styled.div`
@@ -46,4 +49,10 @@ export const TitleItem = styled.div`
     position: relative;
     right: 15px;
   }
+`;
+export const FilterContainer = styled.div`
+  margin-bottom: 16px;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  overflow: hidden;
 `;

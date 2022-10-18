@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { notification } from "antd-notifications-messages";
+import Moment from "react-moment";
 
 import {
   FaSmile,
@@ -21,16 +22,20 @@ import * as S from "./styles";
 import "antd-notifications-messages/lib/styles/style.css";
 import document from "../../../Images/document.gif";
 
-import { getPitchListAction } from "../../../redux/actions";
+import { getPitchDetailAction } from "../../../redux/actions";
 function SetPitch() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { pitch } = useSelector((state) => state.product);
+  const { pitchDetail } = useSelector((state) => state.product);
 
-  const detailPitch = pitch.data.find((item, index) => {
+  useEffect(() => {
+    dispatch(getPitchDetailAction({ id: id }));
+  }, [id]);
+  /*   const detailPitch = pitch.data.find((item, index) => {
     return item.id.toString() === id;
   });
+  console.log(detailPitch, "ccccc"); */
   const show = (type) => {
     notification({
       type,
@@ -40,7 +45,8 @@ function SetPitch() {
   };
   const handleSetPitch = () => {
     /*   show(); */
-    navigate("/pitch/:id/setpitch/detail");
+    /*  navigate("/pitch//setpitch/detail"); */
+    navigate(`/pitch/${id}/setPitch/detail`);
   };
 
   return (
@@ -123,40 +129,47 @@ function SetPitch() {
         </S.Left>
         <S.Center>
           <S.BgTitle>
-            <h1>{detailPitch?.name}</h1>
+            <h1 style={{ color: "#ffffff", paddingTop: 30 }}>
+              {pitchDetail.data?.name}
+            </h1>
+            <h5 style={{ color: " wheat", position: "relative", bottom: 20 }}>
+              Bóng đá | 5 sao
+            </h5>
           </S.BgTitle>
           <S.DetailsThs>
             <img src={document} />
-            Hồ sơ của {detailPitch?.name}
+            Hồ sơ của {pitchDetail.data?.name}
           </S.DetailsThs>
           <S.Details>
             <S.DetailsTBody>
               <S.DetailsTr>
                 <S.DetailsTh>Tiêu đề</S.DetailsTh>
-                <S.DetailsTd>{detailPitch?.title}</S.DetailsTd>
+                <S.DetailsTd>{pitchDetail.data?.title}</S.DetailsTd>
               </S.DetailsTr>
               <S.DetailsTr>
                 <S.DetailsTh>Giá</S.DetailsTh>
-                <S.DetailsTd>{detailPitch?.price}</S.DetailsTd>
+                <S.DetailsTd>{pitchDetail.data?.price}</S.DetailsTd>
               </S.DetailsTr>
               <S.DetailsTr>
                 <S.DetailsTh>Địa chỉ </S.DetailsTh>
-                <S.DetailsTd>{detailPitch?.address}</S.DetailsTd>
+                <S.DetailsTd>{pitchDetail.data?.address}</S.DetailsTd>
               </S.DetailsTr>
               <S.DetailsTr>
                 <S.DetailsTh>Nội dung </S.DetailsTh>
-                <S.DetailsTd>{detailPitch?.content}</S.DetailsTd>
+                <S.DetailsTd>{pitchDetail.data?.content}</S.DetailsTd>
               </S.DetailsTr>
               <S.DetailsTr>
                 <S.DetailsTh>Ngày tạo sân</S.DetailsTh>
-                <S.DetailsTd>{detailPitch?.date}</S.DetailsTd>
+                <S.DetailsTd>
+                  <Moment format="DD/MM/YYYY" date={pitchDetail.data?.date} />
+                </S.DetailsTd>
               </S.DetailsTr>
-              <S.DetailsTr>
+              {/* <S.DetailsTr>
                 <S.DetailsTh>ảnh</S.DetailsTh>
                 <S.DetailsTd>
                   <img src={detailPitch.upload}></img>
                 </S.DetailsTd>
-              </S.DetailsTr>
+              </S.DetailsTr> */}
             </S.DetailsTBody>
           </S.Details>
 
@@ -172,9 +185,6 @@ function SetPitch() {
             </Button>
           </div>
         </S.Center>
-        {/*  <S.RightMenu>
-          <img src="https://cdn.tgdd.vn/2020/08/content/1-800x450-126.jpg"></img>
-        </S.RightMenu> */}
       </S.Main>
     </S.Wrapper>
   );
