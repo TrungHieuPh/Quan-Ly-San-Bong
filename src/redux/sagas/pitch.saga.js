@@ -5,15 +5,20 @@ import { PITCH_ACTION, REQUEST, SUCCESS, FAIL } from "../constants";
 
 function* getPitchListSaga(action) {
   try {
-    const { params, more } = action.payload;
+    const { params, more, sortFilter } = action.payload;
     const result = yield axios.get("http://localhost:4000/pitchs", {
       params: {
         _page: params.page,
         _limit: params.limit,
+        ...(params.keyword && {
+          q: params.keyword,
+        }),
+        ...(params.sortFilter && {
+          _sort: "price",
+          _order: sortFilter,
+        }),
       },
     });
-    console.log(result, "result");
-
     yield put({
       type: SUCCESS(PITCH_ACTION.GET_PITCH_LIST),
       payload: {
@@ -29,6 +34,26 @@ function* getPitchListSaga(action) {
   } catch (e) {
     yield put({
       type: FAIL(PITCH_ACTION.GET_PITCH_LIST),
+      payload: {
+        error: "Đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
+
+function* getPitchDetailSaga(action) {
+  try {
+    const { id } = action.payload;
+    const result = yield axios.get(`http://localhost:4000/pitchs/${id}`);
+    yield put({
+      type: SUCCESS(PITCH_ACTION.GET_PITCH_DETAIL),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(PITCH_ACTION.GET_PITCH_DETAIL),
       payload: {
         error: "Đã có lỗi xảy ra!",
       },
@@ -59,6 +84,18 @@ function* createPitchSaga(action) {
 
 function* updatePitchSaga(action) {
   try {
+    const { values, id } = action.payload;
+    const result = yield axios.patch(
+      `http://localhost:4000/pitchs/${id}`,
+      values
+    );
+    yield put({
+      type: "UPDATE_PITCH_SUCCESS",
+      payload: {
+        data: result.data,
+      },
+    });
+    yield put({ type: "GET_PITCH_LIST_REQUEST" });
   } catch (e) {
     yield put({
       type: "UPDATE_PRODUCT_FAIL",
@@ -72,7 +109,7 @@ function* updatePitchSaga(action) {
 function* deletePitchSaga(action) {
   try {
     const { id } = action.payload;
-    yield axios.delete(`http://localhost:4000/pitch/${id}`);
+    yield axios.delete(`http://localhost:4000/pitchs/${id}`);
     yield put({ type: "DELETE_PRODUCT_SUCCESS" });
     yield put({ type: "GET_PRODUCT_LIST_REQUEST" });
   } catch (e) {
@@ -87,6 +124,7 @@ function* deletePitchSaga(action) {
 
 export default function* pitchSaga() {
   yield takeEvery(REQUEST(PITCH_ACTION.GET_PITCH_LIST), getPitchListSaga);
+  yield takeEvery(REQUEST(PITCH_ACTION.GET_PITCH_DETAIL), getPitchDetailSaga);
   yield takeEvery("CREATE_PITCH_REQUEST", createPitchSaga);
   yield takeEvery("UPDATE_PITCH_REQUEST", updatePitchSaga);
   yield takeEvery("DELETE_PITCH_REQUEST", deletePitchSaga);

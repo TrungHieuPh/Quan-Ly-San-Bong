@@ -1,11 +1,20 @@
 .footerContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 24px;
-  height: 100px;
-  background-color: #08979c;
-  color: white;
+  padding: 21px 62px;
+  height: 130px;
   bottom: 0;
   z-index: 10;
+  margin-top: 25px;
+  /* margin: 28px 0px; */
+  background-color: #ddd;
+  /* border-radius: 5px; */
+}
+
+.footer {
+  /* padding: 3px; */
+  padding-top: 10px;
+}
+.copyRight {
+  padding: 7px;
+  font-size: 12px;
+  margin: 15px;
 }

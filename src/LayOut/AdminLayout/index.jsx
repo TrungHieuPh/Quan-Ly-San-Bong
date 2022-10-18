@@ -17,7 +17,6 @@ function AdminLayout() {
   const [isShowDrawer, setIsShowDrawer] = useState(false);
 
   const { userInfo } = useSelector((state) => state.user);
-  console.log("abc", userInfo.data);
 
   const accessToken = localStorage.getItem("accessToken");
   if (accessToken && userInfo.loading) {

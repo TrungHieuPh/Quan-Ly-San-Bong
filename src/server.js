@@ -2,6 +2,7 @@ const jsonServer = require("json-server");
 const auth = require("json-server-auth");
 const moment = require("moment");
 
+const date = moment();
 const server = jsonServer.create();
 const router = jsonServer.router("./database/db.json");
 

@@ -3,7 +3,7 @@ import { FaUser } from "react-icons/fa";
 import { Button, Space } from "antd";
 import Navigation from "../Navigation";
 import goal from "../../Images/goal.png";
-
+import Slider from "../Slider";
 import * as S from "./styles";
 
 function Header() {

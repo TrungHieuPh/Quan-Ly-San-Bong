@@ -1,45 +1,36 @@
 import styled, { css } from "styled-components";
 
-export const MainContainer = styled.div`
-  min-height: calc(100vh - 198px);
+export const Wrapper = styled.div`
+  margin: 0 auto;
+  min-height: calc(100vh - 263px);
+  max-width: 1165px;
+  margin: 0 auto;
 `;
-
-export const MainContent = styled.div`
-  margin-left: 0px;
-  padding: 16px;
+export const Container = styled.div`
+  background: -webkit-linear-gradient(to bottom, #f0efec, #fff);
+  background: -o-linear-gradient(to bottom, #f0efec, #fff);
+  background: -moz-linear-gradient(to bottom, #f0efec, #fff);
+  /* background: linear-gradient(to bottom,#f0efec,#fff); */
+  background-size: 100% 300px;
+  background-repeat: no-repeat;
+  background-position: top center;
+  max-width: 3000px;
+  min-height: 100%;
+`;
+export const Header = styled.div`
+  color: #fff;
+  padding: 0 12px;
+  position: absolute;
+  top: 15px;
   width: 100%;
-  transition: all 0.3s;
-
-  ${(props) =>
-    props.isShowSidebar &&
-    css`
-      margin-left: 200px;
-      width: calc(100% - 200px);
-    `}
+  border-bottom: 1px solid #ddd;
 `;
 
-export const DrawerOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: ${(props) => (props.isShowDrawer ? "block" : "none")};
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  cursor: pointer;
+export const Line = styled.div`
+  border-bottom: 3px solid rgb(221, 221, 221);
+  margin: 30px 0px;
 `;
-
-export const DrawerContainer = styled.div`
-  position: fixed;
-  top: 0;
-  right: ${(props) => (props.isShowDrawer ? "0px" : "-200px")};
-  padding: 16px;
-  width: 200px;
-  height: 100vh;
-  background-color: #08979c;
-  overflow: hidden;
-  transition: all 0.3s;
-`;
+/*  */
 export const LoadingWrapper = styled.div`
   position: fixed;
   top: 0;
@@ -47,11 +38,6 @@ export const LoadingWrapper = styled.div`
   right: 0;
   bottom: 0;
   display: flex;
-  align-items: center;
   justify-content: center;
-`;
-export const Wrapper = styled.div`
-  max-width: 1250px;
-  margin: 0 auto;
-  min-height: calc(100% - 198px);
+  align-items: center;
 `;

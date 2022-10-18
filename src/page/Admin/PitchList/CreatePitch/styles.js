@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  padding: 45px;
+  padding: 0;
 `;
 
 export const TopWrapper = styled.div`

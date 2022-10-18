@@ -1,16 +1,18 @@
-import { Table, Button, Space, Pagination, Avatar } from "antd";
+import { Table, Button, Space, Pagination, Avatar, Popconfirm } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link, Navigate } from "react-router-dom";
+import { useNavigate, Link, Navigate, generatePath } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 
 import { ADMIN_TABLE_LIMIT } from "../../../constants/paginations";
 import * as S from "./styles";
-import { getPitchListAction } from "../../../redux/actions";
+import { getPitchListAction, deletePitchAction } from "../../../redux/actions";
 import pitchReducers from "../../../redux/reducers/pitch.reducer";
+import { ROUTES } from "../../../constants/routers";
 
 function AdminPitchList() {
   const { pitch } = useSelector((state) => state.product);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -67,17 +69,36 @@ function AdminPitchList() {
       title: "Ngày tạo",
       dataIndex: "date",
       key: "date",
+    
     },
     {
       title: "Chức năng",
-      dataIndex: "action",
+      dataIndex: "id",
       key: "action",
-      render: () => {
+      render: (id) => {
         return (
           <Space>
-            <Button>Update</Button>
-            <Button>Delete</Button>
+            <Link to={generatePath(ROUTES.ADMIN.UPDATE_PITCH, { id: id })}>
+              Update
+            </Link>
+            <Popconfirm
+              title="Bạn có chắc muốn xóa sản phẩm này không?"
+              onConfirm={() => dispatch(deletePitchAction({ id: id }))}
+              okText="Có"
+              cancelText="Không"
+            >
+              <Button danger>Delete</Button>
+            </Popconfirm>
           </Space>
+          /* pitch.data.map((item, index) => {
+            return (
+              <Link
+                to={generatePath(ROUTES.ADMIN.UPDATE_PITCH, { id: item.id })}
+              >
+                Update
+              </Link>
+            );
+          }) */
         );
       },
     },
