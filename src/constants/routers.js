@@ -10,6 +10,7 @@ export const ROUTES = {
     SET_PITCH: "/pitch/:id/setpitch",
     CREATE_PITCH: "/pitch/createpitch",
     PRODUCT_LIST_PAGE: "/product",
+    PROFILE: "/profile",
   },
   ADMIN: {
     DASHBOARD: "/admin/dashboard",

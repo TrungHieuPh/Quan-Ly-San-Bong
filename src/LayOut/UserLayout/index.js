@@ -7,6 +7,7 @@ import { ROUTES } from "../../constants/routers";
 import Breadcrumb from "../BreadCrumbs/BreadCrumbs";
 import Navigation from "../Navigation";
 import Footer from "../Footer";
+import Slider from "../Slider";
 
 import * as S from "./styles";
 

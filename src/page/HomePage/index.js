@@ -1,25 +1,23 @@
-import { Space, Button, Descriptions, Input } from "antd";
+/* eslint-disable jsx-a11y/alt-text */
+import { Space, Button, Carousel, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect } from "react";
-import { SearchOutlined } from "@ant-design/icons";
-import moment from "moment";
 import Moment from "react-moment";
 
 import { getPitchListAction } from "../../redux/actions/";
-import Footer from "../../LayOut/Footer";
 import Slider from "../../LayOut/Slider";
-import Navigate from "../../LayOut/Navigation";
 import styles from "../HomePage/style.module.css";
-import fooball from "../../Images/footbalPlayer.gif";
-import soccerPlayer from "../../Images/soccerPlayer.gif";
+
 import stadium from "../../Images/stadium.gif";
-import imageHome1 from "../../Images/imageHome2.jpg";
-import imageHome from "../../Images/imageHome.jpg";
 import banner from "../../Images/banner.gif";
 import elite from "../../Images/elite.png";
 import rating from "../../Images/rating.png";
-
+import soccercup1 from "../../Images/soccercup1.jpg";
+import soccer2 from "../../Images/soccer2.jpg";
+import ImageHome3 from "../../Images/ImageHome3.jpg";
+import soccer from "../../Images/soccer.jpg";
+/* import fooball from "../../Images/fooballPlayer.gif"; */
 import {
   FaCalendarMinus,
   FaDollarSign,
@@ -103,13 +101,53 @@ function HomePage() {
         <div className={styles.wrapperNavigate}>{/*  <Navigate /> */}</div>
         <div id="banner">
           <div className={styles.main}>
-            {/*   <a href="/pitch" className={styles.gifs}>
-              <img src={fooball}></img>
-              <h3>Đặt Sân Ngay</h3>
-            </a> */}
+            <Link> Đặt Phòng</Link>
           </div>
         </div>
         <Slider />
+        {/* Button */}
+        <div className="container-wrapper1" style={{ width: "100%" }}>
+          <div className={styles.ContentContainer1}>
+            <div className={styles.contentWrapperButton}>
+              <Link>Điểm Đến</Link>
+            </div>
+            {/*  <div className={styles.contentWrapperButton}>
+              <Link>Thương Hiệu</Link>
+            </div> */}
+            <div className={styles.contentWrapperButton}>
+              <Link>Ưu Đãi</Link>
+            </div>
+            <div className={styles.contentWrapperButton}>
+              <Link>Giải Đấu</Link>
+            </div>
+          </div>
+          <div></div>
+        </div>
+        {/*  */}
+        <div className="containerWrapper3">
+          <ul className={styles.ContentContainer3}>
+            <li className={styles.ContentLeft3}>
+              <div className={styles.ContentItem}>
+                <div className={styles.ContentThumb}>
+                  <img className={styles.ImageLeft} src={ImageHome3} />
+                </div>
+                <div className={styles.ContentCaption}></div>
+              </div>
+            </li>
+            <li className={styles.ContentRight3}>
+              <img src={soccer2} />
+            </li>
+          </ul>
+          {/*  <div className={styles.ContentContainer2}>
+            <div className={styles.ContentLeft3}>
+              <img src={soccercup1} />
+            </div>
+            <div className={styles.ContentRight3}>
+              <img src={soccer} />
+            </div>
+          </div> */}
+        </div>
+        {/* Render san */}
         <div className={styles.contentStyle}>
           <div className="main" style={{ width: "60%" }}>
             <div className={styles.contentCenter}>
@@ -138,12 +176,12 @@ function HomePage() {
           <div
             className="right"
             style={{ width: "35%", border: "10px solid black" }}
-            ac
           >
             {/*        <img src={imageHome} /> */}
             <img src={banner} style={{ height: 350, width: 350 }} />
           </div>
         </div>
+        {/* Abou */}
         <div className={styles.wrapperContent2}>
           <div className={styles.ContainerContent2}>
             <div className={styles.Contentleft2}>
@@ -163,6 +201,22 @@ function HomePage() {
               <img src={rating} />
             </div>
           </div>
+        </div>
+        <div className={styles.ItemWrapperCarousel}>
+          <Carousel autoplay effect={"scrollx"}>
+            <div>
+              <img ClassName={styles.ItemCarousel} src={soccer} />
+            </div>
+            <div>
+              <h3 ClassName={styles.ItemCarousel}>2</h3>
+            </div>
+            <div>
+              <h3 ClassName={styles.ItemCarousel}>3</h3>
+            </div>
+            <div>
+              <h3 ClassName={styles.ItemCarousel}>4</h3>
+            </div>
+          </Carousel>
         </div>
       </div>
     </div>
