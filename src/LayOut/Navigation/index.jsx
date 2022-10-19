@@ -1,50 +1,20 @@
 import { useNavigate, Navigate, useLocation, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Space, Button, Dropdown, Menu } from "antd";
-import { FaUser } from "react-icons/fa";
 import { UserOutlined } from "@ant-design/icons";
 
 import styles from "./styles.module.css";
 import { logoutAction } from "../../redux/actions/";
 import { ROUTES } from "../../constants/routers";
-import Header from "../Header/HeaderUser";
+
 import goal from "../../Images/goal.png";
 
 const Navigation = () => {
   const { userInfo } = useSelector((state) => state.user);
-  const { pathname } = useLocation();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem("accessToken");
-  let button;
-  /* if (!accessToken) {
-    button = (
-      <ul className="navBar">
-        <li className="navItem">
-          <Link to={ROUTES.LOGIN} className="login">
-            Login
-          </Link>
-        </li>
-      </ul>
-    );
-  } else {
-    button = (
-      <div className={styles.useNav}>
-        <FaUser />
-        <h4>{userInfo.data.fullName}</h4>
-        <Button
-          onClick={() => {
-            handleLogout();
-          }}
-        >
-          Dang xuat
-        </Button>
-      </div>
-    );
-  } */
-  /* const handleLogout = () => {
-    return localStorage.clear(), navigate("/login");
-  }; */
+
   const handleLogout = () => {
     localStorage.removeItem("userInfo");
     dispatch(logoutAction());
@@ -58,7 +28,7 @@ const Navigation = () => {
             <img src={goal} style={{ width: 35, height: 35 }} />
           </div>
         </Space>
-        <div className={styles.moveNav}>
+        {/* <div className={styles.moveNav}>
           <div className={styles.nav}>
             <ul className={styles.select}>
               <li>
@@ -86,7 +56,7 @@ const Navigation = () => {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
         {userInfo.data.fullName ? (
           <Dropdown
             overlay={
@@ -96,17 +66,17 @@ const Navigation = () => {
                     key="0"
                     onClick={() => navigate(ROUTES.ADMIN.DASHBOARD)}
                   >
-                    Admin Page
+                    Trang Admin
                   </Menu.Item>
                 )}
                 <Menu.Item
                   key="1"
                   onClick={() => navigate(ROUTES.USER.PROFILE)}
                 >
-                  My Profile
+                  Trang của tôi
                 </Menu.Item>
                 <Menu.Item key="2" onClick={() => handleLogout()}>
-                  Logout
+                  Đăng xuất
                 </Menu.Item>
               </Menu>
             }

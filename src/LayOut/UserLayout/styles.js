@@ -3,20 +3,10 @@ import styled, { css } from "styled-components";
 export const Wrapper = styled.div`
   margin: 0 auto;
   min-height: calc(100vh - 263px);
-  max-width: 1165px;
+  max-width: 1265px;
   margin: 0 auto;
 `;
-export const Container = styled.div`
-  background: -webkit-linear-gradient(to bottom, #f0efec, #fff);
-  background: -o-linear-gradient(to bottom, #f0efec, #fff);
-  background: -moz-linear-gradient(to bottom, #f0efec, #fff);
-  /* background: linear-gradient(to bottom,#f0efec,#fff); */
-  background-size: 100% 300px;
-  background-repeat: no-repeat;
-  background-position: top center;
-  max-width: 3000px;
-  min-height: 100%;
-`;
+export const Container = styled.div``;
 export const Header = styled.div`
   color: #fff;
   padding: 0 12px;
