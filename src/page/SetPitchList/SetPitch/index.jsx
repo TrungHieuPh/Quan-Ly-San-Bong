@@ -1,9 +1,29 @@
-import { Button, Card } from "antd";
-import { useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import {
+  Button,
+  Space,
+  Form,
+  DatePicker,
+  Drawer,
+  Descriptions,
+  PageHeader,
+  Statistic,
+  Select,
+  Tabs,
+  Result,
+} from "antd";
+import { useEffect, useMemo, useState } from "react";
+import {
+  Navigate,
+  useNavigate,
+  useParams,
+  Link,
+  generatePath,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { notification } from "antd-notifications-messages";
 import Moment from "react-moment";
+import moment from "moment";
+import { ROUTES } from "../../../constants/routers";
 
 import {
   FaSmile,
@@ -16,178 +36,351 @@ import {
   FaUserPlus,
   FaPeopleArrows,
   FaCheckCircle,
+  FaDollarSign,
 } from "react-icons/fa";
 
 import * as S from "./styles";
 import "antd-notifications-messages/lib/styles/style.css";
 import document from "../../../Images/document.gif";
 
-import { getPitchDetailAction } from "../../../redux/actions";
+import {
+  getPitchDetailAction,
+  bookingPitchAction,
+  getOderListAction,
+} from "../../../redux/actions";
 function SetPitch() {
+  const [selectedOption, setSelectedOption] = useState();
+  console.log(selectedOption, "selected");
+  const [dateSelected, setDateSelected] = useState();
+  const [tabs, setTabs] = useState("1");
+  const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState("top");
+
+  /*   const dateSelect = moment(dateSelected, ["MM-DD-YYYY", "YYYY-MM-DD"]).format(
+    "DD/MM/YYYY"
+  ); */
+  /*   console.log(dateSelect, "dateSelect"); */
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pitchDetail } = useSelector((state) => state.product);
+  const { userInfo } = useSelector((state) => state.user);
+  const { bookingList } = useSelector((state) => state.booking);
+
+  console.log(bookingList.data, "booking");
 
   useEffect(() => {
     dispatch(getPitchDetailAction({ id: id }));
   }, [id]);
-  /*   const detailPitch = pitch.data.find((item, index) => {
-    return item.id.toString() === id;
-  });
-  console.log(detailPitch, "ccccc"); */
-  const show = (type) => {
-    notification({
-      type,
-      title: "Đặt sân thành công",
-      message: `Chúc mừng bạn đã đặt sân thành công ${type}`,
-    });
+  useEffect(() => {
+    dispatch(getOderListAction({ id: id }));
+  }, [id]);
+  /* useEffect(() => {
+    if (pitchDetail.data.times?.length) {
+      setSelectedOption();
+    }
+  }, [pitchDetail.data]); */
+
+  function handleSelectedDate(value) {
+    setDateSelected(moment(value).format("DD/MM/YYYY"));
+  }
+
+  const handleBookingPitch = (id) => {
+    if (!userInfo) {
+      alert("Bạn cần đăng nhập!");
+    } else {
+      dispatch(
+        bookingPitchAction({
+          pitchsId: id,
+          timeSelect: dateSelected,
+          timeId: selectedOption,
+          userId: userInfo.data.id,
+        })
+      );
+    }
+    alert("đặt sân thành công");
+    navigate(ROUTES.USER.PITCH_LIST);
   };
-  const handleSetPitch = () => {
-    /*   show(); */
-    /*  navigate("/pitch//setpitch/detail"); */
-    navigate(`/pitch/${id}/setPitch/detail`);
-  };
 
-  return (
-    <S.Wrapper>
-      <S.Main>
-        <S.Left>
-          <S.SideProfile>
-            <div className="main">
-              <span>Đánh Giá Toàn Diện </span>
-              <div>+674,5</div>
-            </div>
-            <div className="sub">
-              Đánh giá tích cực
-              <span> 98%</span>
-            </div>
-            <ul>
-              <li className="good">
-                <FaSmile />
-                <span>100</span>
-              </li>
-              <li className="meh">
-                <FaMeh />
-                <span>14</span>
-              </li>
-              <li className="bad">
-                <FaFrown />
-                <span>3</span>
-              </li>
-            </ul>
-          </S.SideProfile>
-          <S.LeftMenu>
-            <ul className="arrows">
-              <li>
-                <a href="#">
-                  <FaCommentDots />
-                  <span> Gửi tin nhắn!</span>
-                </a>
-              </li>
-            </ul>
-            <ul className="arrowsbot">
-              <li>
-                <a href="#" className="selected">
-                  <FaFile />
-                  <span>Hồ sơ</span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <FaCalendarDay />
-                  <span>Lịch trình (Tham dự)</span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <FaSignal />
-                  <span>Điều chỉnh</span>
-                </a>
-              </li>
+  const renderPitchOrder = () => {
+    let isDisabled = false;
+    if (dateSelected)
+      Array.from(bookingList.data).forEach((bookingItem, bookingIndex) => {
+        console.log(typeof bookingItem.timeId, "bookingItem");
+        if (
+          moment(dateSelected, "DD/MM/YYYY").unix() ===
+            moment(bookingItem.timeSelect, "DD/MM/YYYY").unix() &&
+          selectedOption === bookingItem.timeId
+        ) {
+          isDisabled = true;
+        }
+      });
+    console.log(isDisabled, "isDisabled");
 
-              <li>
-                <a>
-                  <FaUserPlus />
-                  <span>Tuyển dụng</span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <FaPeopleArrows />
-                  <span>Thành viên</span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <FaCheckCircle />
-                  <span>Đánh giá</span>
-                </a>
-              </li>
-            </ul>
-          </S.LeftMenu>
-        </S.Left>
-        <S.Center>
-          <S.BgTitle>
-            <h1 style={{ color: "#ffffff", paddingTop: 30 }}>
-              {pitchDetail.data?.name}
-            </h1>
-            <h5 style={{ color: " wheat", position: "relative", bottom: 20 }}>
-              Bóng đá | 5 sao
-            </h5>
-          </S.BgTitle>
-          <S.DetailsThs>
-            <img src={document} />
-            Hồ sơ của {pitchDetail.data?.name}
-          </S.DetailsThs>
-          <S.Details>
-            <S.DetailsTBody>
-              <S.DetailsTr>
-                <S.DetailsTh>Tiêu đề</S.DetailsTh>
-                <S.DetailsTd>{pitchDetail.data?.title}</S.DetailsTd>
-              </S.DetailsTr>
-              <S.DetailsTr>
-                <S.DetailsTh>Giá</S.DetailsTh>
-                <S.DetailsTd>{pitchDetail.data?.price}</S.DetailsTd>
-              </S.DetailsTr>
-              <S.DetailsTr>
-                <S.DetailsTh>Địa chỉ </S.DetailsTh>
-                <S.DetailsTd>{pitchDetail.data?.address}</S.DetailsTd>
-              </S.DetailsTr>
-              <S.DetailsTr>
-                <S.DetailsTh>Nội dung </S.DetailsTh>
-                <S.DetailsTd>{pitchDetail.data?.content}</S.DetailsTd>
-              </S.DetailsTr>
-              <S.DetailsTr>
-                <S.DetailsTh>Ngày tạo sân</S.DetailsTh>
-                <S.DetailsTd>
-                  <Moment format="DD/MM/YYYY" date={pitchDetail.data?.date} />
-                </S.DetailsTd>
-              </S.DetailsTr>
-              {/* <S.DetailsTr>
-                <S.DetailsTh>ảnh</S.DetailsTh>
-                <S.DetailsTd>
-                  <img src={detailPitch.upload}></img>
-                </S.DetailsTd>
-              </S.DetailsTr> */}
-            </S.DetailsTBody>
-          </S.Details>
-
-          <div>
-            {/*         <Button onClick={() => navigate(-1)}>Back</Button> */}
+    return (
+      <>
+        <div>
+          {isDisabled && (
             <Button
               type="primary"
-              onClick={() => handleSetPitch("success")}
+              disabled
               danger
-              block
+              style={{ fontSize: 20, height: 50 }}
             >
-              Đặt sân
+              Sân Đã được Đặt
             </Button>
+          )}
+          {!isDisabled && (
+            <Button
+              htmlType="submit"
+              type="primary"
+              danger
+              style={{ fontSize: 20, height: 50 }}
+              /*  onClick={showDrawer} */
+            >
+              Đặt Sân
+            </Button>
+          )}
+        </div>
+      </>
+    );
+  };
+
+  const renderTimeShootOptions = useMemo(() => {
+    return pitchDetail.data.times?.map((item, index) => {
+      return (
+        /*  <Col span={24} > */
+        <Select.Option key={item.id} name="option" value={item.id}>
+          {item.name}
+        </Select.Option>
+        /*  </Col> */
+      );
+    });
+  }, [pitchDetail.data]);
+
+  const onClose = () => {
+    setOpen(false);
+  };
+  {
+    const extraContent = (
+      <div
+        style={{
+          display: "flex",
+          width: "max-content",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Statistic
+          title="Trạng thái"
+          value="padding"
+          style={{
+            marginRight: 32,
+          }}
+        />
+        <Statistic title="Giá" prefix="$" value={pitchDetail.data.price} />
+      </div>
+    );
+    const Content = ({ children, extra }) => (
+      <div className="content" style={{ display: "flex" }}>
+        <div className="main">{children}</div>
+        <div className="extra">{extra}</div>
+      </div>
+    );
+
+    const renderContent = (column = 2) => (
+      <Descriptions size="small" column={column}>
+        <Descriptions.Item label="Tên ">
+          {userInfo.data.fullName}
+        </Descriptions.Item>
+        <Descriptions.Item label="Địa chỉ sân">
+          {pitchDetail.data.address}
+        </Descriptions.Item>
+        <Descriptions.Item label="Email">
+          {userInfo.data.email}
+        </Descriptions.Item>
+        <Descriptions.Item label="Ngày đặt sân">
+          {dateSelected}
+        </Descriptions.Item>
+        {/*  <Descriptions.Item label="Địa chỉ ">
+        {pitchDetail.data.address}
+      </Descriptions.Item> */}
+      </Descriptions>
+    );
+    const renderProductImages = useMemo(() => {
+      if (!pitchDetail.data.images?.length) return null;
+      return pitchDetail.data.images?.map((item) => {
+        return (
+          <img
+            src={item.image}
+            alt={item.name}
+            style={{ width: "45%", height: "auto" }}
+          />
+        );
+      });
+    }, [pitchDetail.data]);
+
+    return (
+      <S.Wrapper>
+        <S.Main>
+          <S.Center>
+            <S.BgTitle>
+              <h1 style={{ color: "#ffffff", paddingTop: 30 }}>
+                {pitchDetail.data?.name}
+              </h1>
+              <h5 style={{ color: " wheat", position: "relative", bottom: 20 }}>
+                Bóng đá | 5 sao
+              </h5>
+            </S.BgTitle>
+          </S.Center>
+
+          <div>
+            <S.DetailsThs>
+              <img src={document} />
+              Hồ sơ của {pitchDetail.data?.name}
+            </S.DetailsThs>
+            <div>
+              <Form onFinish={() => setOpen(true)}>
+                <div
+                  style={{
+                    display: "flex",
+                    border: "1px solid #ddd",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                    height: 100,
+                  }}
+                >
+                  <div
+                    style={{
+                      borderRight: "1px solid #ddd",
+                      textAlign: "center",
+                      padding: "0px 10px",
+                      display: " inherit",
+                    }}
+                  >
+                    <Form.Item
+                      label="Khung giờ "
+                      name="time"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Vui lòng chọn khung giờ",
+                        },
+                      ]}
+                    >
+                      <Select
+                        onChange={(value) => setSelectedOption(value)}
+                        placeholder="Khung giờ"
+                        style={{ width: 150 }}
+                        defaultValue={selectedOption}
+                      >
+                        {renderTimeShootOptions}
+                      </Select>
+                    </Form.Item>
+                  </div>
+                  <div
+                    style={{
+                      textAlign: "center",
+                      borderRight: "1px solid #ddd",
+                      padding: "0px 10px",
+                      display: " inherit",
+                    }}
+                  >
+                    <Form.Item
+                      label="Ngày đặt sân"
+                      name="dateSelected"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Vui lòng chọn ngày ",
+                        },
+                      ]}
+                    >
+                      <DatePicker
+                        bordered="true"
+                        onChange={(values) => handleSelectedDate(values)}
+                      />
+                    </Form.Item>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 30,
+                      padding: "0px 10px",
+                      borderRight: "1px solid #ddd",
+                    }}
+                  >
+                    <FaDollarSign style={{ color: "#38963F" }} />
+                    {pitchDetail.data.price}
+                  </div>
+                  <div> {renderPitchOrder()}</div>
+                </div>
+              </Form>
+              {/*      <p>Vị trí: {pitchDetail.data.location.name}</p> */}
+
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: pitchDetail.data.content,
+                }}
+              ></div>
+              <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+                {renderProductImages}
+              </div>
+
+              <Drawer
+                title="Thông Tin Cá Nhân Người Dùng"
+                placement={placement}
+                width={500}
+                onClose={onClose}
+                open={open}
+                extra={
+                  <Space>
+                    <Button onClick={onClose}>Cancel</Button>
+                  </Space>
+                }
+              >
+                <PageHeader
+                  className="site-page-header-responsive"
+                  footer={
+                    <Tabs activeKey={tabs}>
+                      <Tabs.TabPane tab="Thủ tục thanh toán" key="1">
+                        <Content extra={extraContent}>
+                          {renderContent()}
+                          <Button
+                            type="primary"
+                            danger
+                            onClick={() => setTabs("2")}
+                          >
+                            Tiếp tục
+                          </Button>
+                        </Content>
+                      </Tabs.TabPane>
+                      <Tabs.TabPane tab="Tiếp tục" key="2">
+                        <div>
+                          <h3>Chọn phương thức thanh toán </h3>
+                          <Button
+                            type="link"
+                            onClick={() => handleBookingPitch(id)}
+                          >
+                            Thanh toán qua thẻ ngân hàng
+                          </Button>
+                        </div>
+                        <Button
+                          type="primary"
+                          danger
+                          onClick={() => setTabs("1")}
+                        >
+                          Quay lại
+                        </Button>
+                      </Tabs.TabPane>
+                    </Tabs>
+                  }
+                ></PageHeader>
+              </Drawer>
+            </div>
           </div>
-        </S.Center>
-      </S.Main>
-    </S.Wrapper>
-  );
+        </S.Main>
+      </S.Wrapper>
+    );
+  }
 }
 
 export default SetPitch;

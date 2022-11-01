@@ -4,6 +4,7 @@ import { Button, Form, Input, Card, notification } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPitchDetailAction } from "../../../../redux/actions/pitch.action";
+import ReactQuill from "react-quill";
 
 import * as S from "./styles";
 
@@ -18,11 +19,16 @@ const UpdatePitch = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { pitchDetail } = useSelector((state) => state.product);
-  console.log(pitchDetail, "action");
+  const [updateForm] = Form.useForm();
 
   useEffect(() => {
     dispatch(getPitchDetailAction({ id: id }));
-  }, []);
+  }, [id]);
+  useEffect(() => {
+    if (pitchDetail.data.id) {
+      updateForm.resetFields();
+    }
+  }, [pitchDetail.data]);
 
   const showNotification = (type) => {
     notification({
@@ -47,20 +53,29 @@ const UpdatePitch = () => {
       <S.TopWrapper>
         <h1>Sửa sân</h1>
         <Button onClick={() => navigate(-1)}>Back</Button>
+        <Button
+          type="primary"
+          htmlType="submit"
+          block
+          onClick={() => updateForm.submit()}
+          loading={pitchDetail.loading}
+        >
+          Sửa
+        </Button>
       </S.TopWrapper>
       <S.FormWrapper>
         <Card size="small">
           <Form
+            form={updateForm}
             name="createTask"
             layout="vertical"
             initialValues={{
               name: pitchDetail.data?.name,
-              title: pitchDetail.data?.title,
               price: pitchDetail.data?.price,
               content: pitchDetail.data?.content,
               date: pitchDetail.data?.date,
             }}
-            onFinish={(values, id) => handleUpdatePitch(values, id)}
+            onFinish={(values) => handleUpdatePitch(values)}
           >
             <Form.Item
               label="Tên Sân"
@@ -81,7 +96,7 @@ const UpdatePitch = () => {
             >
               <Input />
             </Form.Item>
-            <Form.Item
+            {/*  <Form.Item
               label="Tiêu đề"
               name="title"
               validateFirst
@@ -99,7 +114,7 @@ const UpdatePitch = () => {
               ]}
             >
               <Input />
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item
               label="Giá"
               name="price"
@@ -125,7 +140,13 @@ const UpdatePitch = () => {
                 },
               ]}
             >
-              <Input />
+              <ReactQuill
+                theme="snow"
+                onChange={(value) => {
+                  console.log(value);
+                  updateForm.setFieldsValue({ content: value });
+                }}
+              />
             </Form.Item>
 
             {/*   <Form.Item name="Upload" label="Upload">
@@ -135,16 +156,6 @@ const UpdatePitch = () => {
                   onChange={() => handleChangeImage}
               />
             </Form.Item> */}
-
-            <Button
-              type="primary"
-              htmlType="submit"
-              block
-              onClick={() => showNotification("success")}
-              loading={pitchDetail.loading}
-            >
-              Sửa
-            </Button>
           </Form>
         </Card>
       </S.FormWrapper>

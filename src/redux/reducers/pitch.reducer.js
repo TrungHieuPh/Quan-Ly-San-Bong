@@ -95,7 +95,7 @@ const pitchReducers = createReducer(initialState, {
     };
   },
   /* Create */
-  CREATE_PITCH_REQUEST: (state, action) => {
+  [REQUEST(PITCH_ACTION.CREATE_PITCH)]: (state, action) => {
     return {
       ...state,
       createPitchData: {
@@ -105,7 +105,7 @@ const pitchReducers = createReducer(initialState, {
       },
     };
   },
-  CREATE_PITCH_SUCCESS: (state, action) => {
+  [SUCCESS(PITCH_ACTION.CREATE_PITCH)]: (state, action) => {
     return {
       ...state,
       createPitchData: {
@@ -114,7 +114,7 @@ const pitchReducers = createReducer(initialState, {
       },
     };
   },
-  CREATE_PITCH_FAIL: (state, action) => {
+  [FAIL(PITCH_ACTION.CREATE_PITCH)]: (state, action) => {
     const { error } = action.payload;
 
     return {

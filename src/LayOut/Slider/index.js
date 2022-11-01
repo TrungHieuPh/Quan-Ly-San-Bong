@@ -3,7 +3,7 @@ import video from "../../videobg.mp4";
 import styles from "../Slider/style.module.css";
 const Slider = () => {
   return (
-    <div style={{ height: 630 }}>
+    <div style={{ height: "788px" }}>
       <video src={video} autoPlay loop muted></video>
       <h1 className={styles.Itemslogan}>
         Ghi bàn trong bất kỳ trận đấu nào luôn là khoảnh khắc hạnh phúc nhất.
