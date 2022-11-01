@@ -18,19 +18,20 @@ export const FormWrapper = styled.div`
 `;
 export const BgTitle = styled.div`
   display: inline-block;
-  margin-bottom: 18px;
+  margin-bottom: 0px;
   color: #000;
+  -webkit-text-decoration: none;
   text-decoration: none;
-  font-size: 21px;
-  margin-left: -11px;
+  /* font-size: 23px; */
+  margin-left: 6px;
   border: 1px solid #ddd;
   box-shadow: 4px 4px 0 rgb(0 0 0 / 10%);
   padding: 5px;
   width: 100%;
   text-align: center;
-  background: url("https://labola.jp/labostatic/img/cover/banner_top.png");
-  height: 134px;
-  background-size: contain;
+  background: url(https://labola.jp/labostatic/img/cover/banner_top.png);
+  height: 246px;
+  background-size: cover;
 `;
 export const Items = styled.div`
   display: flex;
@@ -88,11 +89,13 @@ export const Main = styled.div`
   display: flex;
   width: 90%;
   justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
 `;
 
 export const Center = styled.div`
   float: right;
-  width: 55%;
+  width: 100%;
 `;
 /* left */
 export const Left = styled.div`
@@ -231,4 +234,22 @@ export const RightMenu = styled.section`
 
   top: 130px;
   left: 150px;
+`;
+export const ProductContent = styled.div`
+  padding: 16px;
+
+  & img {
+    width: 100%;
+    height: auto;
+  }
+`;
+export const CartContainer = styled.div`
+  margin: 16px auto;
+  padding: 0 16px;
+  max-width: 1280px;
+  width: 100%;
+
+  h3 {
+    margin-bottom: 0;
+  }
 `;

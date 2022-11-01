@@ -13,7 +13,9 @@
   background-color: #fff;
   box-shadow: 0 0 12px rgb(0 0 0 / 10%);
 }
-
+.navigation::after {
+  background-color: yellow;
+}
 .add-shadow {
   box-shadow: 0 0 12px rgb(0 0 0 / 10%);
 }

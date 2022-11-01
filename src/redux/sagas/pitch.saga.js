@@ -1,21 +1,25 @@
-import { takeEvery, put } from "redux-saga/effects";
+import { takeEvery, put, debounce } from "redux-saga/effects";
 import axios from "axios";
 
 import { PITCH_ACTION, REQUEST, SUCCESS, FAIL } from "../constants";
 
 function* getPitchListSaga(action) {
   try {
-    const { params, more, sortFilter } = action.payload;
-    const result = yield axios.get("http://localhost:4000/pitchs", {
+    const { params, more } = action.payload;
+    const result = yield axios.get(`http://localhost:4000/pitchs`, {
       params: {
+        _embed: "times",
         _page: params.page,
         _limit: params.limit,
         ...(params.keyword && {
           q: params.keyword,
         }),
+        ...(params.timeShootId && {
+          timeShootId: params.timeShootId,
+        }),
         ...(params.sortFilter && {
           _sort: "price",
-          _order: sortFilter,
+          _order: params.sortFilter,
         }),
       },
     });
@@ -44,7 +48,11 @@ function* getPitchListSaga(action) {
 function* getPitchDetailSaga(action) {
   try {
     const { id } = action.payload;
-    const result = yield axios.get(`http://localhost:4000/pitchs/${id}`);
+    const result = yield axios.get(`http://localhost:4000/pitchs/${id}`, {
+      params: {
+        _embed: ["times", "images"],
+      },
+    });
     yield put({
       type: SUCCESS(PITCH_ACTION.GET_PITCH_DETAIL),
       payload: {
@@ -63,18 +71,23 @@ function* getPitchDetailSaga(action) {
 
 function* createPitchSaga(action) {
   try {
-    const { values } = action.payload;
+    const { values, images } = action.payload;
     const result = yield axios.post("http://localhost:4000/pitchs", values);
-    yield put({ type: "GET_PITCH_LIST_REQUEST" });
+    for (let j = 0; j < images.length; j++) {
+      yield axios.post("http://localhost:4000/images", {
+        ...images[j],
+        pitchId: result.data.id,
+      });
+    }
     yield put({
-      type: "CREATE_PITCH_SUCCESS",
+      type: SUCCESS(PITCH_ACTION.CREATE_PITCH),
       payload: {
         data: result.data,
       },
     });
   } catch (e) {
     yield put({
-      type: "CREATE_PITCH_FAIL",
+      type: FAIL(PITCH_ACTION.CREATE_PITCH),
       payload: {
         error: "Đã có lỗi xảy ra!",
       },
@@ -123,7 +136,7 @@ function* deletePitchSaga(action) {
 }
 
 export default function* pitchSaga() {
-  yield takeEvery(REQUEST(PITCH_ACTION.GET_PITCH_LIST), getPitchListSaga);
+  yield debounce(500, REQUEST(PITCH_ACTION.GET_PITCH_LIST), getPitchListSaga);
   yield takeEvery(REQUEST(PITCH_ACTION.GET_PITCH_DETAIL), getPitchDetailSaga);
   yield takeEvery("CREATE_PITCH_REQUEST", createPitchSaga);
   yield takeEvery("UPDATE_PITCH_REQUEST", updatePitchSaga);

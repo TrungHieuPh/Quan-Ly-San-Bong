@@ -7,14 +7,18 @@ import {
   Col,
   Select,
   Tag,
-  Slider,
+  Checkbox,
+  Radio,
 } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { generatePath, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { getPitchListAction } from "../../../redux/actions";
+import {
+  getPitchListAction,
+  getTimeShootListAction,
+} from "../../../redux/actions";
 import * as S from "./styles";
 import pitchs from "../../../Images/pitchs.jpg";
 import { PITCH_LIST_LIMIT } from "../../../constants/paginations";
@@ -27,14 +31,14 @@ function HomePitch() {
   const [filterParams, setFilterParams] = useState({
     keyword: "",
     price: [0, 10000000],
-    sortFilter: undefined,
+    sortFilter: "",
+    timeShootId: [],
   });
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { pitch } = useSelector((state) => state.product);
-
+  const { timeShootList } = useSelector((state) => state.timeShoot);
   useEffect(() => {
     dispatch(
       getPitchListAction({
@@ -44,6 +48,7 @@ function HomePitch() {
         },
       })
     );
+    dispatch(getTimeShootListAction());
   }, []);
 
   const handleFilter = (key, value) => {
@@ -93,26 +98,75 @@ function HomePitch() {
     );
   };
   const handleChangeSort = (value) => {
-    console.log(value);
     setFilterParams({
       ...filterParams,
       sortFilter: value,
     });
     dispatch(
       getPitchListAction({
-        ...filterParams,
-        limit: PITCH_LIST_LIMIT,
-        page: 1,
-        sortFilter: value,
+        params: {
+          ...filterParams,
+          sortFilter: value,
+          limit: PITCH_LIST_LIMIT,
+          page: 1,
+        },
       })
     );
   };
-  const renderPitch = () => {
+
+  const renderTimeShootOptions = () => {
+    return timeShootList.data.map((item, index) => {
+      return (
+        <Col span={24} key={item.id}>
+          <Select.Option value={item.id}>{item.name}</Select.Option>
+        </Col>
+      );
+    });
+  };
+  const handleClearTimeShootFilter = (id) => {
+    const newTimeShootId = filterParams.timeShootId.filter(
+      (item) => item !== id
+    );
+    setFilterParams({
+      ...filterParams,
+      timeShootId: newTimeShootId,
+    });
+    dispatch(
+      getPitchListAction({
+        params: {
+          ...filterParams,
+          timeShootId: newTimeShootId,
+          page: 1,
+          limit: PITCH_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
+  const renderFilterTimeShoot = () => {
+    return filterParams.timeShootId.map((filterItem) => {
+      const timeShootData = timeShootList.data.find(
+        (timeShootItem) => timeShootItem.id === filterItem
+      );
+      return (
+        <Tag
+          key={filterItem}
+          closable
+          onClose={() => handleClearTimeShootFilter(filterItem)}
+        >
+          {timeShootData.name}
+        </Tag>
+      );
+    });
+  };
+
+  const renderPitchList = () => {
     return pitch.data.map((item) => {
       return (
         <Col span={6} key={item.id}>
-          <Link to={generatePath(ROUTES.USER.SET_PITCH, { id: item.id })}>
+          <Link to={generatePath(ROUTES.USER.PITCH_DETAIL, { id: item.id })}>
             <Card
+              title={item.name}
               size="small"
               style={{ fontSize: "20px" }}
               cover={<img alt="example" src={pitchs} />}
@@ -141,7 +195,6 @@ function HomePitch() {
   return (
     <S.Wrapper>
       {/*  <S.TopWrapper></S.TopWrapper> */}
-
       <Card size="small" style={{ marginTop: 16, zwordWrap: "break-word" }}>
         <S.TitleContent>
           <FaCalendarPlus />
@@ -149,8 +202,20 @@ function HomePitch() {
         </S.TitleContent>
         <Row gutter={[16, 16]}>
           <Col span={6}>
+            <Card size="small" title="Filter">
+              <h4>TimeShoot</h4>
+              <Space style={{ marginBottom: 16 }}>
+                <Select
+                  style={{ width: 120 }}
+                  onChange={(value) => handleFilter(value)}
+                  value={renderTimeShootOptions}
+                ></Select>
+              </Space>
+            </Card>
+          </Col>
+          {/* <Col span={6}>
             <Card size="small" title="Giá">
-              {/*  <S.FilterContainer>
+                <S.FilterContainer>
                 <S.FilterTitle>Giá</S.FilterTitle>
                 <div style={{ padding: "0 8px" }}>
                   <Slider
@@ -163,13 +228,14 @@ function HomePitch() {
                     onChange={(value) => handleChangePriceFilter(value)}
                   />  
                 </div>
-              </S.FilterContainer> */}
+              </S.FilterContainer> 
             </Card>
-          </Col>
+          </Col> */}
           <Col span={18}>
-            <Row gutter={[16, 16]}>
+            <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
               <Col span={16}>
                 <Input
+                  placeholder="Nhập từ khóa tìm kiếm"
                   onChange={(e) => handleFilter("keyword", e.target.value)}
                   value={filterParams.keyword}
                   prefix={<SearchOutlined />}
@@ -188,13 +254,14 @@ function HomePitch() {
               </Col>
             </Row>
             <Space style={{ marginBottom: 16 }}>
+              {renderFilterTimeShoot()}
               {filterParams.keyword && (
                 <Tag closable onClose={() => handleClearKeywordFilter()}>
                   Keyword: {filterParams.keyword}
                 </Tag>
               )}
             </Space>
-            <Row gutter={[16, 16]}>{renderPitch()}</Row>
+            <Row gutter={[16, 16]}>{renderPitchList()}</Row>
             {pitch.data.length !== pitch.meta.total && (
               <Row justify="center">
                 <Button style={{ margin: 16 }} onClick={() => handleShowMore()}>

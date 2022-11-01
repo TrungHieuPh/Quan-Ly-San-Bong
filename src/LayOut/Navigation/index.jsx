@@ -25,7 +25,9 @@ const Navigation = () => {
       <div className={styles.fixNav}>
         <Space>
           <div className={styles.logo}>
-            <img src={goal} style={{ width: 35, height: 35 }} />
+            <Link to="/">
+              <img src={goal} style={{ width: 35, height: 35 }} />
+            </Link>
           </div>
         </Space>
         {/* <div className={styles.moveNav}>
@@ -75,7 +77,13 @@ const Navigation = () => {
                 >
                   Trang của tôi
                 </Menu.Item>
-                <Menu.Item key="2" onClick={() => handleLogout()}>
+                <Menu.Item
+                  key="2"
+                  onClick={() => navigate(ROUTES.USER.PITCH_HISTORY)}
+                >
+                  Lịch sử
+                </Menu.Item>
+                <Menu.Item key="3" onClick={() => handleLogout()}>
                   Đăng xuất
                 </Menu.Item>
               </Menu>

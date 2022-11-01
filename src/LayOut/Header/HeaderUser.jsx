@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { Button, Space } from "antd";
 import Navigation from "../Navigation";
@@ -13,10 +14,11 @@ function Header() {
     <S.HeaderContainer>
       <Space>
         <S.Logo>
-          <img src={goal} style={{ width: 35, height: 35 }} />
+          <Link to="/home">
+            {/*   <img src={goal} style={{ width: 35, height: 35 }} /> */}
+          </Link>
         </S.Logo>
       </Space>
-
       <S.UseNav>
         <FaUser />
         <h4>{userInfo.data.fullName}</h4>
