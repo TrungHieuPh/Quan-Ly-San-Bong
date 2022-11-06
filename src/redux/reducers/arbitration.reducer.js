@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const arbitrationReducer = createReducer(initialState, {
-  [REQUEST(ARBITRATION_ACTION.GET_ORDER_LIST)]: (state, action) => {
+  [REQUEST(ARBITRATION_ACTION.GET_ARBITRATION)]: (state, action) => {
     return {
       ...state,
       arbitrationList: {
@@ -20,7 +20,7 @@ const arbitrationReducer = createReducer(initialState, {
       },
     };
   },
-  [SUCCESS(ARBITRATION_ACTION.GET_ORDER_LIST)]: (state, action) => {
+  [SUCCESS(ARBITRATION_ACTION.GET_ARBITRATION)]: (state, action) => {
     const { data } = action.payload;
     return {
       ...state,
@@ -31,7 +31,7 @@ const arbitrationReducer = createReducer(initialState, {
       },
     };
   },
-  [FAIL(ARBITRATION_ACTION.GET_ORDER_LIST)]: (state, action) => {
+  [FAIL(ARBITRATION_ACTION.GET_ARBITRATION)]: (state, action) => {
     const { error } = action.payload;
     return {
       ...state,

@@ -30,24 +30,17 @@ import Moment from "react-moment";
 import moment from "moment";
 import { ROUTES } from "../../../constants/routers";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
-import {
-  FaSmile,
-  FaFrown,
-  FaMeh,
-  FaCommentDots,
-  FaFile,
-  FaCalendarDay,
-  FaSignal,
-  FaUser,
-  FaPeopleArrows,
-  FaCheckCircle,
-  FaDollarSign,
-  FaPen,
-} from "react-icons/fa";
+import { FaSmile, FaCommentDots, FaUser, FaDollarSign } from "react-icons/fa";
 
 import * as S from "./styles";
 import "antd-notifications-messages/lib/styles/style.css";
 import document from "../../../Images/document.gif";
+import click from "../../../Images/click.gif";
+import wink from "../../../Images/wink.gif";
+import signposts from "../../../Images/signposts.gif";
+import image from "../../../Images/image.gif";
+import pencil from "../../../Images/pencil.gif";
+import chat from "../../../Images/chat.gif";
 
 import {
   getPitchDetailAction,
@@ -277,7 +270,12 @@ function SetPitch() {
             key={item.id}
             src={item.url}
             alt={item.name}
-            style={{ width: "70%", height: "500px", margin: 16 }}
+            style={{
+              width: "80%",
+              height: "250px",
+              margin: 16,
+              objectFit: "cover",
+            }}
           />
         );
       });
@@ -304,73 +302,114 @@ function SetPitch() {
           <Spin spinning={pitchDetail.loading}>
             <div>
               <div>
-                <Form onFinish={() => setOpen(true)}>
-                  <S.SearchBooking>
-                    {/* <S.SearchItem>
-                      <h3>Khung giờ ?</h3>
-                      <Form.Item
-                        label=""
-                        name="time"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Vui lòng chọn khung giờ",
-                          },
-                        ]}
-                      >
-                        <Select
-                          onChange={(value) => setSelectedOption(value)}
-                          placeholder="Khung giờ"
-                          style={{ width: "100%" }}
-                          defaultValue={selectedOption}
-                        >
-                          {renderTimeShootOptions}
-                        </Select>
-                      </Form.Item>
-                    </S.SearchItem> */}
-                    {/* <S.SearchItem>
-                      <h3>Khung giờ ?</h3>
-                      <Form.Item
-                        label=""
-                        name="dateSelected"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Vui lòng chọn ngày ",
-                          },
-                        ]}
-                      >
-                        <DatePicker
-                          bordered="true"
-                          disabledDate={disabledDate}
-                          style={{ width: "100%" }}
-                          onChange={(values) => handleSelectedDate(values)}
-                          defaultValue={dateSelected}
+                <S.SearchBooking>
+                  <S.ButtonSetPitchHover>
+                    <S.ButtonSetPitch
+                      style={{
+                        fontSize: 25,
+                        backgroundColor: "whitesmoke",
+                        boxShadow: "rgb(0 0 0 / 60%) 0px 3px 5px",
+                      }}
+                      size="large"
+                      type="link"
+                      danger
+                      block
+                      onClick={() =>
+                        navigate(generatePath(ROUTES.USER.CHECKOUT, { id }))
+                      }
+                    >
+                      Bạn muốn đặt sân không ?
+                      <h3 style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={wink}
+                          style={{
+                            width: 50,
+                            height: 50,
+                          }}
+                          alt=""
                         />
-                      </Form.Item>
-                    </S.SearchItem> */}
-                    <div>
+                        Hãy nhấn vào đây!
+                      </h3>
+                    </S.ButtonSetPitch>
+                  </S.ButtonSetPitchHover>
+                  <div style={{ margin: 24, fontSize: 50 }}>
+                    {" "}
+                    <img
+                      src={signposts}
+                      style={{
+                        width: 100,
+                        height: 100,
+                      }}
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "50%",
+                      justifyContent: "space-around",
+                      alignitems: "center",
+                    }}
+                  >
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div style={{ fontSize: 24, color: "red" }}>
+                        Yêu Thích?
+                      </div>
                       <Button
                         size="large"
+                        type="link"
                         danger={isLike}
                         bordered="false"
                         icon={isLike ? <HeartFilled /> : <HeartOutlined />}
                         onClick={() => handleToggleFavorite()}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          fontSize: 30,
+                          border: "5px solid white",
+                          backgroundColor: "whitesmoke",
+                          height: 80,
+                          boxShadow: "rgb(0 0 0 / 60%) 0px 3px 5px",
+                        }}
                       >
                         {pitchDetail.data?.favorites?.length || 0}
+                        <img
+                          src={click}
+                          style={{
+                            width: 60,
+                            height: 60,
+                          }}
+                          alt=""
+                        />
                       </Button>
                     </div>
-                    <div
-                      style={{
-                        fontSize: 38,
-                        padding: "0px 10px",
-                        borderRight: "1px solid #ddd",
-                      }}
-                    >
-                      <FaDollarSign style={{ color: "#38963F" }} />
-                      {parseFloat(pitchDetail.data.price).toLocaleString()}
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div style={{ fontSize: 24, color: "red" }}>
+                        Giá chỉ từ
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          fontSize: 40,
+                          padding: "0px 10px",
+                          border: "5px solid whitesmoke",
+                          backgroundColor: "white",
+                          height: 80,
+                          width: 350,
+                          boxShadow: "rgb(0 0 0 / 60%) 0px 3px 5px",
+                        }}
+                      >
+                        {/*  <FaDollarSign /> */}
+                        <h3 style={{ display: "flex" }}>
+                          <div style={{ fontSize: 25 }}>đ &nbsp;</div>
+                          {parseFloat(
+                            pitchDetail.data.price
+                          ).toLocaleString()}{" "}
+                          VNĐ
+                        </h3>
+                      </div>
                     </div>
-                    <div>
+                    {/*  <div>
                       <Button
                         danger
                         type="primary"
@@ -381,46 +420,72 @@ function SetPitch() {
                       >
                         Đặt sân
                       </Button>
-                    </div>
-                  </S.SearchBooking>
-                </Form>
+                    </div> */}
+                  </div>
+                </S.SearchBooking>
                 {/*      <p>Vị trí: {pitchDetail.data.location.name}</p> */}
-                <S.DetailsThs>
-                  <img
-                    src={document}
-                    style={{ width: 80, height: 80 }}
-                    alt=""
-                  />
-                  Hồ sơ của {pitchDetail.data?.name}
-                </S.DetailsThs>
-                <div style={{ display: "flex", width: "100%" }}>
-                  <div
-                    style={{ width: "30%", fontSize: 20 }}
-                    dangerouslySetInnerHTML={{
-                      __html: pitchDetail.data.content,
-                    }}
-                  ></div>
+                <S.WrapperContent>
+                  <S.DetailsThs>
+                    <img
+                      src={document}
+                      style={{
+                        width: 80,
+                        height: 80,
+                      }}
+                      alt=""
+                    />
+                    Hồ sơ của {pitchDetail.data?.name}
+                  </S.DetailsThs>
                   <div
                     style={{
-                      width: "65%",
                       display: "flex",
-                      flexDirection: " column",
-                      alignItems: "center",
+                      width: "100%",
+                      marginBottom: 50,
                     }}
                   >
-                    {renderProductImages}
+                    <S.ContentRight>
+                      <div
+                        style={{ width: "100%", fontSize: 20 }}
+                        dangerouslySetInnerHTML={{
+                          __html: pitchDetail.data.content,
+                        }}
+                      ></div>
+                    </S.ContentRight>
+                    <S.ContentLeft>
+                      <h2
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          border: "5px solid white",
+                          boxShadow: "rgb(0 0 0 / 50%) 0px 1px 2px",
+                          margin: 6,
+                          padding: 6,
+                        }}
+                      >
+                        <img
+                          src={image}
+                          style={{
+                            width: 50,
+                            height: 50,
+                          }}
+                          alt=""
+                        />
+                        Hình ảnh sân
+                      </h2>
+                      {renderProductImages}
+                    </S.ContentLeft>
                   </div>
-                </div>
-                <div
-                  style={{
-                    backgroundColor: " white",
-                    boxShadow: " rgb(0 0 0 / 50%) -1px 1px 3px",
-                    borderRadius: 5,
-                    padding: 16,
-                  }}
-                >
+                </S.WrapperContent>
+                <S.WrapperReview>
                   <div style={{ display: "flex" }}>
-                    <FaCommentDots style={{ width: 30, height: 30 }} />
+                    <img
+                      src={chat}
+                      style={{
+                        width: 30,
+                        height: 30,
+                      }}
+                      alt=""
+                    />
                     <h2>Bình luận</h2>
                   </div>
 
@@ -455,18 +520,26 @@ function SetPitch() {
                             <Rate />
                           </Form.Item>
                           <Form.Item label="Bình luận" name="comment">
+                            <img
+                              src={pencil}
+                              style={{
+                                width: 40,
+                                height: 40,
+                              }}
+                              alt=""
+                            />{" "}
                             <Input.TextArea
-                              autoSize={{ maxRows: 6, minRows: 2 }}
+                              autoSize={{ maxRows: 6, minRows: 4 }}
                             />
                           </Form.Item>
                           <Button type="primary" htmlType="submit" block>
-                            Submit
+                            Đăng bình luận
                           </Button>
                         </S.CustomForm>
                       )}
                     </Card>
                   </Col>
-                </div>
+                </S.WrapperReview>
                 <Drawer
                   title="Thông Tin Cá Nhân Người Dùng"
                   placement="top"

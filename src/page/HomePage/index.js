@@ -11,6 +11,7 @@ import {
   Divider,
   Layout,
   Spin,
+  Tag,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link, generatePath } from "react-router-dom";
@@ -24,6 +25,10 @@ import Slider from "../../LayOut/Slider";
 import styles from "../HomePage/style.module.css";
 
 import stadium from "../../Images/stadiumU.gif";
+import click from "../../Images/click.gif";
+import locations from "../../Images/locations.gif";
+import growing from "../../Images/growing.gif";
+
 import elite from "../../Images/elite.png";
 import rating from "../../Images/rating.png";
 import soccer2 from "../../Images/soccer2.jpg";
@@ -116,19 +121,38 @@ function HomePage() {
                     fontSize: 25,
                   }}
                 >
-                  <FaDollarSign /> {parseFloat(item.price).toLocaleString()}
+                  <img
+                    src={growing}
+                    style={{
+                      width: 40,
+                      height: 40,
+                    }}
+                    alt=""
+                  />
+                  {parseFloat(item.price).toLocaleString()} đ
                 </div>
-                <h4>Địa chỉ: {item.address}</h4>
-                <div size="small">
+                <div style={{ display: "flex" }}>
+                  <img
+                    src={locations}
+                    style={{
+                      width: 25,
+                      height: 25,
+                    }}
+                    alt=""
+                  />
+                  <h4>Địa chỉ: {item.address}</h4>
+                </div>
+                <div>
+                  <h5>khung giờ của sân:</h5>
                   {item.times?.map((itemTimes) => {
                     return (
-                      <Button
+                      <Tag
                         type="dashed"
                         danger
                         style={{ fontSize: 12, margin: 1, borderRadius: 4 }}
                       >
                         {itemTimes.name}
-                      </Button>
+                      </Tag>
                     );
                   })}
                 </div>
@@ -139,15 +163,6 @@ function HomePage() {
       );
     });
   };
-  const getTime = (values) => {
-    console.log(values);
-    console.log(moment().toDate(values).valueOf(values));
-    console.log(<Moment format="YYYY MM DD">{values}</Moment>);
-  };
-
-  const DemoBox = (props) => (
-    <p className={`height-${props.value}`}>{props.children}</p>
-  );
 
   var settings1 = {
     dots: true,
@@ -174,7 +189,15 @@ function HomePage() {
       <div style={{ position: "sticky", top: 100, zIndex: 1 }}>
         <div className={styles.ButtonSetPitch}>
           <Link to="/pitch">
-            <span style={{ color: "#820014" }}>Đặt Sân</span>
+            <span style={{ color: "#fa541c" }}>Đặt Sân</span>
+            <img
+              src={click}
+              style={{
+                width: 35,
+                height: 35,
+              }}
+              alt=""
+            />
           </Link>
         </div>
       </div>
@@ -218,7 +241,7 @@ function HomePage() {
             style={{
               margin: 24,
               width: "100%",
-              color: "#820014",
+              color: "whitesmoke",
               fontSize: 20,
             }}
             onClick={() => navigate(ROUTES.USER.PITCH_LIST)}
@@ -444,10 +467,12 @@ function HomePage() {
           <div className={styles.ContainerContent2}>
             <div className={styles.Contentleft2}>
               <img src={elite} />
-              <h2 style={{ color: "#820014;" }}>
+              <h2 style={{ color: "whitesmoke" }}>
                 Sự thân thiện và môi trường phát triển{" "}
               </h2>
-              <p>Tự hào khi là một thành viên của chúng tôi.</p>
+              <p style={{ color: "whitesmoke" }}>
+                Tự hào khi là một thành viên của chúng tôi.
+              </p>
               <Link
                 to={ROUTES.USER.PITCH_ABOUT}
                 className={styles.defauBtn}

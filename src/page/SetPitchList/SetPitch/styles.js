@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Form } from "antd";
+import { Form, Button } from "antd";
 
 export const Wrapper = styled.div`
   max-width: 1250px;
@@ -65,15 +65,18 @@ export const DetailsTh = styled.th`
   text-align: left;
 `;
 export const DetailsThs = styled.th`
-  width: 25%;
   white-space: nowrap;
-  padding: 17px 12px 12px 0;
-  border-bottom: solid 1px #ddd;
   vertical-align: top;
   font-size: 60px;
   display: inline-flex;
   font-weight: bold;
   text-align: left;
+  padding: 25px 10px 40px 10px;
+  margin: 16px;
+  background-color: whitesmoke;
+  border-radius: 7px;
+  box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
+
   & img {
     height: 50px;
     width: 50px;
@@ -96,7 +99,7 @@ export const Main = styled.div`
 
 export const Center = styled.div`
   float: right;
-  width: 128%;
+  width: 110%;
 `;
 /* left */
 export const Left = styled.div`
@@ -259,10 +262,25 @@ export const CustomForm = styled(Form)`
   margin-bottom: 16px;
   border-bottom: 1px solid #ccc;
 `;
+export const ButtonSetPitch = styled(Button)`
+  font-weight: 600;
+  padding: 10px;
+  margin: 10px;
+  height: max-content;
+  border-radius: 5px;
+  & > :hover {
+    background-color: red;
+  }
+`;
+export const ButtonSetPitchHover = styled.div`
+  /*   & :hover {
+    background-color: red;
+  } */
+`;
 export const SearchBooking = styled.div`
   display: flex;
   position: relative;
-  bottom: 80px;
+  bottom: 20px;
   border: "1px solid #ddd";
   justify-content: space-around;
   align-items: center;
@@ -279,4 +297,37 @@ export const SearchItem = styled.div`
   flex-direction: column;
   align-items: center;
   width: 18%;
+`;
+export const WrapperContent = styled.div`
+  border: 1px solid white;
+  background-color: white;
+  border-radius: 7px;
+`;
+export const ContentLeft = styled.div`
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  margin: 8px;
+  padding: 16px;
+  background-color: whitesmoke;
+  box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
+`;
+export const ContentRight = styled.div`
+  background-color: whitesmoke;
+  text-align: center;
+  width: 45%;
+  padding: 16px;
+  margin: 8px;
+  box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
+  height: max-content;
+  border-radius: 15px;
+`;
+export const WrapperReview = styled.div`
+  margin-top: 30px;
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 50%) -1px 1px 3px;
+  padding: 16px;
+  border-radius: 10px;
 `;

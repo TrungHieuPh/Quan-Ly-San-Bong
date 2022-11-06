@@ -18,4 +18,5 @@
 .Wrapper {
   max-width: 100%;
   height: 710px;
+  border-radius: 6px;
 }

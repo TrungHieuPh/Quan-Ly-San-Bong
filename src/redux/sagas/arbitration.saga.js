@@ -7,7 +7,7 @@ function* getCategoryListSaga() {
   try {
     const result = yield axios.get("http://localhost:4000/arbitrations");
     yield put({
-      type: SUCCESS(ARBITRATION_ACTION.GET_ARBITRATION_LIST),
+      type: SUCCESS(ARBITRATION_ACTION.GET_ARBITRATION),
       payload: {
         data: result.data,
       },

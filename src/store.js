@@ -7,6 +7,7 @@ import bookingReducer from "./redux/reducers/booking.reducer";
 import reviewReducer from "./redux/reducers/review.reducer";
 import locationReducer from "./redux/reducers/location.reducer";
 import arbitrationReducer from "./redux/reducers/arbitration.reducer";
+import comboReducer from "./redux/reducers/combo.reducer";
 
 import rootSaga from "./redux/sagas";
 
@@ -21,6 +22,7 @@ const store = configureStore({
     review: reviewReducer,
     location: locationReducer,
     arbitration: arbitrationReducer,
+    combo: comboReducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({
