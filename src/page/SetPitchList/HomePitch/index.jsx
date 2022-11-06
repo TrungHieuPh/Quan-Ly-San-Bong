@@ -10,16 +10,18 @@ import {
   DatePicker,
   Form,
   Spin,
+  notification,
   Radio,
   Tabs,
   PageHeader,
   Drawer,
+  Content,
   Statistic,
   Descriptions,
 } from "antd";
 import React from "react";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useForm } from "react";
+import { generatePath, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {
@@ -29,12 +31,13 @@ import {
   getOderListAction,
 } from "../../../redux/actions";
 import * as S from "./styles";
+import pitchs from "../../../Images/pitchs.jpg";
 import calendar from "../../../Images/calendar.gif";
 import stadiumU from "../../../Images/stadiumU.gif";
 
 import { PITCH_LIST_LIMIT } from "../../../constants/paginations";
 import { ROUTES } from "../../../constants/routers";
-import { FaCalendarPlus, FaDollarSign, FaLocationArrow } from "react-icons/fa";
+import { FaCalendarPlus, FaDollarSign, FaMapMarkedAlt } from "react-icons/fa";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
 
@@ -46,10 +49,12 @@ function HomePitch() {
     timeShootId: [],
     dateSelected: undefined,
   });
+  console.log(filterParams);
 
   const [tabs, setTabs] = useState("1");
   const [open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState();
+  console.log(selectedOption, "ssss");
   const [ids, setIds] = useState();
 
   const dispatch = useDispatch();
@@ -185,7 +190,7 @@ function HomePitch() {
         ...filterParams,
         dateSelected: moment(value).format("DD/MM/YYYY"),
       });
-      dispatch(
+      /*   dispatch(
         getPitchListAction({
           params: {
             ...filterParams,
@@ -194,7 +199,7 @@ function HomePitch() {
           },
           dateSelected: moment(value).format("DD/MM/YYYY"),
         })
-      );
+      ); */
     } else {
       setFilterParams({
         ...filterParams,
@@ -202,6 +207,8 @@ function HomePitch() {
       });
     }
   }
+
+  const isDisabledButton = filterParams.dateSelected === null ? true : false;
 
   const handleCheckDateTimeOrder = (id) => {
     let isDisabled = false;
@@ -231,6 +238,43 @@ function HomePitch() {
                 block
                 danger
                 onClick={() => setIds(id)}
+              >
+                Đặt Sân
+              </Button>
+            )}
+          </div>
+        )}
+      </>
+    );
+  };
+  const handleSetPitch = (id) => {
+    let isDisabled = false;
+    if (filterParams.dateSelected)
+      Array.from(bookingList.data).forEach((bookingItem, bookingIndex) => {
+        if (
+          moment(filterParams.dateSelected, "DD/MM/YYYY").valueOf() ===
+            moment(bookingItem.timeSelect, "DD/MM/YYYY").valueOf() &&
+          selectedOption === bookingItem.timeId
+        ) {
+          isDisabled = true;
+        }
+      });
+    return (
+      <>
+        {userInfo.data.id && (
+          <div>
+            {isDisabled && (
+              <Button type="primary" block disabled danger>
+                Đặt Sân
+              </Button>
+            )}
+            {!isDisabled && (
+              <Button
+                htmlType="submit"
+                type="primary"
+                block
+                danger
+                /*  onClick={() => setIds(id)} */
               >
                 Đặt Sân
               </Button>
@@ -281,7 +325,7 @@ function HomePitch() {
                   }}
                 />
               </div>
-              <div style={{ width: "30%" }}>
+              <div style={{ width: "60%" }}>
                 <Space
                   style={{
                     alignItems: "start",
@@ -290,89 +334,59 @@ function HomePitch() {
                   <img
                     src={stadiumU}
                     alt=""
-                    style={{ height: "70px", width: "70px" }}
+                    style={{ height: "50px", width: "50px" }}
                   />
-                  <h1> {item.name}</h1>
+                  <h3 style={{ fontSize: 26 }}> {item.name}</h3>
                 </Space>
+                <Row gutter={(16, 16)}>
+                  <Col span={12}>
+                    {item.times?.map((itemTime) => {
+                      return (
+                        <Button
+                          onChange={(e) => setSelectedOption(e.target.value)}
+                          size="small"
+                        >
+                          {itemTime.name}
+                        </Button>
+                      );
+                    })}
+                  </Col>
+                  <Col span={12}>
+                    <div style={{ fontSize: 20 }}>
+                      <FaMapMarkedAlt />
+                      {item.address}
+                    </div>
 
-                <div hidden>{item.id}</div>
-                <div style={{ fontSize: 20 }}>
-                  <FaLocationArrow />
-                  {item.address}
-                </div>
-                <div>{item.id}</div>
-                <Space>
-                  <Form.Item
-                    label=""
-                    name="radio"
-                    rules={[
-                      {
-                        required: true,
-                        message: "chon option",
-                      },
-                    ]}
-                  >
-                    <Radio.Group name="radiogroup" defaultValue={item.times.id}>
-                      {item.times.map((itemTime) => {
-                        return (
-                          <Radio
-                            disabled={
-                              filterParams.dateSelected &&
-                              bookingList.data.forEach(
-                                (bookingItem, bookingIndex) => {
-                                  if (
-                                    moment(
-                                      filterParams.dateSelected,
-                                      "DD/MM/YYYY"
-                                    ).valueOf() ===
-                                      moment(
-                                        bookingItem.timeSelect,
-                                        "DD/MM/YYYY"
-                                      ).valueOf() &&
-                                    selectedOption === bookingItem.timeId
-                                  ) {
-                                    return true;
-                                  }
-                                }
-                              )
-                            }
-                            key={itemTime.id}
-                            name="option"
-                            value={itemTime.id}
-                            onChange={(e) => setSelectedOption(e.target.value)}
-                          >
-                            {itemTime.name}
-                          </Radio>
-                        );
-                      })}
-                    </Radio.Group>
-                  </Form.Item>
-                </Space>
-              </div>
-
-              <div
-                style={{
-                  width: "20%",
-                  margin: 16,
-                  height: "100%",
-                  borderLeft: "1px solid #ddd",
-                  padding: "45px 0px 58px 10px",
-                }}
-              >
-                <h2 style={{ fontSize: 30 }}>
-                  <FaDollarSign />
-                  {parseFloat(item.price).toLocaleString()}
-                </h2>
-                <Button
-                  type="primary"
-                  block
-                  danger
-                  onClick={() => navigate(`/pitch/${item.id}/setpitch`)}
-                >
-                  Chi tiết
-                </Button>
-
-                {handleCheckDateTimeOrder(item.id)}
+                    <h2 style={{ fontSize: 30 }}>
+                      <FaDollarSign />
+                      {parseFloat(item.price).toLocaleString()}đ
+                    </h2>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={24}>
+                    <Button
+                      type="primary"
+                      block
+                      danger
+                      onClick={() => navigate(`/pitch/${item.id}/setpitch`)}
+                    >
+                      Chi tiết
+                    </Button>
+                    <Button
+                      type="primary"
+                      block
+                      danger
+                      onClick={() =>
+                        navigate(
+                          generatePath(ROUTES.USER.CHECKOUT, { id: item.id })
+                        )
+                      }
+                    >
+                      Đặt sân
+                    </Button>
+                  </Col>
+                </Row>
               </div>
             </div>
           </div>
@@ -380,68 +394,6 @@ function HomePitch() {
       );
     });
   };
-
-  const onClose = () => {
-    setOpen(false);
-  };
-
-  const extraContent = (
-    <div
-      style={{
-        display: "flex",
-        width: "max-content",
-        justifyContent: "flex-end",
-      }}
-    >
-      <Statistic
-        title="Trạng thái"
-        value="padding"
-        style={{
-          marginRight: 32,
-        }}
-      />
-      <Statistic title="Giá" prefix="$" value={pitchDetail.data.price} />
-    </div>
-  );
-  const Content = ({ children, extra }) => (
-    <div className="content" style={{ display: "flex" }}>
-      <div className="main">{children}</div>
-      <div className="extra">{extra}</div>
-    </div>
-  );
-
-  const renderContent = (column = 2) => (
-    <Descriptions size="small" column={column}>
-      <Descriptions.Item label="Tên ">
-        {userInfo.data.fullName}
-      </Descriptions.Item>
-      <Descriptions.Item label="Địa chỉ sân">
-        {pitchDetail.data.address}
-      </Descriptions.Item>
-      <Descriptions.Item label="Email">{userInfo.data.email}</Descriptions.Item>
-      <Descriptions.Item label="Ngày đặt sân">
-        {pitch.dateSelected}
-      </Descriptions.Item>
-    </Descriptions>
-  );
-  //
-  const handleBookingPitch = (ids) => {
-    if (!userInfo) {
-      alert("Bạn cần đăng nhập!");
-    } else {
-      dispatch(
-        bookingPitchAction({
-          pitchsId: ids.id,
-          timeSelect: pitch.dateSelected,
-          timeId: selectedOption,
-          userId: userInfo.data.id,
-        })
-      );
-    }
-    alert("đặt sân thành công");
-    navigate(ROUTES.USER.PITCH_LIST);
-  };
-
   return (
     <S.Wrapper>
       <Spin spinning={pitch.loading}>
@@ -461,7 +413,19 @@ function HomePitch() {
             </S.TitleContent>
             <Row gutter={[16, 16]}>
               <Col span={24}>
-                <Row gutter={[16, 16]}>
+                <Row
+                  gutter={[16, 16]}
+                  style={{
+                    border: "1px solid white",
+                    margin: 16,
+                    backgroundColor: " white",
+                    boxShadow: " rgb(0 0 0 / 50%) -1px 1px 8px",
+                    alignItems: " baseline",
+                    justifyContent: "space-between",
+                    alignContent: "center",
+                    borderRadius: 5,
+                  }}
+                >
                   <Col
                     span={6}
                     style={{ display: "flex", justifyContent: "space-evenly" }}
@@ -547,56 +511,6 @@ function HomePitch() {
                   </Col>
                 </Row>
               </Col>
-              <Drawer
-                title="Thông Tin Cá Nhân Người Dùng"
-                placement="top"
-                width={500}
-                onClose={onClose}
-                open={open}
-                extra={
-                  <Space>
-                    <Button onClick={onClose}>Cancel</Button>
-                  </Space>
-                }
-              >
-                <PageHeader
-                  className="site-page-header-responsive"
-                  footer={
-                    <Tabs activeKey={tabs}>
-                      <Tabs.TabPane tab="Thủ tục thanh toán" key="1">
-                        <Content extra={extraContent}>
-                          {renderContent()}
-                          <Button
-                            type="primary"
-                            danger
-                            onClick={() => setTabs("2")}
-                          >
-                            Tiếp tục
-                          </Button>
-                        </Content>
-                      </Tabs.TabPane>
-                      <Tabs.TabPane tab="Tiếp tục" key="2">
-                        <div>
-                          <h3>Chọn phương thức thanh toán </h3>
-                          <Button
-                            type="link"
-                            onClick={() => handleBookingPitch(ids)}
-                          >
-                            Thanh toán qua thẻ ngân hàng
-                          </Button>
-                        </div>
-                        <Button
-                          type="primary"
-                          danger
-                          onClick={() => setTabs("1")}
-                        >
-                          Quay lại
-                        </Button>
-                      </Tabs.TabPane>
-                    </Tabs>
-                  }
-                ></PageHeader>
-              </Drawer>
             </Row>
           </Card>
         </Form>

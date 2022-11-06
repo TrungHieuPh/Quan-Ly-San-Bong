@@ -18,12 +18,32 @@ import {
 } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  Navigate,
+  useNavigate,
+  useParams,
+  Link,
+  generatePath,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import Moment from "react-moment";
 import moment from "moment";
 import { ROUTES } from "../../../constants/routers";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
-import { FaCommentDots, FaUser, FaDollarSign } from "react-icons/fa";
+import {
+  FaSmile,
+  FaFrown,
+  FaMeh,
+  FaCommentDots,
+  FaFile,
+  FaCalendarDay,
+  FaSignal,
+  FaUser,
+  FaPeopleArrows,
+  FaCheckCircle,
+  FaDollarSign,
+  FaPen,
+} from "react-icons/fa";
 
 import * as S from "./styles";
 import "antd-notifications-messages/lib/styles/style.css";
@@ -67,7 +87,10 @@ function SetPitch() {
     dispatch(getReviewListAction({ pitchId: id }));
     dispatch(getOderListAction({ id: id }));
   }, [id]);
-
+  /*   useEffect(() => {
+    dispatch(getOderListAction({ id: id }));
+  }, [id]);
+ */
   function handleSelectedDate(value) {
     setDateSelected(moment(value).format("DD/MM/YYYY"));
   }
@@ -115,17 +138,8 @@ function SetPitch() {
       notification.warn({ message: "Bạn cần đăng nhập" });
     }
   };
-  const handlePostReview = (values) => {
-    dispatch(
-      postReviewAction({
-        ...values,
-        userId: userInfo.data.id,
-        productId: pitchDetail.data.id,
-      })
-    );
-  };
 
-  const renderPitchOrder = () => {
+  /*  const renderPitchOrder = () => {
     let isDisabled = false;
     if (pitch.dateSelected || dateSelected)
       Array.from(bookingList.data).forEach((bookingItem, bookingIndex) => {
@@ -155,7 +169,6 @@ function SetPitch() {
             {!isDisabled && (
               <Button
                 onClick={() => navigate(`/checkout/${id}`)}
-                /*   htmlType="submit" */
                 type="primary"
                 danger
                 style={{ fontSize: 30, height: 60 }}
@@ -166,6 +179,15 @@ function SetPitch() {
           </div>
         )}
       </>
+    );
+  }; */
+  const handlePostReview = (values) => {
+    dispatch(
+      postReviewAction({
+        ...values,
+        userId: userInfo.data.id,
+        productId: pitchDetail.data.id,
+      })
     );
   };
 
@@ -284,7 +306,7 @@ function SetPitch() {
               <div>
                 <Form onFinish={() => setOpen(true)}>
                   <S.SearchBooking>
-                    <S.SearchItem>
+                    {/* <S.SearchItem>
                       <h3>Khung giờ ?</h3>
                       <Form.Item
                         label=""
@@ -305,8 +327,8 @@ function SetPitch() {
                           {renderTimeShootOptions}
                         </Select>
                       </Form.Item>
-                    </S.SearchItem>
-                    <S.SearchItem>
+                    </S.SearchItem> */}
+                    {/* <S.SearchItem>
                       <h3>Khung giờ ?</h3>
                       <Form.Item
                         label=""
@@ -326,7 +348,7 @@ function SetPitch() {
                           defaultValue={dateSelected}
                         />
                       </Form.Item>
-                    </S.SearchItem>
+                    </S.SearchItem> */}
                     <div>
                       <Button
                         size="large"
@@ -348,7 +370,18 @@ function SetPitch() {
                       <FaDollarSign style={{ color: "#38963F" }} />
                       {parseFloat(pitchDetail.data.price).toLocaleString()}
                     </div>
-                    <div> {renderPitchOrder()}</div>
+                    <div>
+                      <Button
+                        danger
+                        type="primary"
+                        block
+                        onClick={() =>
+                          navigate(generatePath(ROUTES.USER.CHECKOUT, { id }))
+                        }
+                      >
+                        Đặt sân
+                      </Button>
+                    </div>
                   </S.SearchBooking>
                 </Form>
                 {/*      <p>Vị trí: {pitchDetail.data.location.name}</p> */}

@@ -16,7 +16,7 @@ import PitchHistory from "./page/PitchHistory";
 import SetPitch from "./page/SetPitchList/SetPitch";
 import HomePitch from "./page/SetPitchList/HomePitch";
 import CreatePitch from "./page/Admin/PitchList/CreatePitch";
-/* import CheckoutPitch from "./page/SetPitchList/CheckoutPitch"; */
+import CheckoutPitch from "./page/SetPitchList/CheckoutPitch";
 import Profile from "./page/profile";
 
 import LoginPage from "./page/LoginPage";
@@ -64,7 +64,7 @@ function App() {
             path={ROUTES.USER.PRODUCT_LIST_PAGE}
             element={<PitchListPage />}
           />
-          {/*  <Route path={ROUTES.USER.CHECKOUT} element={<CheckoutPitch />} /> */}
+          <Route path={ROUTES.USER.CHECKOUT} element={<CheckoutPitch />} />
         </Route>
         <Route element={<LoginLayout />}>
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />

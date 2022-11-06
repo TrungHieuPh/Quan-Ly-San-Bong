@@ -5,6 +5,8 @@ import userReducer from "./redux/reducers/user.reducer";
 import timeShootReducer from "./redux/reducers/timeshoot.reducer";
 import bookingReducer from "./redux/reducers/booking.reducer";
 import reviewReducer from "./redux/reducers/review.reducer";
+import locationReducer from "./redux/reducers/location.reducer";
+import arbitrationReducer from "./redux/reducers/arbitration.reducer";
 
 import rootSaga from "./redux/sagas";
 
@@ -17,6 +19,8 @@ const store = configureStore({
     timeShoot: timeShootReducer,
     booking: bookingReducer,
     review: reviewReducer,
+    location: locationReducer,
+    arbitration: arbitrationReducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({
