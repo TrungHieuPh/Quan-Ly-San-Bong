@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   position: relative;
   min-height: calc(100vh - 310px);
+  background-color: #fbcec978;
 `;
 
 export const TopWrapper = styled.div`
@@ -56,4 +57,3 @@ export const FilterContainer = styled.div`
   border: 1px solid #d9d9d9;
   overflow: hidden;
 `;
-

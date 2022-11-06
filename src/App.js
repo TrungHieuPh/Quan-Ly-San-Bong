@@ -16,10 +16,12 @@ import PitchHistory from "./page/PitchHistory";
 import SetPitch from "./page/SetPitchList/SetPitch";
 import HomePitch from "./page/SetPitchList/HomePitch";
 import CreatePitch from "./page/Admin/PitchList/CreatePitch";
-import DetailSetPitch from "./page/SetPitchList/SetPitch/detailSetPitch";
+/* import CheckoutPitch from "./page/SetPitchList/CheckoutPitch"; */
 import Profile from "./page/profile";
+
 import LoginPage from "./page/LoginPage";
 import RegisterPage from "./page/RegisterPage";
+import ChangePassword from "./page/profile/component/ChangePassword";
 import { ROUTES } from "./constants/routers";
 import { getUserInfoAction } from "./redux/actions";
 import UserLayout from "./LayOut/UserLayout";
@@ -55,13 +57,14 @@ function App() {
           <Route path={ROUTES.USER.CREATE_PITCH} element={<CreatePitch />} />
           <Route path={ROUTES.USER.PROFILE} element={<Profile />} />
           <Route
+            path={ROUTES.USER.CHANGE_PASSWORD}
+            element={<ChangePassword />}
+          />
+          <Route
             path={ROUTES.USER.PRODUCT_LIST_PAGE}
             element={<PitchListPage />}
           />
-          <Route
-            path="/datsan/:id/setpitch/detail"
-            element={<DetailSetPitch />}
-          />
+          {/*  <Route path={ROUTES.USER.CHECKOUT} element={<CheckoutPitch />} /> */}
         </Route>
         <Route element={<LoginLayout />}>
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />

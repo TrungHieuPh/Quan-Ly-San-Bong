@@ -8,7 +8,7 @@ function* bookingSaga(action) {
   try {
     const { timeSelect, pitchsId, price, timeId, userId } = action.payload;
     const result = yield axios.post("http://localhost:4000/orders", {
-      pitchsId: pitchsId,
+      pitchsId: parseInt(pitchsId),
       timeSelect: timeSelect,
       timeId: timeId,
       userId: userId,
@@ -34,7 +34,7 @@ function* bookingSaga(action) {
 function* getOrderListSaga() {
   try {
     const result = yield axios.get("http://localhost:4000/orders", {
-      params: { _expand: "pitchs" },
+      params: { _expand: ["pitchs", "time"] },
     });
     yield put({
       type: SUCCESS(BOOKING_ACTION.GET_ORDER_LIST),

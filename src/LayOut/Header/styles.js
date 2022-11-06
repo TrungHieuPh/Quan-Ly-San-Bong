@@ -42,3 +42,18 @@ export const UseNav = styled.div`
   font-size: 15px;
   color: #e84749;
 `;
+export const TopWrapper = styled.div`
+  max-width: 100%;
+  height: 55px;
+  position: sticky;
+  top: 0;
+  background-color: #820014;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 40px;
+  padding-left: 40px;
+`;
+export const Logos = styled.h2`
+  font-family: "font-sh-imogen-agnes";
+`;

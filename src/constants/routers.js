@@ -11,6 +11,8 @@ export const ROUTES = {
     CREATE_PITCH: "/pitch/createpitch",
     PRODUCT_LIST_PAGE: "/product",
     PROFILE: "/profile",
+    CHANGE_PASSWORD: "/changepassword",
+    CHECKOUT: "/checkout/:id",
   },
   ADMIN: {
     DASHBOARD: "/admin/dashboard",
