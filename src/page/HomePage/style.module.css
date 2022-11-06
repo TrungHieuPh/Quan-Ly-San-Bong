@@ -10,7 +10,7 @@
   position: absolute;
   z-index: 1;
   top: 221px;
-  right: 25px;
+  right: -80px;
   display: block;
   vertical-align: top;
   cursor: pointer;
@@ -189,7 +189,7 @@ tbody > tr > td {
   font-weight: 800;
 }
 .Contentleft2 p {
-  color: var(--blackColor);
+  color: #820014;
   font-weight: 500;
   font-size: 20px;
 }
@@ -232,6 +232,7 @@ a {
   height: 100%;
 }
 .ContentContainer1 {
+  color: #820014;
   width: 100%;
   display: flex;
   justify-content: space-around;

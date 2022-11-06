@@ -192,7 +192,7 @@ function SetPitch() {
       </Descriptions.Item> */}
     </Descriptions>
   );
-  const abc = <div>abc</div>;
+
   {
     const extraContent = (
       <div
@@ -234,7 +234,7 @@ function SetPitch() {
 
           <div>
             <S.DetailsThs>
-              <img src={document} />
+              <img src={document} alt="" />
               Hồ sơ của {pitchDetail.data?.name}
             </S.DetailsThs>
             <div>

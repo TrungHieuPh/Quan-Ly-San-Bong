@@ -5,10 +5,10 @@ import { PITCH_ACTION, REQUEST, SUCCESS, FAIL } from "../constants";
 
 function* getPitchListSaga(action) {
   try {
-    const { params, more } = action.payload;
+    const { params, more, dateSelected } = action.payload;
     const result = yield axios.get(`http://localhost:4000/pitchs`, {
       params: {
-        _embed: "times",
+        _embed: ["times", "images"],
         _page: params.page,
         _limit: params.limit,
         ...(params.keyword && {
@@ -21,6 +21,7 @@ function* getPitchListSaga(action) {
           _sort: "price",
           _order: params.sortFilter,
         }),
+        dateSelected: params.dateSelected,
       },
     });
     yield put({
@@ -33,6 +34,7 @@ function* getPitchListSaga(action) {
           limit: params.limit,
         },
         more: more,
+        dateSelected: dateSelected,
       },
     });
   } catch (e) {
@@ -50,7 +52,7 @@ function* getPitchDetailSaga(action) {
     const { id } = action.payload;
     const result = yield axios.get(`http://localhost:4000/pitchs/${id}`, {
       params: {
-        _embed: ["times", "images"],
+        _embed: ["times", "images", "favorites"],
       },
     });
     yield put({

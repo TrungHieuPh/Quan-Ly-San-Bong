@@ -7,3 +7,6 @@ export const registerAction = createAction(REQUEST(USER_ACTION.REGISTER));
 export const getUserInfoAction = createAction(
   REQUEST(USER_ACTION.GET_USER_INFO)
 );
+export const changePasswordAction = createAction(
+  REQUEST(USER_ACTION.CHANGE_PASSWORD)
+);

@@ -44,10 +44,12 @@ const CreatePitch = () => {
     const newImages = [];
     for (let i = 0; i < images.length; i++) {
       const imgBase64 = await convertImageToBase64(images[i].originFileObj);
+      console.log(imgBase64, "aaa");
       await newImages.push({
         name: images[i].name,
         type: images[i].type,
-        image: imgBase64,
+        thumbUrl: images[i].thumbUrl,
+        url: imgBase64,
       });
     }
     await dispatch(

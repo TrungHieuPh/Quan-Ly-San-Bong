@@ -4,11 +4,19 @@ import { useEffect, useMemo } from "react";
 import { useNavigate, Link, Navigate, generatePath } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
-import { FaBook } from "react-icons/fa";
 import { getOderListAction } from "../../redux/actions";
 import { PITCH_LIST_LIMIT } from "../../constants/paginations";
 import { ROUTES } from "../../constants/routers";
+import "antd/dist/antd.css";
 
+import {
+  FaFutbol,
+  FaCalendarDay,
+  FaCheckCircle,
+  FaDollarSign,
+  FaClock,
+  FaBook,
+} from "react-icons/fa";
 import * as S from "./styles";
 /* import goal from "../../../Images/goal.gif"; */
 
@@ -22,23 +30,45 @@ function PitchHistory() {
 
   const renderOrderHistory = () => {
     return bookingList.data?.map((item) => {
-      return (
-        <Col span={6} key={item.id}>
-          <Card
-            title={item.pitchs.name}
-            size="small"
-            style={{ fontSize: "20px" }}
-          >
-            <h5> {item.pitchs.name}</h5>
-            <h5> {item.pitchs.price}</h5>
-            <h5> {item.pitchs.name}</h5>
-            <h5> {item.pitchs.name}</h5>
-          </Card>
-        </Col>
-      );
+      if (userInfo.data.id === item.userId)
+        return (
+          <Col span={24} key={item.id}>
+            <div
+              style={{
+                fontSize: "20px",
+                margin: 16,
+                width: 1230,
+                border: "1px solid #ddd",
+                textAlign: "center",
+                wordSpacing: "2px",
+              }}
+            >
+              <h3 style={{ borderBottom: "1px solid #ddd", padding: 16 }}>
+                <FaFutbol /> &nbsp;
+                {item.pitchs.name}
+              </h3>
+              <div style={{ paddingLeft: 10 }}>
+                <h5>
+                  Giá sân: &nbsp;
+                  <FaDollarSign style={{ color: "#38963F" }} />
+                  {item.pitchs.price}
+                </h5>
+                <h5>
+                  Ngày đặt sân: &nbsp;
+                  <FaCalendarDay /> {item.timeSelect}
+                </h5>
+                <h5>
+                  Khung giờ: &nbsp; <FaClock /> {item.time.name}
+                </h5>
+                <h5>
+                  <FaCheckCircle /> &nbsp; Đã thanh toán
+                </h5>
+              </div>
+            </div>
+          </Col>
+        );
     });
   };
-
   useEffect(() => {
     /*   if (!accessToken) {
       return <h3 style={{ color: "black" }}>Chưa có lịch sử giao dịch </h3>;
@@ -67,7 +97,7 @@ function PitchHistory() {
           alignItems: "center",
         }}
       >
-        <div>
+        <div style={{ width: "100%" }}>
           <S.TitleContent>
             <FaBook />
             <h1>Lịch Sử Đặt Sân</h1>

@@ -1,5 +1,11 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { PITCH_ACTION, REQUEST, SUCCESS, FAIL } from "../constants";
+import {
+  PITCH_ACTION,
+  FAVORITE_ACTION,
+  REQUEST,
+  SUCCESS,
+  FAIL,
+} from "../constants";
 const initialState = {
   pitch: {
     data: [],
@@ -39,13 +45,14 @@ const pitchReducers = createReducer(initialState, {
     };
   },
   [SUCCESS(PITCH_ACTION.GET_PITCH_LIST)]: (state, action) => {
-    const { data, meta, more } = action.payload;
+    const { data, meta, more, dateSelected } = action.payload;
     return {
       ...state,
       pitch: {
         ...state.pitch,
         data: more ? [...state.pitch.data, ...data] : data,
         meta: meta,
+        dateSelected: dateSelected,
         loading: false,
       },
     };
@@ -185,6 +192,36 @@ const pitchReducers = createReducer(initialState, {
         ...state.deletePitchData,
         loading: false,
         error: error,
+      },
+    };
+  },
+
+  [SUCCESS(FAVORITE_ACTION.FAVORITE_PITCH)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      pitchDetail: {
+        ...state.pitchDetail,
+        data: {
+          ...state.pitchDetail.data,
+          favorites: [...state.pitchDetail.data.favorites, data],
+        },
+      },
+    };
+  },
+  [SUCCESS(FAVORITE_ACTION.UN_FAVORITE_PITCH)]: (state, action) => {
+    const { id } = action.payload;
+    const newFavorites = state.pitchDetail.data.favorites?.filter(
+      (item) => item.id !== id
+    );
+    return {
+      ...state,
+      pitchDetail: {
+        ...state.pitchDetail,
+        data: {
+          ...state.pitchDetail.data,
+          favorites: newFavorites,
+        },
       },
     };
   },

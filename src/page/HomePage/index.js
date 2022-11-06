@@ -10,6 +10,7 @@ import {
   Form,
   Divider,
   Layout,
+  Spin,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link, generatePath } from "react-router-dom";
@@ -24,18 +25,12 @@ import styles from "../HomePage/style.module.css";
 import * as S from "./style";
 
 import stadium from "../../Images/stadiumU.gif";
-import banner from "../../Images/banner.gif";
 import elite from "../../Images/elite.png";
 import rating from "../../Images/rating.png";
-import soccer from "../../Images/soccer.jpg";
-import ImageHome3 from "../../Images/ImageHome3.jpg";
 import soccer2 from "../../Images/soccer2.jpg";
-import soccercup3 from "../../Images/soccercup3.jpg";
 import soccer3 from "../../Images/soccer3.jpg";
 import imageright from "../../Images/imageright.jpg";
 import imageleft from "../../Images/imageleft.jpg";
-import imageHome3 from "../../Images/ImageHome3.jpg";
-import imageHome2 from "../../Images/imageHome2.jpg";
 import imageHome from "../../Images/imageHome.jpg";
 import piture1 from "../../Images/picture1.jpg";
 import piture2 from "../../Images/piture2.jpg";
@@ -94,7 +89,7 @@ function HomePage() {
                   fontSize: 55,
                   fontWeight: 600,
                   padding: 2,
-                  color: "#000",
+                  color: "#820014",
                 }}
               >
                 {item.name}
@@ -103,7 +98,7 @@ function HomePage() {
             <div style={{ padding: "2px 13px" }}>
               <div
                 style={{
-                  color: "#888",
+                  color: "#820014",
                   display: "flex",
                   alignItems: "center",
                   fontSize: 50,
@@ -111,17 +106,6 @@ function HomePage() {
               >
                 <FaDollarSign /> {parseFloat(item.price).toLocaleString()}
               </div>
-
-              <div
-                style={{ color: "#888", display: "flex", alignItems: "center" }}
-              >
-                <FaCalendarMinus />
-                <Moment format="DD/MM/YYYY" date={item.date} />
-                {/*  {(item.date).} */}
-              </div>
-              {/*  <Button type="primary" danger block style={{ color: "black" }}>
-                Đặt sân ngay
-              </Button> */}
             </div>
           </Link>
         </>
@@ -158,10 +142,11 @@ function HomePage() {
   };
   return (
     <div>
+      {/*  <Spin spinning={pitch.loading}> */}
       <div style={{ position: "sticky", top: 100, zIndex: 1 }}>
         <div className={styles.ButtonSetPitch}>
           <Link to="/pitch">
-            <span>Đặt Sân</span>
+            <span style={{ color: "#820014" }}>Đặt Sân</span>
           </Link>
         </div>
       </div>
@@ -189,102 +174,35 @@ function HomePage() {
           </div>
           <div></div>
         </div>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              color: "#820014",
+            }}
+          >
+            {renderPitch()}
+          </div>
+          <Button
+            type="link"
+            style={{
+              margin: 24,
+              width: "100%",
+              color: "#820014",
+              fontSize: 20,
+            }}
+            onClick={() => navigate(ROUTES.USER.PITCH_LIST)}
+          >
+            Xem Thêm
+          </Button>
+        </div>
         {/*  */}
 
-        {/*  <div className="containerWrapper3">
-          <ul className={styles.ContentContainer3}>
-            <Link to={ROUTES.USER.PITCH_LIST} className={styles.ContentLeft3}>
-              <div className={styles.ContentItem}>
-                <div className={styles.ContentThumb}>
-                  <img className={styles.ImageLeft} src={piture43} />
-                </div>
-                <div className={styles.ContentCaption}>
-                  <div className={styles.ContentCapDesc}>
-                    <p>
-                      <a>
-                        <span>BÓNG ĐÁ</span>
-                      </a>
-                    </p>
-                    <p>
-                      <a>
-                        <span>Thể thao sức khỏe</span>
-                      </a>
-                    </p>
-                  </div>
-                  <div className={styles.ContentCapTitle}>SPORTS</div>
-                  <div className={styles.ContentCapContent}>
-                    <p>&nbsp;</p>
-                    <p>
-                      <a>
-                        <span style={{ color: "#ffffff" }}>
-                          Bóng đá là môn thể thao phổ biến và được yêu thích
-                          nhất trên thế giới từ xưa tới nay, nó được chơi từ
-                          đẳng cấp chuyên nghiệp cho tới nghiệp dư, từ thành thị
-                          cho tới xóm làng, từ người lớn cho tới trẻ nhỏ. Bóng
-                          đá là bình đẳng, không phân biệt màu da hay giới tính.
-                          Mỗi khi có trận bóng đá lớn, hàng vạn người đến sân để
-                          xem và cổ vũ cùng hàng triệu người khác theo dõi qua
-                          tivi nếu không thể đến sân vận động. Ở các quán cà phê
-                          hay những điểm chiếu công cộng, bóng đá gắn kết mọi
-                          người theo cách rất riêng và đặc biệt mà không thứ gì
-                          khác có thể làm được. Có thể nói, bóng đá còn nhiều
-                          hơn là một môn thể thao!
-                        </span>
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </Link>
-            <Link to={ROUTES.USER.PITCH_LIST} className={styles.ContentRight3}>
-              <div className={styles.ContentItemRight}>
-                <div className={styles.ContentThumbRight}>
-                  <img src={soccer2} />
-                </div>
-                <div className={styles.ContentCaptionRight}>
-                  <div className={styles.ContentCapDescRight}>
-                    <p>
-                      <a>
-                        <span>Sự đoàn kết</span>
-                      </a>
-                    </p>
-                    <p>
-                      <a>
-                        <span>Nơi thể hiện đam vê và tính đồng đội</span>
-                      </a>
-                    </p>
-                  </div>
-                  <div className={styles.ContentCapTitleRight}>SPORT</div>
-                  <div className={styles.ContentCapContentRight}>
-                    <p>&nbsp;</p>
-                    <p>
-                      <a>
-                        <span style={{ color: "#ffffff" }}>
-                          Bóng đá là tôn giáo, bóng đá cũng là cuộc sống. Với
-                          nhiều người, đó là niềm đam mê mãnh liệt, họ như sinh
-                          ra chỉ vì bóng đá và chết đi cùng với bóng đá. Trong
-                          trận đấu, họ cùng cười, khóc, hồi hộp, căng thẳng
-                          trong từng giây, từng phút với đội bóng yêu thích của
-                          mình. Họ cũng cảm nhận được sự vinh quang khi chiến
-                          thắng hay những giọt nước mắt của nỗi buồn khi thất
-                          bại. Hôm nay, tôi sẽ gửi tới các bạn 50 dòng status
-                          bóng đá và những câu nói hay nhất về bóng đá vô cùng ý
-                          nghĩa để mọi người cùng nhau suy ngẫm. Hy vọng rằng
-                          các bạn cũng sẽ thích những câu nói hay về bóng đá!
-                        </span>
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </ul>
-        </div> */}
-        {/*  */}
-        <div style={{ border: "1px solid #ddd" }}>
+        <div>
           <>
             <div>
-              <Sliders {...settings1}>
+              <Sliders {...settings}>
                 <div style={{ textAlign: "center" }}>
                   <Row>
                     <Col span={4}>
@@ -459,37 +377,9 @@ function HomePage() {
                 </div>
               </Sliders>
             </div>
-            <div>
-              <h2>Auto Play</h2>
-              <Sliders {...settings}>
-                <div>
-                  <img src={soccer2} />
-                </div>
-                <div>
-                  <img src={soccercup3} />
-                </div>
-                <div>
-                  <img src={soccer3} />
-                </div>
-                <div>
-                  <img src={imageright} />
-                </div>
-                <div>
-                  <img src={imageleft} />
-                </div>
-                <div>
-                  <img src={imageHome3} />
-                </div>
-                <div>
-                  <img src={imageHome2} />
-                </div>
-                <div>
-                  <img src={soccer} />
-                </div>
-              </Sliders>
-            </div>
           </>
         </div>
+
         {/*  <Layout style={contentStyle}>
           <Layout.Footer>Sider</Layout.Footer>
           <Layout.Content>Content</Layout.Content>
@@ -511,27 +401,6 @@ function HomePage() {
                 <div className={styles.text}>Danh sách Sân</div>
               </div> */}
             </div>
-            <div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                {renderPitch()}
-              </div>
-              <Button
-                type="link"
-                style={{
-                  margin: 16,
-                  width: "100%",
-                  color: "red",
-                  fontSize: 30,
-                }}
-                onClick={() => navigate(ROUTES.USER.PITCH_LIST)}
-              >
-                ... Xem Thêm
-              </Button>
-
-              {/* <div>
-                <img src={imageHome1} />
-              </div> */}
-            </div>
           </div>
           {/* <div
             className="right"
@@ -546,7 +415,9 @@ function HomePage() {
           <div className={styles.ContainerContent2}>
             <div className={styles.Contentleft2}>
               <img src={elite} />
-              <h2>Sự thân thiện và môi trường phát triển </h2>
+              <h2 style={{ color: "#820014;" }}>
+                Sự thân thiện và môi trường phát triển{" "}
+              </h2>
               <p>Tự hào khi là một thành viên của chúng tôi.</p>
               <Link
                 to={ROUTES.USER.PITCH_ABOUT}
@@ -579,6 +450,7 @@ function HomePage() {
           </Carousel>
         </div> */}
       </div>
+      {/*   </Spin> */}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Form } from "antd";
 
 export const Wrapper = styled.div`
   max-width: 1250px;
@@ -23,14 +24,14 @@ export const BgTitle = styled.div`
   -webkit-text-decoration: none;
   text-decoration: none;
   /* font-size: 23px; */
-  margin-left: 6px;
+
   border: 1px solid #ddd;
   box-shadow: 4px 4px 0 rgb(0 0 0 / 10%);
   padding: 5px;
   width: 100%;
   text-align: center;
   background: url(https://labola.jp/labostatic/img/cover/banner_top.png);
-  height: 246px;
+  height: 300px;
   background-size: cover;
 `;
 export const Items = styled.div`
@@ -64,12 +65,12 @@ export const DetailsTh = styled.th`
   text-align: left;
 `;
 export const DetailsThs = styled.th`
-  width: 1%;
+  width: 25%;
   white-space: nowrap;
   padding: 17px 12px 12px 0;
   border-bottom: solid 1px #ddd;
   vertical-align: top;
-  font-size: 33px;
+  font-size: 60px;
   display: inline-flex;
   font-weight: bold;
   text-align: left;
@@ -87,7 +88,7 @@ export const DetailsTd = styled.td`
 `;
 export const Main = styled.div`
   display: flex;
-  width: 90%;
+  width: 100%;
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
@@ -95,7 +96,7 @@ export const Main = styled.div`
 
 export const Center = styled.div`
   float: right;
-  width: 100%;
+  width: 128%;
 `;
 /* left */
 export const Left = styled.div`
@@ -252,4 +253,30 @@ export const CartContainer = styled.div`
   h3 {
     margin-bottom: 0;
   }
+`;
+export const CustomForm = styled(Form)`
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #ccc;
+`;
+export const SearchBooking = styled.div`
+  display: flex;
+  position: relative;
+  bottom: 80px;
+  border: "1px solid #ddd";
+  justify-content: space-around;
+  align-items: center;
+  height: 140px;
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 50%) 0px 1px 1px;
+  border-radius: 5px;
+`;
+export const SearchItem = styled.div`
+  border-right: "1px solid #ddd";
+  text-align: center;
+  padding: "0px 10px";
+  display: " inherit";
+  flex-direction: column;
+  align-items: center;
+  width: 18%;
 `;

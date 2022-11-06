@@ -6,8 +6,10 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { ROUTES } from "../../constants/routers";
 import Breadcrumb from "../BreadCrumbs/BreadCrumbs";
 import Navigation from "../Navigation";
+import HeaderUser from "../Header/HeaderUser";
 import Footer from "../Footer";
 import Slider from "../Slider";
+import Profile from "../../page/profile";
 
 import * as S from "./styles";
 
@@ -25,11 +27,12 @@ const UserLayout = () => {
   } */
   return (
     <S.Container>
-      <Navigation />
-      {/*    <Breadcrumb /> */}
+      <HeaderUser />
 
       <S.Wrapper>
         <Outlet />
+        {/* <Profile />
+        </Outlet> */}
 
         <S.Line></S.Line>
       </S.Wrapper>

@@ -75,9 +75,33 @@ function* getUserInfoSaga(action) {
     });
   }
 }
+function* changePasswordSaga(action) {
+  try {
+    const { id, data, callback } = action.payload;
+    yield axios.post("http://localhost:4000/login", {
+      email: data.email,
+      password: data.oldPassword,
+    });
+    yield axios.patch(`http://localhost:4000/users/${id}`, {
+      password: data.newPassword,
+    });
+    yield callback.clearForm();
+    yield put({
+      type: SUCCESS(USER_ACTION.CHANGE_PASSWORD),
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(USER_ACTION.CHANGE_PASSWORD),
+      payload: {
+        error: "Lấy không được",
+      },
+    });
+  }
+}
 
 export default function* userSaga() {
   yield takeEvery(REQUEST(USER_ACTION.LOGIN), loginSaga);
   yield takeEvery(REQUEST(USER_ACTION.REGISTER), registerSaga);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_INFO), getUserInfoSaga);
+  yield takeEvery(REQUEST(USER_ACTION.CHANGE_PASSWORD), changePasswordSaga);
 }
