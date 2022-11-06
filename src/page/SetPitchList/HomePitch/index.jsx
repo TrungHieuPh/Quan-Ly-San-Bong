@@ -34,6 +34,8 @@ import * as S from "./styles";
 import pitchs from "../../../Images/pitchs.jpg";
 import calendar from "../../../Images/calendar.gif";
 import stadiumU from "../../../Images/stadiumU.gif";
+import locations from "../../../Images/locations.gif";
+import money from "../../../Images/money.gif";
 
 import { PITCH_LIST_LIMIT } from "../../../constants/paginations";
 import { ROUTES } from "../../../constants/routers";
@@ -284,6 +286,22 @@ function HomePitch() {
       </>
     );
   };
+  /* const handleSelectOption = useMemo(() => {
+    return pitch.data.map((item) => {
+      return (
+        <Radio.Group
+          key={item.times?.id}
+          name="option"
+          value={item.times?.id}
+          style={{ margin: 6 }}
+        >
+          {item.times.map((itemtime) => {
+            return <Radio.Button>{itemtime.name}</Radio.Button>;
+          })}
+        </Radio.Group>
+      );
+    });
+  },[]); */
 
   const renderPitchList = () => {
     return pitch.data.map((item) => {
@@ -340,25 +358,59 @@ function HomePitch() {
                 </Space>
                 <Row gutter={(16, 16)}>
                   <Col span={12}>
+                    {/*  <Radio.Group
+                      onChange={(e) => setSelectedOption(e.target.value)}
+                      defaultValue={selectedOption}
+                      style={{
+
+                        padding: 25,
+                        textAlign: "center",
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      {handleSelectOption}
+                    </Radio.Group> */}
+                    <h6>Khung giờ:</h6>
                     {item.times?.map((itemTime) => {
                       return (
-                        <Button
+                        <Tag
                           onChange={(e) => setSelectedOption(e.target.value)}
                           size="small"
                         >
                           {itemTime.name}
-                        </Button>
+                        </Tag>
                       );
                     })}
                   </Col>
                   <Col span={12}>
-                    <div style={{ fontSize: 20 }}>
-                      <FaMapMarkedAlt />
+                    <div style={{ fontSize: 20, display: "flex" }}>
+                      <img
+                        src={locations}
+                        style={{
+                          width: 30,
+                          height: 30,
+                        }}
+                        alt=""
+                      />
                       {item.address}
                     </div>
 
-                    <h2 style={{ fontSize: 30 }}>
-                      <FaDollarSign />
+                    <h2
+                      style={{
+                        fontSize: 30,
+                        display: "flex",
+                        alignItems: "center ",
+                      }}
+                    >
+                      <img
+                        src={money}
+                        style={{
+                          width: 40,
+                          height: 40,
+                        }}
+                        alt=""
+                      />
                       {parseFloat(item.price).toLocaleString()}đ
                     </h2>
                   </Col>

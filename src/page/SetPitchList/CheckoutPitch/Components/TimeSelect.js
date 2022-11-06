@@ -19,6 +19,7 @@ import {
   getOderListAction,
   getArbitrationAction,
   bookingPitchAction,
+  getComboAction,
 } from "../../../../redux/actions";
 import { ROUTES } from "../../../../constants/routers";
 const TimeSelect = ({ setStep }) => {
@@ -29,25 +30,21 @@ const TimeSelect = ({ setStep }) => {
   const { userInfo } = useSelector((state) => state.user);
   const { bookingList } = useSelector((state) => state.booking);
   const { arbitrationList } = useSelector((state) => state.arbitration);
+  const { comboList } = useSelector((state) => state.combo);
 
-  console.log(arbitrationList.data, "arbitrationList");
   const { id } = useParams();
 
   const [dateSelected, setDateSelected] = useState();
   const [selectedOption, setSelectedOption] = useState();
-  const [selectedOptionId, setSelectedOptionId] = useState("");
-  console.log(selectedOptionId, "selected");
-  /*   console.log(
-    selectedOptionId.data.map((item) => {
-      return <>{item.bonusPrice}</>;
-    }),
-    "selectedOptionId"
-  ); */
+  const [selectedOptionArbitration, setSelectedOptionArbitration] =
+    useState("");
+  const [selectedOptionCombo, setSelectedOptionCombo] = useState("");
 
   useEffect(() => {
     dispatch(getPitchDetailAction({ id: id }));
     dispatch(getOderListAction({ id: id }));
     dispatch(getArbitrationAction());
+    dispatch(getComboAction());
   }, [id]);
 
   function handleSelectedDate(value) {
@@ -72,12 +69,20 @@ const TimeSelect = ({ setStep }) => {
   };
 
   const selectedOptionData = arbitrationList.data?.find(
-    (item) => item.id === selectedOptionId
+    (item) => item.id === selectedOptionArbitration
   );
-  console.log(selectedOptionData, "abc");
   const bonusPrice = selectedOptionData ? selectedOptionData?.bonusPrice : 0;
   const productPrice =
     parseInt(pitchDetail.data.price || 0) + parseInt(bonusPrice);
+
+  const selectedOptionDataCombo = comboList.data?.find(
+    (item) => item.id === selectedOptionCombo
+  );
+  const bonusPriceCombo = selectedOptionDataCombo
+    ? selectedOptionDataCombo?.bonusPrice
+    : 0;
+  const productPriceCombo =
+    parseInt(productPrice || 0) + parseInt(bonusPriceCombo);
 
   const renderArbitrationList = useMemo(() => {
     return arbitrationList.data?.map((item) => {
@@ -93,6 +98,20 @@ const TimeSelect = ({ setStep }) => {
       );
     });
   }, [arbitrationList.data]);
+  const renderComboList = useMemo(() => {
+    return comboList.data?.map((item) => {
+      return (
+        <Radio.Button
+          key={item.id}
+          name="option"
+          value={item.id}
+          style={{ margin: 6 }}
+        >
+          {item.name}
+        </Radio.Button>
+      );
+    });
+  }, [comboList.data]);
 
   const renderPitchOrder = () => {
     let isDisabled = false;
@@ -218,10 +237,19 @@ const TimeSelect = ({ setStep }) => {
           <div style={{ margin: 16 }}>
             <h3>Bạn có muốn thêm trọng tài?</h3>
             <Radio.Group
-              onChange={(e) => setSelectedOptionId(e.target.value)}
-              defaultValue={selectedOptionId}
+              onChange={(e) => setSelectedOptionArbitration(e.target.value)}
+              defaultValue={selectedOptionArbitration}
             >
               {renderArbitrationList}
+            </Radio.Group>
+          </div>
+          <div style={{ margin: 16 }}>
+            <h3>Bạn có muốn thêm combo nước để tiết kiệm chi phí?</h3>
+            <Radio.Group
+              onChange={(e) => setSelectedOptionCombo(e.target.value)}
+              /* defaultValue={selectedOptionArbitration} */
+            >
+              {renderComboList}
             </Radio.Group>
           </div>
           <div
@@ -230,8 +258,22 @@ const TimeSelect = ({ setStep }) => {
               borderTop: "1px solid #ddd",
             }}
           >
-            <h5>Tổng tiền</h5>
-            {parseFloat(productPrice).toLocaleString()}
+            <h5> Hóa đơn</h5>
+            <div>
+              Giá gốc: {parseFloat(pitchDetail.data.price).toLocaleString()}
+            </div>
+            <div>
+              Thuê trọng tài:
+              {parseFloat(bonusPrice).toLocaleString()}{" "}
+            </div>
+            <div>
+              Combo Nước uống:
+              {parseFloat(bonusPriceCombo).toLocaleString()}{" "}
+            </div>
+            <div>
+              Tổng Cộng hóa đơn:
+              {parseFloat(productPriceCombo).toLocaleString()}
+            </div>
           </div>
         </div>
       </div>
