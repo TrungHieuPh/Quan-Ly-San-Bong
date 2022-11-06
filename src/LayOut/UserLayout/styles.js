@@ -7,6 +7,10 @@ export const Wrapper = styled.div`
 `;
 export const Container = styled.div`
   background-color: #e5e5e5;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+  background-image: url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=5000&q=200");
 `;
 export const Header = styled.div`
   color: #fff;

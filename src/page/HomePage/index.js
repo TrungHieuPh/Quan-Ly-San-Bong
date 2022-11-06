@@ -22,7 +22,6 @@ import Sliders from "react-slick";
 import { getPitchListAction } from "../../redux/actions/";
 import Slider from "../../LayOut/Slider";
 import styles from "../HomePage/style.module.css";
-import * as S from "./style";
 
 import stadium from "../../Images/stadiumU.gif";
 import elite from "../../Images/elite.png";
@@ -86,7 +85,7 @@ function HomePage() {
                 onClick={() => navigate(`/pitch/${item.id}/setPitch`)}
                 primary
                 style={{
-                  fontSize: 55,
+                  fontSize: 22,
                   fontWeight: 600,
                   padding: 2,
                   color: "#820014",
@@ -95,16 +94,44 @@ function HomePage() {
                 {item.name}
               </Button>
             </div>
-            <div style={{ padding: "2px 13px" }}>
-              <div
+            <div style={{ display: "flex", width: "100%" }}>
+              <img
+                key={item.images[0]?.id}
+                src={item.images[0]?.url}
+                alt={item.images[0]?.name}
                 style={{
-                  color: "#820014",
-                  display: "flex",
-                  alignItems: "center",
-                  fontSize: 50,
+                  height: "150px",
+                  margin: 16,
+                  borderRadius: 6,
+                  width: "100%",
                 }}
-              >
-                <FaDollarSign /> {parseFloat(item.price).toLocaleString()}
+              />
+
+              <div style={{ padding: 0 }}>
+                <div
+                  style={{
+                    color: "#820014",
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: 25,
+                  }}
+                >
+                  <FaDollarSign /> {parseFloat(item.price).toLocaleString()}
+                </div>
+                <h4>Địa chỉ: {item.address}</h4>
+                <div size="small">
+                  {item.times?.map((itemTimes) => {
+                    return (
+                      <Button
+                        type="dashed"
+                        danger
+                        style={{ fontSize: 12, margin: 1, borderRadius: 4 }}
+                      >
+                        {itemTimes.name}
+                      </Button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </Link>
@@ -121,6 +148,7 @@ function HomePage() {
   const DemoBox = (props) => (
     <p className={`height-${props.value}`}>{props.children}</p>
   );
+
   var settings1 = {
     dots: true,
     infinite: true,
@@ -180,6 +208,7 @@ function HomePage() {
               display: "flex",
               justifyContent: "space-between",
               color: "#820014",
+              width: "100%",
             }}
           >
             {renderPitch()}

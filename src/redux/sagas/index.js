@@ -6,6 +6,8 @@ import timeShootSaga from "./timeshoot.saga";
 import bookingPitchSaga from "./booking.saga";
 import favoriteSaga from "./favorite.sagas";
 import reviewSaga from "./review.saga";
+import locationSaga from "./location.saga";
+import arbitrationSaga from "./arbitration.saga";
 
 export default function* rootSaga() {
   yield fork(pitchSaga);
@@ -14,4 +16,6 @@ export default function* rootSaga() {
   yield fork(bookingPitchSaga);
   yield fork(favoriteSaga);
   yield fork(reviewSaga);
+  yield fork(locationSaga);
+  yield fork(arbitrationSaga);
 }

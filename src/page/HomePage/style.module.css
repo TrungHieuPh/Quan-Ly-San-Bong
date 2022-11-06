@@ -109,15 +109,8 @@ tbody > tr > td {
   border-bottom: 1px solid #ddd;
 }
 .items {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: space-around;
-  align-items: flex-start;
-  flex-direction: column;
-  font-size: 15px;
-  flex-direction: row-reverse;
   border: 1px solid #938888;
-  height: 220px;
+  height: auto;
   width: 30%;
   justify-content: space-evenly;
   transition: all 0.4s ease 0s;
@@ -129,13 +122,14 @@ tbody > tr > td {
   color: black;
   display: flex;
   align-items: stretch;
+  margin: 5px;
 }
-.itemTitle img {
+/* .itemTitle img {
   position: relative;
   top: 5px;
-  width: 80px !important;
+  width: 40px !important;
   height: 80px !important;
-}
+} */
 .itemTitle :hover {
   background-color: bluebird;
   text-decoration: underline 0.5px;
