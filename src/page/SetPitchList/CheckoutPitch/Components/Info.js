@@ -1,11 +1,12 @@
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Button, Card, Form, Select } from "antd";
+import { Row, Col, Button, Card, Form, Select, Input } from "antd";
 
 import {
   getCityListAction,
   getDistrictListAction,
   getWardListAction,
+  setCheckoutInfoAction,
 } from "../../../../redux/actions";
 
 const Info = ({ setStep }) => {
@@ -15,11 +16,47 @@ const Info = ({ setStep }) => {
   const { cityList, districtList, wardList } = useSelector(
     (state) => state.location
   );
-  console.log(cityList, districtList, wardList, "acc");
+
+  const { userInfo } = useSelector((state) => state.user);
+
+  const initialValue = {
+    name: userInfo.data.fullName || "",
+    email: userInfo.data.email || "",
+    sdt: "",
+    address: "",
+    cityCode: undefined,
+    districtCode: undefined,
+    wardCode: undefined,
+  };
 
   useEffect(() => {
     dispatch(getCityListAction());
   }, []);
+  useEffect(() => {
+    if (userInfo.data.id) infoForm.resetFields();
+  }, [userInfo.data]);
+
+  const handleSubmitInfoForm = (values) => {
+    const { cityCode, districtCode, wardCode, ...otherValues } = values;
+    const cityData = cityList.data.find((item) => item.code === cityCode);
+    const districtData = districtList.data.find(
+      (item) => item.code === districtCode
+    );
+
+    const wardData = wardList.data.find((item) => item.code === wardCode);
+    dispatch(
+      setCheckoutInfoAction({
+        ...otherValues,
+        cityId: cityData.id,
+        cityName: cityData.name,
+        districtId: districtData.id,
+        districtName: districtData.name,
+        wardId: wardData.id,
+        wardName: wardData.name,
+      })
+    );
+    setStep(2);
+  };
 
   const renderCityOptions = useMemo(() => {
     return cityList.data.map((item) => {
@@ -56,13 +93,57 @@ const Info = ({ setStep }) => {
       <div>Info</div>
       <Card size="small">
         <Form
+          layout="vertical"
           name="infoForm"
           form={infoForm}
-          onFinish={(values) => console.log(values)}
+          initialValues={initialValue}
+          onFinish={(values) => handleSubmitInfoForm(values)}
         >
           <Row gutter={[16, 16]}>
+            <Col span={24}>
+              <Form.Item
+                label="Họ và tên: "
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Hãy nhập tên người thuê sân!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item label="Email: " name="email">
+                <Input disabled />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                label="Số điện thoại"
+                name="sdt"
+                rules={[
+                  {
+                    required: true,
+                    message: "Hãy nhập số điện thoại !",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
             <Col span={8}>
-              <Form.Item label="City" name="cityCode">
+              <Form.Item
+                label="Thành phố / Tỉnh thành"
+                name="cityCode"
+                rules={[
+                  {
+                    required: true,
+                    message: "Hãy chọn Tỉnh Thành hoặc Thành Phố !",
+                  },
+                ]}
+              >
                 <Select
                   onChange={(value) => {
                     dispatch(getDistrictListAction({ cityCode: value }));
@@ -77,7 +158,16 @@ const Info = ({ setStep }) => {
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item label="District" name="districtCode">
+              <Form.Item
+                label="Quận / Huyện "
+                name="districtCode"
+                rules={[
+                  {
+                    required: true,
+                    message: "Hãy chọn Quận / Huyện !",
+                  },
+                ]}
+              >
                 <Select
                   onChange={(value) => {
                     dispatch(getWardListAction({ districtCode: value }));
@@ -92,7 +182,16 @@ const Info = ({ setStep }) => {
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item label="Ward" name="wardCode">
+              <Form.Item
+                label="Khu vực"
+                name="wardCode"
+                rules={[
+                  {
+                    required: true,
+                    message: "Hãy chọn khu vực của bạn!",
+                  },
+                ]}
+              >
                 <Select disabled={!infoForm.getFieldValue("districtCode")}>
                   {renderWardListOptions}
                 </Select>
@@ -102,9 +201,27 @@ const Info = ({ setStep }) => {
         </Form>
       </Card>
       <Row justify="space-between">
-        <Button onClick={() => setStep(0)}>Back</Button>
-        <Button type="primary" onClick={() => infoForm.submit()}>
-          Next
+        <Button
+          onClick={() => setStep(0)}
+          style={{
+            margin: 10,
+            float: "right",
+            boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
+          }}
+        >
+          Quay lại
+        </Button>
+        <Button
+          type="primary"
+          danger
+          onClick={() => infoForm.submit()}
+          style={{
+            margin: 10,
+            float: "right",
+            boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
+          }}
+        >
+          Tiếp tục
         </Button>
       </Row>
     </>

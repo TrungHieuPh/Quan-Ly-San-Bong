@@ -67,6 +67,7 @@ export const DetailsTh = styled.th`
 export const DetailsThs = styled.th`
   white-space: nowrap;
   vertical-align: top;
+  color: #f5222d;
   font-size: 60px;
   display: inline-flex;
   font-weight: bold;
@@ -330,4 +331,16 @@ export const WrapperReview = styled.div`
   box-shadow: rgb(0 0 0 / 50%) -1px 1px 3px;
   padding: 16px;
   border-radius: 10px;
+`;
+export const priceFrom = styled.div`
+  display: flex;
+  font-size: 35px;
+  padding: 0px 10px;
+  border: 5px solid whitesmoke;
+  background-color: white;
+  height: 125px;
+  width: 350px;
+  box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
+  align-items: flex-start;
+  flex-direction: column;
 `;

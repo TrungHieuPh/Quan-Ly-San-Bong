@@ -27,8 +27,8 @@ import { useState } from "react";
 import {
   getPitchListAction,
   getTimeShootListAction,
-  bookingPitchAction,
   getOderListAction,
+  getReviewListAction,
 } from "../../../redux/actions";
 import * as S from "./styles";
 import pitchs from "../../../Images/pitchs.jpg";
@@ -36,10 +36,11 @@ import calendar from "../../../Images/calendar.gif";
 import stadiumU from "../../../Images/stadiumU.gif";
 import locations from "../../../Images/locations.gif";
 import money from "../../../Images/money.gif";
+import flag from "../../../Images/flag.gif";
 
 import { PITCH_LIST_LIMIT } from "../../../constants/paginations";
 import { ROUTES } from "../../../constants/routers";
-import { FaCalendarPlus, FaDollarSign, FaMapMarkedAlt } from "react-icons/fa";
+import { FaCalendarPlus } from "react-icons/fa";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
 
@@ -51,7 +52,6 @@ function HomePitch() {
     timeShootId: [],
     dateSelected: undefined,
   });
-  console.log(filterParams);
 
   const [tabs, setTabs] = useState("1");
   const [open, setOpen] = useState(false);
@@ -64,6 +64,8 @@ function HomePitch() {
   const { pitch } = useSelector((state) => state.product);
   const { pitchDetail } = useSelector((state) => state.product);
   const { bookingList } = useSelector((state) => state.booking);
+  const { reviewList } = useSelector((state) => state.review);
+  console.log(reviewList, "reviewList");
 
   const { userInfo } = useSelector((state) => state.user);
   const { timeShootList } = useSelector((state) => state.timeShoot);
@@ -79,6 +81,7 @@ function HomePitch() {
     );
     dispatch(getTimeShootListAction());
     dispatch(getOderListAction({}));
+    dispatch(getReviewListAction());
   }, []);
 
   const handleFilter = (key, value) => {
@@ -181,6 +184,12 @@ function HomePitch() {
   };
 
   const day = new Date();
+  const dateTime =
+    day.setHours("23") +
+    ":" +
+    day.setMinutes("59") +
+    ":" +
+    day.setSeconds("59");
   day.setDate(day.getDate());
   const disabledDate = (current) => {
     return current && current.valueOf() < day;
@@ -209,8 +218,6 @@ function HomePitch() {
       });
     }
   }
-
-  const isDisabledButton = filterParams.dateSelected === null ? true : false;
 
   const handleCheckDateTimeOrder = (id) => {
     let isDisabled = false;
@@ -302,7 +309,10 @@ function HomePitch() {
       );
     });
   },[]); */
-
+  /*   const avengerRating = reviewList.data
+    .map((item) => item.rate)
+    .reduce((total, rate) => total + rate, 0);
+  const countAverageRating = avengerRating / reviewList.data.length || 0; */
   const renderPitchList = () => {
     return pitch.data.map((item) => {
       /*     if (filterParams.dateSelected !== undefined) { */
@@ -311,10 +321,12 @@ function HomePitch() {
           span={24}
           key={item.id}
           style={{
+            padding: "10px 5px 15px 5px",
             border: "1px solid white",
             margin: 16,
             backgroundColor: "white",
             boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+            borderRadius: 10,
           }}
         >
           <div
@@ -336,8 +348,9 @@ function HomePitch() {
                   src={item.images[0]?.url}
                   alt={item.images[0]?.name}
                   style={{
-                    width: "200px",
-                    height: "200px",
+                    width: "220px",
+                    height: "220px",
+                    objectFit: "cover",
                     margin: 16,
                     borderRadius: 6,
                   }}
@@ -350,27 +363,17 @@ function HomePitch() {
                   }}
                 >
                   <img
-                    src={stadiumU}
+                    src={flag}
                     alt=""
                     style={{ height: "50px", width: "50px" }}
                   />
-                  <h3 style={{ fontSize: 26 }}> {item.name}</h3>
+                  <h3 style={{ fontSize: 26, color: "#f5222d" }}>
+                    {" "}
+                    {item.name}
+                  </h3>
                 </Space>
                 <Row gutter={(16, 16)}>
                   <Col span={12}>
-                    {/*  <Radio.Group
-                      onChange={(e) => setSelectedOption(e.target.value)}
-                      defaultValue={selectedOption}
-                      style={{
-
-                        padding: 25,
-                        textAlign: "center",
-                        display: "flex",
-                        flexDirection: "column",
-                      }}
-                    >
-                      {handleSelectOption}
-                    </Radio.Group> */}
                     <h6>Khung giờ:</h6>
                     {item.times?.map((itemTime) => {
                       return (
@@ -384,7 +387,13 @@ function HomePitch() {
                     })}
                   </Col>
                   <Col span={12}>
-                    <div style={{ fontSize: 20, display: "flex" }}>
+                    <div
+                      style={{
+                        fontSize: 20,
+                        display: "flex",
+                        color: "#1890ff",
+                      }}
+                    >
                       <img
                         src={locations}
                         style={{
@@ -401,6 +410,7 @@ function HomePitch() {
                         fontSize: 30,
                         display: "flex",
                         alignItems: "center ",
+                        color: "#f5222d",
                       }}
                     >
                       <img
