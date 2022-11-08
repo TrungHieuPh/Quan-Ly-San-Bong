@@ -105,6 +105,7 @@ function HomePage() {
                 src={item.images[0]?.url}
                 alt={item.images[0]?.name}
                 style={{
+                  objectFit: "cover",
                   height: "150px",
                   margin: 16,
                   borderRadius: 6,
@@ -264,6 +265,7 @@ function HomePage() {
                           width: 410,
                           height: "auto",
                           margin: "15px 0px 15px 0px",
+                          objectFit: "cover",
                         }}
                         src={piture6}
                       />
@@ -277,6 +279,7 @@ function HomePage() {
                           width: 410,
                           height: "auto",
                           margin: "15px 0px 15px 0px",
+                          objectFit: "cover",
                         }}
                         src={piture7}
                       />
@@ -292,6 +295,7 @@ function HomePage() {
                           width: 385,
                           height: "auto",
                           margin: "15px 0px 0px 15px  ",
+                          objectFit: "cover",
                         }}
                         src={piture5}
                       />
@@ -307,6 +311,7 @@ function HomePage() {
                           width: 410,
                           height: "auto",
                           margin: "15px 0px 15px 0px",
+                          objectFit: "cover",
                         }}
                         src={soccer2}
                       />
@@ -320,6 +325,7 @@ function HomePage() {
                           width: 410,
                           height: "auto",
                           margin: "15px 0px 15px 0px",
+                          objectFit: "cover",
                         }}
                         src={soccer3}
                       />
@@ -335,6 +341,7 @@ function HomePage() {
                           width: 360,
                           height: "auto",
                           margin: "15px 0px 0px 24px  ",
+                          objectFit: "cover",
                         }}
                         src={imageHome}
                       />
@@ -350,6 +357,7 @@ function HomePage() {
                           width: 410,
                           height: "auto",
                           margin: "15px 0px 15px 15px",
+                          objectFit: "cover",
                         }}
                         src={imageright}
                       />
@@ -363,6 +371,7 @@ function HomePage() {
                           width: 410,
                           height: "auto",
                           margin: "15px 0px 15px 15px",
+                          objectFit: "cover",
                         }}
                         src={imageleft}
                       />
@@ -378,6 +387,7 @@ function HomePage() {
                           width: 348,
                           height: "auto",
                           margin: "15px 0px 0px 30px  ",
+                          objectFit: "cover",
                         }}
                         src={piture2}
                       />
@@ -393,6 +403,7 @@ function HomePage() {
                           width: 410,
                           height: "auto",
                           margin: "15px 0px 15px -15px",
+                          objectFit: "cover",
                         }}
                         src={piture3}
                       />
@@ -406,6 +417,7 @@ function HomePage() {
                           width: 410,
                           height: "auto",
                           margin: "15px 0px 15px -15px",
+                          objectFit: "cover",
                         }}
                         src={piture4}
                       />
@@ -421,6 +433,7 @@ function HomePage() {
                           width: 384,
                           height: "auto",
                           margin: "15px 0px 0px 10px  ",
+                          objectFit: "cover",
                         }}
                         src={piture1}
                       />

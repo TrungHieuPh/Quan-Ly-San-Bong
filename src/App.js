@@ -21,8 +21,8 @@ import Profile from "./page/profile";
 
 import LoginPage from "./page/LoginPage";
 import RegisterPage from "./page/RegisterPage";
-import ChangePassword from "./page/profile/component/ChangePassword";
-import { ROUTES } from "./constants/routers";
+/* import ChangePassword from "./page/profile/component/ChangePassword";
+ */ import { ROUTES } from "./constants/routers";
 import { getUserInfoAction } from "./redux/actions";
 import UserLayout from "./LayOut/UserLayout";
 import styles from "./App.module.css";
@@ -56,10 +56,10 @@ function App() {
           <Route path={ROUTES.USER.SET_PITCH} element={<SetPitch />} />
           <Route path={ROUTES.USER.CREATE_PITCH} element={<CreatePitch />} />
           <Route path={ROUTES.USER.PROFILE} element={<Profile />} />
-          <Route
+          {/*   <Route
             path={ROUTES.USER.CHANGE_PASSWORD}
             element={<ChangePassword />}
-          />
+          /> */}
           <Route
             path={ROUTES.USER.PRODUCT_LIST_PAGE}
             element={<PitchListPage />}

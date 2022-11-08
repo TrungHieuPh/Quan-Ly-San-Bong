@@ -1,15 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
-import { Button, Select, Calendar, Avatar, Radio, List } from "antd";
+import {
+  Button,
+  Select,
+  Calendar,
+  Avatar,
+  Radio,
+  List,
+  Form,
+  Item,
+} from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Navigate,
-  useNavigate,
-  useParams,
-  Link,
-  generatePath,
-} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import * as S from "../styles";
 import "antd-notifications-messages/lib/styles/style.css";
@@ -20,12 +23,14 @@ import {
   getArbitrationAction,
   bookingPitchAction,
   getComboAction,
+  setCheckoutTimeSelectAction,
 } from "../../../../redux/actions";
 import { ROUTES } from "../../../../constants/routers";
 const TimeSelect = ({ setStep }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pitchDetail } = useSelector((state) => state.product);
+  console.log(pitchDetail, "pitchDetail");
   const { pitch } = useSelector((state) => state.product);
   const { userInfo } = useSelector((state) => state.user);
   const { bookingList } = useSelector((state) => state.booking);
@@ -33,7 +38,7 @@ const TimeSelect = ({ setStep }) => {
   const { comboList } = useSelector((state) => state.combo);
 
   const { id } = useParams();
-
+  const [form] = Form.useForm();
   const [dateSelected, setDateSelected] = useState();
   const [selectedOption, setSelectedOption] = useState();
   const [selectedOptionArbitration, setSelectedOptionArbitration] =
@@ -51,21 +56,44 @@ const TimeSelect = ({ setStep }) => {
     setDateSelected(moment(value).format("DD/MM/YYYY"));
   }
 
-  const handleBookingPitch = (id) => {
-    if (!userInfo) {
-      alert("Bạn cần đăng nhập!");
-    } else {
-      dispatch(
-        bookingPitchAction({
-          pitchsId: id,
-          timeSelect: dateSelected,
-          timeId: selectedOption,
-          userId: userInfo.data.id,
-        })
-      );
-    }
-    alert("đặt sân thành công");
-    navigate(ROUTES.USER.PITCH_LIST);
+  const handleSubmitTimeSelectForm = (values) => {
+    /*   console.log(
+      {
+        ...values,
+        date: dateSelected,
+        totalPrice: parseInt(productPriceCombo),
+        pitchBonus: {
+          arbitrationSelect: selectedOptionArbitration
+            ? arbitrationList.data.find(
+                (item) => item.id === selectedOptionArbitration
+              )
+            : 0,
+          comboSelect: selectedOptionCombo
+            ? comboList.data.find((item) => item.id === selectedOptionCombo)
+            : 0,
+        },
+      },
+      "av "
+    ); */
+
+    dispatch(
+      setCheckoutTimeSelectAction({
+        ...values,
+        date: dateSelected,
+        totalPrice: parseInt(productPriceCombo),
+        pitchBonus: {
+          arbitrationSelect: selectedOptionArbitration
+            ? arbitrationList.data.find(
+                (item) => item.id === selectedOptionArbitration
+              )
+            : 0,
+          comboSelect: selectedOptionCombo
+            ? comboList.data.find((item) => item.id === selectedOptionCombo)
+            : 0,
+        },
+      })
+    );
+    setStep(1);
   };
 
   const selectedOptionData = arbitrationList.data?.find(
@@ -115,12 +143,12 @@ const TimeSelect = ({ setStep }) => {
 
   const renderPitchOrder = () => {
     let isDisabled = false;
-    if (pitch.dateSelected || dateSelected)
+    if (dateSelected)
       Array.from(bookingList.data).forEach((bookingItem, bookingIndex) => {
         if (
-          moment(pitch.dateSelected || dateSelected, "DD/MM/YYYY").valueOf() ===
-            moment(bookingItem.timeSelect, "DD/MM/YYYY").valueOf() &&
-          selectedOption === bookingItem.timeId
+          moment(dateSelected, "DD/MM/YYYY").valueOf() ===
+            moment(bookingItem.date, "DD/MM/YYYY").valueOf() &&
+          selectedOption === bookingItem.timeOption
         ) {
           isDisabled = true;
         }
@@ -134,17 +162,26 @@ const TimeSelect = ({ setStep }) => {
                 type="primary"
                 disabled
                 danger
-                style={{ fontSize: 20, height: 50 }}
+                style={{
+                  margin: 10,
+                  float: "right",
+                  boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
+                }}
               >
                 Tiếp tục
               </Button>
             )}
             {!isDisabled && (
               <Button
-                onClick={() => setStep(1)}
+                htmlType="submit"
+                onClick={() => form.submit()}
                 type="primary"
                 danger
-                style={{ fontSize: 30, height: 60 }}
+                style={{
+                  margin: 10,
+                  float: "right",
+                  boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
+                }}
               >
                 Tiếp tục
               </Button>
@@ -180,105 +217,133 @@ const TimeSelect = ({ setStep }) => {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          width: "100%",
-          margin: "55px 0px 0px  0px",
-          backgroundColor: "white",
-          boxShadow: "rgb(0 0 0 / 50%) 1px 0px 2px 2px",
-        }}
+      <Form
+        form={form}
+        onFinish={(values) => handleSubmitTimeSelectForm(values)}
       >
         <div
           style={{
-            width: "60%",
-            backgroundColor: "#425B76",
-            textAlign: "center",
-          }}
-        >
-          {/*   <Avatar size={100} icon={<UserOutlined />} /> */}
-          <h2 style={{ margin: 16 }}>Bạn ơi, chọn ngày ở đây !</h2>
-          <Calendar
-            disabledDate={disabledDate}
-            fullscreen={false}
-            onChange={(values) => handleSelectedDate(values)}
-            defaultValue={dateSelected}
-            style={{
-              margin: "30px  60px 60px",
-              backgroundColor: "#425B76",
-            }}
-          />
-        </div>
-
-        <div
-          style={{
-            width: "40%",
-            border: "1px solid white",
+            display: "flex",
+            justifyContent: "space-around",
+            width: "100%",
+            margin: "55px 0px 0px  0px",
             backgroundColor: "white",
+            boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
           }}
         >
-          <h2>Thời gian nào là thuận tiện nhất?</h2>
-
-          <Radio.Group
-            onChange={(e) => setSelectedOption(e.target.value)}
-            defaultValue={selectedOption}
-            style={{
-              /*    position: "relative",
-              top: 75, */
-              padding: 25,
-              textAlign: "center",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            {renderTimeShootOptions}
-          </Radio.Group>
-          <div style={{ margin: 16 }}>
-            <h3>Bạn có muốn thêm trọng tài?</h3>
-            <Radio.Group
-              onChange={(e) => setSelectedOptionArbitration(e.target.value)}
-              defaultValue={selectedOptionArbitration}
-            >
-              {renderArbitrationList}
-            </Radio.Group>
-          </div>
-          <div style={{ margin: 16 }}>
-            <h3>Bạn có muốn thêm combo nước để tiết kiệm chi phí?</h3>
-            <Radio.Group
-              onChange={(e) => setSelectedOptionCombo(e.target.value)}
-              /* defaultValue={selectedOptionArbitration} */
-            >
-              {renderComboList}
-            </Radio.Group>
-          </div>
           <div
             style={{
-              padding: "0px 10px",
-              borderTop: "1px solid #ddd",
+              width: "60%",
+              backgroundColor: "#425B76",
+              textAlign: "center",
+              boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
             }}
           >
-            <h5> Hóa đơn</h5>
-            <div>
-              Giá gốc: {parseFloat(pitchDetail.data.price).toLocaleString()}
+            {/*   <Avatar size={100} icon={<UserOutlined />} /> */}
+            <h2 style={{ margin: 16 }}>Bạn ơi, chọn ngày ở đây !</h2>
+            <Form.Item
+              label=""
+              name="date"
+              rules={[
+                {
+                  required: true,
+                  message: "vui lòng chọn ngày đặt sân !",
+                },
+              ]}
+              style={{
+                boxShadow: "rgb(0 0 0 / 50%) -1px 1px 7px",
+                margin: 16,
+                borderRadius: 10,
+              }}
+            >
+              <Calendar
+                disabledDate={disabledDate}
+                fullscreen={false}
+                onChange={(values) => handleSelectedDate(values)}
+                defaultValue={dateSelected}
+                style={{
+                  margin: "30px  60px 60px",
+                  backgroundColor: "#425B76",
+                }}
+              />
+            </Form.Item>
+          </div>
+
+          <div
+            style={{
+              width: "40%",
+              border: "1px solid white",
+              backgroundColor: "white",
+            }}
+          >
+            <h2>Thời gian nào là thuận tiện nhất?</h2>
+            <Form.Item
+              label=""
+              name="timeoption"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn khung giờ của sân",
+                },
+              ]}
+            >
+              <Radio.Group
+                onChange={(e) => setSelectedOption(e.target.value)}
+                defaultValue={selectedOption}
+                style={{
+                  /*    position: "relative",
+              top: 75, */
+                  padding: 25,
+                  textAlign: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                {renderTimeShootOptions}
+              </Radio.Group>
+            </Form.Item>
+            <div style={{ margin: 16 }}>
+              <h3>Bạn có muốn thêm trọng tài?</h3>
+              <Radio.Group
+                onChange={(e) => setSelectedOptionArbitration(e.target.value)}
+                defaultValue={selectedOptionArbitration}
+              >
+                {renderArbitrationList}
+              </Radio.Group>
             </div>
-            <div>
-              Thuê trọng tài:
-              {parseFloat(bonusPrice).toLocaleString()}{" "}
+            <div style={{ margin: 16 }}>
+              <h3>Bạn có muốn thêm combo nước để tiết kiệm chi phí?</h3>
+              <Radio.Group
+                onChange={(e) => setSelectedOptionCombo(e.target.value)}
+                /* defaultValue={selectedOptionArbitration} */
+              >
+                {renderComboList}
+              </Radio.Group>
             </div>
-            <div>
-              Combo Nước uống:
-              {parseFloat(bonusPriceCombo).toLocaleString()}{" "}
-            </div>
-            <div>
-              Tổng Cộng hóa đơn:
-              {parseFloat(productPriceCombo).toLocaleString()}
+            <div
+              style={{
+                padding: "0px 10px",
+                borderTop: "1px solid #ddd",
+              }}
+            >
+              <h5> Hóa đơn</h5>
+              <div>
+                Giá gốc: {parseFloat(pitchDetail.data.price).toLocaleString()}
+              </div>
+              <div>
+                Thuê trọng tài:
+                {parseFloat(bonusPrice).toLocaleString()}{" "}
+              </div>
+              <div>
+                Combo Nước uống:
+                {parseFloat(bonusPriceCombo).toLocaleString()}{" "}
+              </div>
+              <h3>{parseFloat(productPriceCombo).toLocaleString()}</h3>
             </div>
           </div>
         </div>
-      </div>
-      {renderPitchOrder()}
-      <Button onClick={() => handleBookingPitch(id)}>Đặt sân</Button>
+      </Form>
+      <div>{renderPitchOrder()}</div>
     </>
   );
 };

@@ -8,3 +8,4 @@ export * from "./review.constant";
 export * from "./location.constant";
 export * from "./arbitration.constant";
 export * from "./combo.constant";
+export * from "./checkout.constant";
