@@ -10,18 +10,10 @@ import {
   DatePicker,
   Form,
   Spin,
-  notification,
-  Radio,
-  Tabs,
-  PageHeader,
-  Drawer,
-  Content,
-  Statistic,
-  Descriptions,
 } from "antd";
 import React from "react";
-import { useEffect, useMemo, useForm } from "react";
-import { generatePath, Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { generatePath, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {
@@ -31,16 +23,14 @@ import {
   getReviewListAction,
 } from "../../../redux/actions";
 import * as S from "./styles";
-import pitchs from "../../../Images/pitchs.jpg";
 import calendar from "../../../Images/calendar.gif";
-import stadiumU from "../../../Images/stadiumU.gif";
 import locations from "../../../Images/locations.gif";
-import money from "../../../Images/money.gif";
+import cashback from "../../../Images/cashback.gif";
 import flag from "../../../Images/flag.gif";
 
 import { PITCH_LIST_LIMIT } from "../../../constants/paginations";
 import { ROUTES } from "../../../constants/routers";
-import { FaCalendarPlus } from "react-icons/fa";
+import { FaCalendarPlus, FaCommentDots, FaStar } from "react-icons/fa";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
 
@@ -53,11 +43,8 @@ function HomePitch() {
     dateSelected: undefined,
   });
 
-  const [tabs, setTabs] = useState("1");
-  const [open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState();
   console.log(selectedOption, "ssss");
-  const [ids, setIds] = useState();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -81,8 +68,8 @@ function HomePitch() {
     );
     dispatch(getTimeShootListAction());
     dispatch(getOderListAction({}));
-    dispatch(getReviewListAction());
-  }, []);
+    dispatch(getReviewListAction({ userId: userInfo.data.id }));
+  }, [userInfo.data]);
 
   const handleFilter = (key, value) => {
     setFilterParams({
@@ -219,7 +206,7 @@ function HomePitch() {
     }
   }
 
-  const handleCheckDateTimeOrder = (id) => {
+  /* const handleCheckDateTimeOrder = (id) => {
     let isDisabled = false;
     if (filterParams.dateSelected)
       Array.from(bookingList.data).forEach((bookingItem, bookingIndex) => {
@@ -255,8 +242,8 @@ function HomePitch() {
         )}
       </>
     );
-  };
-  const handleSetPitch = (id) => {
+  }; */
+  /*   const handleSetPitch = (id) => {
     let isDisabled = false;
     if (filterParams.dateSelected)
       Array.from(bookingList.data).forEach((bookingItem, bookingIndex) => {
@@ -283,7 +270,7 @@ function HomePitch() {
                 type="primary"
                 block
                 danger
-                /*  onClick={() => setIds(id)} */
+               
               >
                 Đặt Sân
               </Button>
@@ -292,7 +279,7 @@ function HomePitch() {
         )}
       </>
     );
-  };
+  }; */
   /* const handleSelectOption = useMemo(() => {
     return pitch.data.map((item) => {
       return (
@@ -323,16 +310,12 @@ function HomePitch() {
           style={{
             padding: "10px 5px 15px 5px",
             border: "1px solid white",
-            margin: 16,
             backgroundColor: "white",
             boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
             borderRadius: 10,
           }}
         >
-          <div
-          /*  style={{ width: "100%" }}
-            to={generatePath(ROUTES.USER.PITCH_DETAIL, { id: item.id })} */
-          >
+          <div>
             <div
               style={{
                 fontSize: "20px",
@@ -367,7 +350,7 @@ function HomePitch() {
                     alt=""
                     style={{ height: "50px", width: "50px" }}
                   />
-                  <h3 style={{ fontSize: 26, color: "#f5222d" }}>
+                  <h3 style={{ fontSize: 26, color: "#cf1322" }}>
                     {" "}
                     {item.name}
                   </h3>
@@ -380,6 +363,7 @@ function HomePitch() {
                         <Tag
                           onChange={(e) => setSelectedOption(e.target.value)}
                           size="small"
+                          style={{ color: "#cf1322" }}
                         >
                           {itemTime.name}
                         </Tag>
@@ -389,9 +373,47 @@ function HomePitch() {
                   <Col span={12}>
                     <div
                       style={{
+                        display: "flex",
+                        alignContent: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <h4 style={{ fontFamily: "cursive" }}>
+                        {item.reviews
+                          .map((item) => {
+                            return item.rate;
+                          })
+                          .reduce((total, rate) => total + rate, 0) /
+                          item.reviews.length || 0}
+                        <FaStar style={{ color: "#faad14" }} />
+                      </h4>
+                      &nbsp; || &nbsp;
+                      <h4 style={{ fontFamily: "cursive" }}>
+                        {item.reviews.length}
+                        <FaCommentDots style={{ color: "#8c8c8c" }} />
+                      </h4>
+                    </div>
+                    <S.ItemPrice>
+                      <h6 style={{ fontSize: 12, color: "#cf1322" }}>
+                        Giá chỉ từ
+                      </h6>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={cashback}
+                          style={{
+                            width: 40,
+                            height: 40,
+                          }}
+                          alt=""
+                        />
+                        {parseFloat(item.price).toLocaleString()}đ
+                      </div>
+                    </S.ItemPrice>
+                    <div
+                      style={{
                         fontSize: 20,
                         display: "flex",
-                        color: "#1890ff",
+                        color: "#cf1322",
                       }}
                     >
                       <img
@@ -404,25 +426,6 @@ function HomePitch() {
                       />
                       {item.address}
                     </div>
-
-                    <h2
-                      style={{
-                        fontSize: 30,
-                        display: "flex",
-                        alignItems: "center ",
-                        color: "#f5222d",
-                      }}
-                    >
-                      <img
-                        src={money}
-                        style={{
-                          width: 40,
-                          height: 40,
-                        }}
-                        alt=""
-                      />
-                      {parseFloat(item.price).toLocaleString()}đ
-                    </h2>
                   </Col>
                 </Row>
                 <Row>
@@ -456,125 +459,160 @@ function HomePitch() {
       );
     });
   };
+
   return (
     <S.Wrapper>
       <Spin spinning={pitch.loading}>
-        <Form form={registerForm} onFinish={() => setOpen(true)}>
-          <Card
-            size="small"
-            bordered="false"
-            style={{
-              marginTop: 16,
-              wordWrap: "break-word",
-              backgroundColor: "#E5E5E5",
-            }}
-          >
-            <S.TitleContent>
-              <FaCalendarPlus />
-              <h1>Thông tin Sân</h1>
-            </S.TitleContent>
-            <Row gutter={[16, 16]}>
-              <Col span={24}>
-                <Row
-                  gutter={[16, 16]}
-                  style={{
-                    border: "1px solid white",
-                    margin: 16,
-                    backgroundColor: " white",
-                    boxShadow: " rgb(0 0 0 / 50%) -1px 1px 8px",
-                    alignItems: " baseline",
-                    justifyContent: "space-between",
-                    alignContent: "center",
-                    borderRadius: 5,
-                  }}
-                >
-                  <Col
-                    span={6}
-                    style={{ display: "flex", justifyContent: "space-evenly" }}
-                  >
-                    <img
-                      src={calendar}
-                      alt=""
-                      style={{ height: "50px", width: "50px" }}
-                    />
-                    <h1>Ngày đặt sân:</h1>
-                  </Col>
-
-                  <Col span={16}>
-                    <div size="small" title="Ngày đặt sân ">
-                      <Form.Item
-                        label=""
-                        name="date"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Bạn chưa chọn ngày!",
-                          },
-                        ]}
-                      >
-                        <DatePicker
-                          bordered="true"
-                          disabledDate={disabledDate}
-                          style={{ fontSize: 30, width: "100%" }}
-                          onChange={(values) => handleSelectedDate(values)}
-                          initialValues={filterParams.dateSelected}
-                        />
-                      </Form.Item>
-                    </div>
-                  </Col>
-                </Row>
-              </Col>
-              <Row gutter={[16, 16]}></Row>
-              <Col span={24}>
-                <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-                  <Col span={6}>
-                    <Input
-                      placeholder="Nhập từ khóa tìm kiếm"
-                      onChange={(e) => handleFilter("keyword", e.target.value)}
-                      value={filterParams.keyword}
-                      prefix={<SearchOutlined />}
-                    />
-                    <Select
-                      style={{ width: "100%" }}
-                      placeholder="Sắp xếp theo"
-                      allowClear
-                      onChange={(value) => handleChangeSort(value)}
+        <Form form={registerForm}>
+          <Row gutter={[16, 16]}>
+            <Col span={24}>
+              <Card
+                size="small"
+                bordered="false"
+                style={{
+                  marginTop: 16,
+                  wordWrap: "break-word",
+                  backgroundColor: "#E5E5E5",
+                }}
+              >
+                <Row gutter={[16, 16]}>
+                  <Col>
+                    <S.TitleContent
+                      xs={{ span: 24, order: 1 }}
+                      /*   md={{ span: 24, order: 1 }} */
                     >
-                      <Select.Option value="asc">Giá tăng dần </Select.Option>
-                      <Select.Option value="desc">Giá giảm dần</Select.Option>
-                    </Select>
+                      <FaCalendarPlus />
+                      <h1>Thông tin Sân</h1>
+                    </S.TitleContent>
                   </Col>
 
-                  <Col span={16}>
-                    <Row style={{ marginBottom: 16 }}>
-                      {renderFilterTimeShoot()}
-                      {filterParams.keyword && (
-                        <Tag
-                          closable
-                          onClose={() => handleClearKeywordFilter()}
+                  <Col md={24} xs={{ span: 24, order: 1 }}>
+                    <Row
+                      gutter={[16, 16]}
+                      style={{
+                        border: "1px solid white",
+                        margin: 16,
+                        backgroundColor: " white",
+                        boxShadow: " rgb(0 0 0 / 50%) -1px 1px 8px",
+                        alignItems: " baseline",
+                        justifyContent: "space-between",
+                        alignContent: "center",
+                        borderRadius: 5,
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-evenly",
+                        }}
+                      >
+                        <img
+                          src={calendar}
+                          alt=""
+                          style={{ height: "50px", width: "50px" }}
+                        />
+                        <h1>Ngày đặt sân:</h1>
+                      </div>
+
+                      <Col span={24}>
+                        <Form.Item
+                          label=""
+                          name="date"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Bạn chưa chọn ngày!",
+                            },
+                          ]}
                         >
-                          Keyword: {filterParams.keyword}
-                        </Tag>
-                      )}
+                          <DatePicker
+                            bordered="true"
+                            disabledDate={disabledDate}
+                            style={{ fontSize: 30, width: "100%" }}
+                            onChange={(values) => handleSelectedDate(values)}
+                            initialValues={filterParams.dateSelected}
+                          />
+                        </Form.Item>
+                      </Col>
                     </Row>
+                  </Col>
 
-                    <Col>{renderPitchList()}</Col>
+                  <Col md={{ span: 24, order: 2 }} xs={{ span: 24, order: 1 }}>
+                    <Row
+                      gutter={[24, 24]}
+                      style={{ marginBottom: 16, padding: 16 }}
+                    >
+                      <Col Col md={6} xs={24}>
+                        <Input
+                          placeholder="Nhập từ khóa tìm kiếm"
+                          onChange={(e) =>
+                            handleFilter("keyword", e.target.value)
+                          }
+                          value={filterParams.keyword}
+                          prefix={<SearchOutlined />}
+                          style={{
+                            backgroundColor: "white",
+                            boxShadow: " rgb(0 0 0 / 50%) -1px 1px 8px",
+                            margin: "0px 0px 10px 0px",
+                          }}
+                        />
 
-                    {pitch.data.length !== pitch.meta.total && (
-                      <Row justify="center">
-                        <Button
-                          style={{ margin: 16 }}
-                          onClick={() => handleShowMore()}
+                        <Select
+                          placeholder="Sắp xếp theo"
+                          allowClear
+                          onChange={(value) => handleChangeSort(value)}
+                          style={{
+                            backgroundColor: "white",
+                            boxShadow: " rgb(0 0 0 / 50%) -1px 1px 8px",
+                            margin: "0px 0px 10px 0px",
+                            width: "100%",
+                            borderRadius: 5,
+                          }}
                         >
-                          Xem Thêm
-                        </Button>
-                      </Row>
-                    )}
+                          <Select.Option value="asc">
+                            Giá tăng dần{" "}
+                          </Select.Option>
+                          <Select.Option value="desc">
+                            Giá giảm dần
+                          </Select.Option>
+                        </Select>
+                      </Col>
+                      <Col md={16} xs={24}>
+                        <Row gutter={[16, 16]}>
+                          <div style={{ marginBottom: 16 }}>
+                            <Col>
+                              {renderFilterTimeShoot()}
+                              {filterParams.keyword && (
+                                <Tag
+                                  closable
+                                  onClose={() => handleClearKeywordFilter()}
+                                >
+                                  Keyword: {filterParams.keyword}
+                                </Tag>
+                              )}
+                            </Col>
+                          </div>
+                        </Row>
+
+                        <Row gutter={[16, 16]}>{renderPitchList()}</Row>
+
+                        {pitch.data.length !== pitch.meta.total && (
+                          <Row justify="center">
+                            <Button
+                              style={{ margin: 16 }}
+                              onClick={() => handleShowMore()}
+                            >
+                              Xem Thêm
+                            </Button>
+                          </Row>
+                        )}
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
-              </Col>
-            </Row>
-          </Card>
+              </Card>
+            </Col>
+          </Row>
         </Form>
       </Spin>
     </S.Wrapper>

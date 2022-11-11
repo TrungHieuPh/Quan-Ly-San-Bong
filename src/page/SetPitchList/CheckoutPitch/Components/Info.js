@@ -8,6 +8,7 @@ import {
   getWardListAction,
   setCheckoutInfoAction,
 } from "../../../../redux/actions";
+import * as S from "../styles";
 
 const Info = ({ setStep }) => {
   const [infoForm] = Form.useForm();
@@ -38,21 +39,22 @@ const Info = ({ setStep }) => {
 
   const handleSubmitInfoForm = (values) => {
     const { cityCode, districtCode, wardCode, ...otherValues } = values;
-    const cityData = cityList.data.find((item) => item.code === cityCode);
+    /* const cityData = cityList.data.find((item) => item.code === cityCode);
     const districtData = districtList.data.find(
       (item) => item.code === districtCode
     );
 
-    const wardData = wardList.data.find((item) => item.code === wardCode);
+    const wardData = wardList.data.find((item) => item.code === wardCode); */
+    console.log(values);
     dispatch(
       setCheckoutInfoAction({
         ...otherValues,
-        cityId: cityData.id,
+        /*    cityId: cityData.id,
         cityName: cityData.name,
         districtId: districtData.id,
         districtName: districtData.name,
         wardId: wardData.id,
-        wardName: wardData.name,
+        wardName: wardData.name, */
       })
     );
     setStep(2);
@@ -90,8 +92,17 @@ const Info = ({ setStep }) => {
 
   return (
     <>
-      <div>Info</div>
-      <Card size="small">
+      <S.ItemTitleInfo>Thông tin</S.ItemTitleInfo>
+      <Card
+        size="small"
+        style={{
+          boxShadow: " rgb(0 0 0 / 50%) -1px 1px 7px",
+          backgroundColor: "whitesmoke",
+          borderRadius: 5,
+          margin: 0,
+          padding: 10,
+        }}
+      >
         <Form
           layout="vertical"
           name="infoForm"
@@ -133,7 +144,7 @@ const Info = ({ setStep }) => {
                 <Input />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            {/* <Col span={8}>
               <Form.Item
                 label="Thành phố / Tỉnh thành"
                 name="cityCode"
@@ -196,7 +207,7 @@ const Info = ({ setStep }) => {
                   {renderWardListOptions}
                 </Select>
               </Form.Item>
-            </Col>
+            </Col> */}
           </Row>
         </Form>
       </Card>

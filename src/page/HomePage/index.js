@@ -1,18 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import {
-  Space,
-  Button,
-  Carousel,
-  DatePicker,
-  TimePicker,
-  Row,
-  Col,
-  Form,
-  Divider,
-  Layout,
-  Spin,
-  Tag,
-} from "antd";
+import { Button, Row, Col, Tag } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link, generatePath } from "react-router-dom";
 import { useEffect } from "react";
@@ -23,11 +10,13 @@ import Sliders from "react-slick";
 import { getPitchListAction } from "../../redux/actions/";
 import Slider from "../../LayOut/Slider";
 import styles from "../HomePage/style.module.css";
+import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 
-import stadium from "../../Images/stadiumU.gif";
+import soccerarea from "../../Images/soccerarea.gif";
 import click from "../../Images/click.gif";
 import locations from "../../Images/locations.gif";
-import growing from "../../Images/growing.gif";
+import yuan from "../../Images/yuan.gif";
+import stopwatch from "../../Images/stopwatch.gif";
 
 import elite from "../../Images/elite.png";
 import rating from "../../Images/rating.png";
@@ -77,103 +66,112 @@ function HomePage() {
     if (pitch.loading) return <div>Loading...</div>;
     return pitch.data.map((item, index) => {
       return (
-        <>
-          <Link
-            to={generatePath(ROUTES.USER.SET_PITCH, { id: item.id })}
-            className={styles.items}
-          >
-            <div className={styles.itemTitle}>
-              {/*   <span className={styles.new}>New</span> */}
-              <img src={stadium} style={{ width: 35, height: 35 }} />
-              <Button
-                type="link"
-                onClick={() => navigate(`/pitch/${item.id}/setPitch`)}
-                primary
-                style={{
-                  fontSize: 22,
-                  fontWeight: 600,
-                  padding: 2,
-                  color: "#820014",
-                }}
+        <Col
+          md={{ span: 7, flex: 1 }}
+          /*   sm={{ span: 18, flex: 1 }} */
+          xs={24}
+          key={item.id}
+          className={styles.items}
+        >
+          <Link to={generatePath(ROUTES.USER.SET_PITCH, { id: item.id })}>
+            <Row gutter={[16, 16]}>
+              <Col
+                md={{ span: 24, offset: 0 }}
+                xs={{ span: 20, offset: 6 }}
+                className={styles.itemTitle}
               >
-                {item.name}
-              </Button>
-            </div>
-            <div style={{ display: "flex", width: "100%" }}>
-              <img
-                key={item.images[0]?.id}
-                src={item.images[0]?.url}
-                alt={item.images[0]?.name}
-                style={{
-                  objectFit: "cover",
-                  height: "150px",
-                  margin: 16,
-                  borderRadius: 6,
-                  width: "100%",
-                }}
-              />
-
-              <div style={{ padding: 0 }}>
-                <div
+                {/*   <span className={styles.new}>New</span> */}
+                <img src={soccerarea} style={{ width: 35, height: 35 }} />
+                <Button
+                  type="link"
+                  onClick={() => navigate(`/pitch/${item.id}/setPitch`)}
+                  primary
                   style={{
+                    fontSize: 22,
+                    fontWeight: 600,
+                    padding: 2,
                     color: "#820014",
-                    display: "flex",
-                    alignItems: "center",
-                    fontSize: 25,
                   }}
                 >
+                  {item.name}
+                </Button>
+              </Col>
+              <Row style={{ /* display: "flex", */ width: "100%" }}>
+                <Col
+                  md={{ span: 12, offset: 0 }}
+                  xs={{ span: 8, order: 1, offset: 4 }}
+                >
                   <img
-                    src={growing}
+                    key={item.images[0]?.id}
+                    src={item.images[0]?.url}
+                    alt={item.images[0]?.name}
                     style={{
-                      width: 40,
-                      height: 40,
+                      objectFit: "cover",
+                      height: "150px",
+                      margin: 16,
+                      borderRadius: 6,
+                      width: "150px",
                     }}
-                    alt=""
                   />
-                  {parseFloat(item.price).toLocaleString()} đ
-                </div>
-                <div style={{ display: "flex" }}>
-                  <img
-                    src={locations}
-                    style={{
-                      width: 25,
-                      height: 25,
-                    }}
-                    alt=""
-                  />
-                  <h4>Địa chỉ: {item.address}</h4>
-                </div>
-                <div>
-                  <h5>khung giờ của sân:</h5>
-                  {item.times?.map((itemTimes) => {
-                    return (
-                      <Tag
-                        type="dashed"
-                        danger
-                        style={{ fontSize: 12, margin: 1, borderRadius: 4 }}
-                      >
-                        {itemTimes.name}
-                      </Tag>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
+                </Col>
+
+                <Col md={12} xs={{ span: 12, order: 1 }} style={{ padding: 0 }}>
+                  <div className={styles.itemPrice}>
+                    <img
+                      src={yuan}
+                      style={{
+                        width: 40,
+                        height: 40,
+                      }}
+                      alt=""
+                    />
+                    {parseFloat(item.price).toLocaleString()} đ
+                  </div>
+                  <div style={{ display: "flex" }}>
+                    <img
+                      src={locations}
+                      style={{
+                        width: 25,
+                        height: 25,
+                      }}
+                      alt=""
+                    />
+                    <h4>Địa chỉ: {item.address}</h4>
+                  </div>
+                  <div>
+                    <h5 style={{ display: "flex", alignItems: "center" }}>
+                      {" "}
+                      <img
+                        src={stopwatch}
+                        style={{
+                          width: 25,
+                          height: 25,
+                        }}
+                        alt=""
+                      />
+                      khung giờ của sân:
+                    </h5>
+                    {item.times?.map((itemTimes) => {
+                      return (
+                        <Tag
+                          type="dashed"
+                          danger
+                          style={{ fontSize: 12, margin: 1, borderRadius: 4 }}
+                        >
+                          {itemTimes.name}
+                        </Tag>
+                      );
+                    })}
+                  </div>
+                </Col>
+              </Row>
+            </Row>
           </Link>
-        </>
+        </Col>
       );
     });
   };
 
-  var settings1 = {
-    dots: true,
-    infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    pauseOnHover: true,
-  };
   const settings = {
     dots: false,
     infinite: true,
@@ -185,322 +183,142 @@ function HomePage() {
     cssEase: "linear",
   };
   return (
-    <div>
-      {/*  <Spin spinning={pitch.loading}> */}
-      <div style={{ position: "sticky", top: 100, zIndex: 1 }}>
-        <div className={styles.ButtonSetPitch}>
-          <Link to="/pitch">
-            <span style={{ color: "#fa541c" }}>Đặt Sân</span>
-            <img
-              src={click}
-              style={{
-                width: 35,
-                height: 35,
-              }}
-              alt=""
-            />
-          </Link>
-        </div>
-      </div>
-
-      <div className={styles.main}></div>
-      <div className="wrapper">
-        <div className={styles.wrapperNavigate}>{/*  <Navigate /> */}</div>
-        <div id="banner"></div>
-        <Slider />
-
-        <div className="container-wrapper1" style={{ width: "100%" }}>
-          <div className={styles.ContentContainer1}>
-            <div className={styles.contentWrapperButton}>
-              <Link>Điểm Đến</Link>
-            </div>
-            {/*  <div className={styles.contentWrapperButton}>
-              <Link>Thương Hiệu</Link>
-            </div> */}
-            <div className={styles.contentWrapperButton}>
-              <Link>Ưu Đãi</Link>
-            </div>
-            <div className={styles.contentWrapperButton}>
-              <Link>Giải Đấu</Link>
+    <Row gutter={[16, 16]}>
+      <Col xs={24}>
+        <Row gutter={[16, 16]}>
+          <div className={styles.WrapperButtonSetPitch}>
+            <div className={styles.ButtonSetPitch}>
+              <Col xs={{ span: 24 }}>
+                <Link to="/pitch">
+                  <span style={{ color: "#fa541c" }}>Đặt Sân</span>
+                  <img
+                    src={click}
+                    style={{
+                      width: 35,
+                      height: 35,
+                    }}
+                    alt=""
+                  />
+                </Link>
+              </Col>
             </div>
           </div>
-          <div></div>
-        </div>
-        <div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              color: "#820014",
-              width: "100%",
-            }}
-          >
-            {renderPitch()}
-          </div>
-          <Button
-            type="link"
-            style={{
-              margin: 24,
-              width: "100%",
-              color: "whitesmoke",
-              fontSize: 20,
-            }}
-            onClick={() => navigate(ROUTES.USER.PITCH_LIST)}
-          >
-            Xem Thêm
-          </Button>
-        </div>
-        {/*  */}
 
-        <div>
-          <>
-            <div>
-              <Sliders {...settings}>
-                <div style={{ textAlign: "center" }}>
-                  <Row>
-                    <Col span={4}>
-                      {" "}
-                      <img
-                        style={{
-                          width: 410,
-                          height: "auto",
-                          margin: "15px 0px 15px 0px",
-                          objectFit: "cover",
-                        }}
-                        src={piture6}
-                      />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col span={4}>
-                      {" "}
-                      <img
-                        style={{
-                          width: 410,
-                          height: "auto",
-                          margin: "15px 0px 15px 0px",
-                          objectFit: "cover",
-                        }}
-                        src={piture7}
-                      />
-                    </Col>
-                  </Row>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <Row>
-                    <Col span={4}>
-                      {" "}
-                      <img
-                        style={{
-                          width: 385,
-                          height: "auto",
-                          margin: "15px 0px 0px 15px  ",
-                          objectFit: "cover",
-                        }}
-                        src={piture5}
-                      />
-                    </Col>
-                  </Row>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <Row>
-                    <Col span={4}>
-                      {" "}
-                      <img
-                        style={{
-                          width: 410,
-                          height: "auto",
-                          margin: "15px 0px 15px 0px",
-                          objectFit: "cover",
-                        }}
-                        src={soccer2}
-                      />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col span={4}>
-                      {" "}
-                      <img
-                        style={{
-                          width: 410,
-                          height: "auto",
-                          margin: "15px 0px 15px 0px",
-                          objectFit: "cover",
-                        }}
-                        src={soccer3}
-                      />
-                    </Col>
-                  </Row>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <Row>
-                    <Col span={4}>
-                      {" "}
-                      <img
-                        style={{
-                          width: 360,
-                          height: "auto",
-                          margin: "15px 0px 0px 24px  ",
-                          objectFit: "cover",
-                        }}
-                        src={imageHome}
-                      />
-                    </Col>
-                  </Row>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <Row>
-                    <Col span={4}>
-                      {" "}
-                      <img
-                        style={{
-                          width: 410,
-                          height: "auto",
-                          margin: "15px 0px 15px 15px",
-                          objectFit: "cover",
-                        }}
-                        src={imageright}
-                      />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col span={4}>
-                      {" "}
-                      <img
-                        style={{
-                          width: 410,
-                          height: "auto",
-                          margin: "15px 0px 15px 15px",
-                          objectFit: "cover",
-                        }}
-                        src={imageleft}
-                      />
-                    </Col>
-                  </Row>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <Row>
-                    <Col span={4}>
-                      {" "}
-                      <img
-                        style={{
-                          width: 348,
-                          height: "auto",
-                          margin: "15px 0px 0px 30px  ",
-                          objectFit: "cover",
-                        }}
-                        src={piture2}
-                      />
-                    </Col>
-                  </Row>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <Row>
-                    <Col span={4}>
-                      {" "}
-                      <img
-                        style={{
-                          width: 410,
-                          height: "auto",
-                          margin: "15px 0px 15px -15px",
-                          objectFit: "cover",
-                        }}
-                        src={piture3}
-                      />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col span={4}>
-                      {" "}
-                      <img
-                        style={{
-                          width: 410,
-                          height: "auto",
-                          margin: "15px 0px 15px -15px",
-                          objectFit: "cover",
-                        }}
-                        src={piture4}
-                      />
-                    </Col>
-                  </Row>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <Row>
-                    <Col span={4}>
-                      {" "}
-                      <img
-                        style={{
-                          width: 384,
-                          height: "auto",
-                          margin: "15px 0px 0px 10px  ",
-                          objectFit: "cover",
-                        }}
-                        src={piture1}
-                      />
-                    </Col>
-                  </Row>
-                </div>
-              </Sliders>
-            </div>
-          </>
-        </div>
-
-        {/*  <Layout style={contentStyle}>
-          <Layout.Footer>Sider</Layout.Footer>
-          <Layout.Content>Content</Layout.Content>
-          <Layout.Footer>Footer</Layout.Footer>
-        </Layout>
-        <Layout style={contentStyle}>
-          <Layout.Footer>Sider</Layout.Footer>
-          <Layout.Content>Content</Layout.Content>
-          <Layout.Footer>Footer</Layout.Footer>
-        </Layout> */}
-        {/* Render san */}
-        <div className={styles.contentStyle}>
-          <div className="main" style={{ width: "100%" }}>
-            <div className={styles.contentCenter}>
-              {/*  <div className={styles.titlePitch}>
-                <FaCalendarDay
-                  style={{ color: "#183153", height: 50, width: 40 }}
-                />
-                <div className={styles.text}>Danh sách Sân</div>
-              </div> */}
-            </div>
-          </div>
-          {/* <div
-            className="right"
-            style={{ width: "35%", border: "10px solid black" }}
-          >
-           
-            <img src={banner} style={{ height: 350, width: 350 }} />
-          </div> */}
-        </div>
-        {/* Abou */}
-        <div className={styles.wrapperContent2}>
-          <div className={styles.ContainerContent2}>
-            <div className={styles.Contentleft2}>
-              <img src={elite} />
-              <h2 style={{ color: "whitesmoke" }}>
-                Sự thân thiện và môi trường phát triển{" "}
-              </h2>
-              <p style={{ color: "whitesmoke" }}>
-                Tự hào khi là một thành viên của chúng tôi.
-              </p>
-              <Link
-                to={ROUTES.USER.PITCH_ABOUT}
-                className={styles.defauBtn}
-                danger
-                type="primary"
+          <Col md={24} sm={24} xs={24}>
+            <Slider />
+          </Col>
+          <Col xs={24} md={24}>
+            <Row gutter={[16, 16]}>
+              <Col
+                md={{ span: 8, order: 2 }}
+                sm={{ span: 24, order: 2 }}
+                xs={{ span: 24, order: 1 }}
+                /* offset="24" */
               >
-                About
-              </Link>
-            </div>
-            <div className={styles.ContentRight2}>
-              <img src={rating} />
+                <div className={styles.contentWrapperButton}>
+                  <Link>Điểm Đến</Link>
+                </div>
+              </Col>
+              <Col md={{ span: 8, order: 2 }} xs={{ span: 24, order: 2 }}>
+                <div className={styles.contentWrapperButton}>
+                  <Link>Ưu Đãi</Link>
+                </div>
+              </Col>
+              <Col md={{ span: 8, order: 2 }} xs={{ span: 24, order: 3 }}>
+                <div className={styles.contentWrapperButton}>
+                  <Link>Giải Đấu</Link>
+                </div>
+              </Col>
+              {/*     </div> */}
+            </Row>
+          </Col>
+          <Col xs={24}>
+            <Row
+              gutter={[16, 24]}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                color: "#820014",
+                width: "100%",
+                marginTop: 50,
+              }}
+            >
+              {renderPitch()}
+            </Row>
+            <Row justify="center">
+              <Button
+                type="link"
+                style={{
+                  margin: "15px 0px 15px 0px",
+                  width: "100%",
+                  color: "whitesmoke",
+                  fontSize: 20,
+                }}
+                onClick={() => navigate(ROUTES.USER.PITCH_LIST)}
+              >
+                Xem Thêm
+              </Button>
+            </Row>
+            {/*  */}
+          </Col>
+
+          {/* Render san */}
+          <div className={styles.contentStyle}>
+            <div className="main" style={{ width: "100%" }}>
+              <div className={styles.contentCenter}></div>
             </div>
           </div>
-        </div>
-        {/*  <div className={styles.ItemWrapperCarousel}>
+          {/* Abou */}
+          <Row gutter={[16, 16]}>
+            <div className={styles.wrapperContent2}>
+              <div className={styles.ContainerContent2}>
+                <Row gutter={[24, 24]}>
+                  <Col md={{ span: 24, order: 2 }} xs={{ span: 24, order: 3 }}>
+                    {" "}
+                    <p style={{ color: "whitesmoke" }}>
+                      Tự hào khi là một thành viên của chúng tôi.
+                    </p>
+                  </Col>
+                  <Col md={{ span: 12, order: 4 }} xs={{ span: 20, order: 3 }}>
+                    <Link
+                      to={ROUTES.USER.PITCH_ABOUT}
+                      className={styles.defauBtn}
+                      danger
+                      type="primary"
+                    >
+                      About
+                    </Link>
+                  </Col>
+
+                  <div className={styles.Contentleft2} gutter={[16, 16]}>
+                    <Col
+                      md={{ span: 12, order: 1 }}
+                      xs={{ span: 20, order: 2 }}
+                    >
+                      <img src={elite} />
+                    </Col>
+                    <Col
+                      md={{ span: 12, order: 1 }}
+                      xs={{ span: 20, order: 2 }}
+                    >
+                      <h2 style={{ color: "whitesmoke" }}>
+                        Sự thân thiện và môi trường phát triển{" "}
+                      </h2>
+                    </Col>
+                  </div>
+                </Row>
+                <Row gutter={[16, 16]}>
+                  <Col md={{ span: 24, order: 4 }} xs={{ span: 16, order: 1 }}>
+                    <div className={styles.ContentRight2}>
+                      <img src={rating} />
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </div>
+          </Row>
+          <Col md={24} xs={24}></Col>
+          {/*  <div className={styles.ItemWrapperCarousel}>
           <Carousel autoplay effect={"scrollx"}>
             <div>
               <img ClassName={styles.ItemCarousel} src={soccer} />
@@ -516,9 +334,10 @@ function HomePage() {
             </div>
           </Carousel>
         </div> */}
-      </div>
-      {/*   </Spin> */}
-    </div>
+          {/*   </Spin> */}
+        </Row>
+      </Col>
+    </Row>
   );
 }
 export default HomePage;

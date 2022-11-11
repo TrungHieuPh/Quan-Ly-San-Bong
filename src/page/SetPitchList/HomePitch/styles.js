@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Col } from "antd";
 
 export const Wrapper = styled.div`
-  width: 1250px;
   margin: 0 auto;
   position: relative;
   min-height: calc(100vh - 310px);
@@ -23,7 +23,7 @@ export const TopWrapper = styled.div`
 export const ListWrapper = styled.div`
   margin-top: 16px;
 `;
-export const TitleContent = styled.div`
+export const TitleContent = styled(Col)`
   margin-top: 16px;
   display: flex;
   & > svg {
@@ -56,4 +56,16 @@ export const FilterContainer = styled.div`
   border-radius: 4px;
   border: 1px solid #d9d9d9;
   overflow: hidden;
+`;
+export const ItemPrice = styled.h2`
+  width: max-content;
+  font-size: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #cf1322;
+  box-shadow: rgb(0 0 0 / 50%) -1px 0px 3px;
+  background-color: whitesmoke;
+  border-radius: 3px;
+  padding: 5px;
 `;

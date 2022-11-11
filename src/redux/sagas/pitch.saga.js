@@ -8,7 +8,7 @@ function* getPitchListSaga(action) {
     const { params, more, dateSelected } = action.payload;
     const result = yield axios.get(`http://localhost:4000/pitchs`, {
       params: {
-        _embed: ["times", "images"],
+        _embed: ["times", "images", "favorites", "reviews"],
         _page: params.page,
         _limit: params.limit,
         ...(params.keyword && {
@@ -52,7 +52,7 @@ function* getPitchDetailSaga(action) {
     const { id } = action.payload;
     const result = yield axios.get(`http://localhost:4000/pitchs/${id}`, {
       params: {
-        _embed: ["times", "images", "favorites"],
+        _embed: ["times", "images", "favorites", "reviews"],
       },
     });
     yield put({
