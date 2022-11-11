@@ -10,3 +10,6 @@ export const getUserInfoAction = createAction(
 export const changePasswordAction = createAction(
   REQUEST(USER_ACTION.CHANGE_PASSWORD)
 );
+export const updateAddressUser = createAction(
+  REQUEST(USER_ACTION.UPDATE_ADDRESS_USER)
+);

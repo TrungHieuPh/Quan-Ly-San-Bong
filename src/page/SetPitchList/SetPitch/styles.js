@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { Form, Button } from "antd";
+import { Form, Button, Col, Row } from "antd";
 
 export const Wrapper = styled.div`
-  max-width: 1250px;
   margin: 0 auto;
   position: relative;
 `;
@@ -53,7 +52,7 @@ export const DetailsTr = styled.tr`
   line-height: 1.5;
   border-bottom: 0.5px solid #ddd;
 `;
-export const DetailsTh = styled.th`
+export const DetailsTh = styled.div`
   width: 1%;
   white-space: nowrap;
   padding: 17px 12px 12px 0;
@@ -64,7 +63,7 @@ export const DetailsTh = styled.th`
   font-weight: bold;
   text-align: left;
 `;
-export const DetailsThs = styled.th`
+export const DetailsThs = styled.div`
   white-space: nowrap;
   vertical-align: top;
   color: #f5222d;
@@ -336,11 +335,21 @@ export const priceFrom = styled.div`
   display: flex;
   font-size: 35px;
   padding: 0px 10px;
-  border: 5px solid whitesmoke;
-  background-color: white;
+  background-color: whitesmoke;
+  border-radius: 5px;
   height: 125px;
-  width: 350px;
-  box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
+  width: max-content;
+  box-shadow: rgb(0 0 0 / 60%) 0px 1px 10px;
   align-items: flex-start;
   flex-direction: column;
+`;
+export const ItemIconContent = styled.div`
+  display: flex;
+  align-items: center;
+`;
+export const ItemPrice = styled.h3`
+  width: max-content;
+  display: flex;
+  color: rgb(245, 34, 45);
+  font-weight: 700;
 `;

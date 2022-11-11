@@ -3,7 +3,6 @@ import axios from "axios";
 
 import {
   FAVORITE_ACTION,
-  PRODUCT_ACTION,
   REQUEST,
   SUCCESS,
   FAIL,
@@ -40,7 +39,6 @@ function* favoriteProductSaga(action) {
 function* unFavoriteProductSaga(action) {
   try {
     const { id, pitchId } = action.payload;
-    console.log(id, "productId");
     yield axios.delete(`http://localhost:4000/favorites/${id}`);
     yield put({
       type: SUCCESS(FAVORITE_ACTION.UN_FAVORITE_PITCH),
@@ -64,7 +62,11 @@ function* unFavoriteProductSaga(action) {
 
 function* getFavoriteListSaga(action) {
   try {
-    const result = yield axios.get("http://localhost:4000/favorites");
+    const result = yield axios.get("http://localhost:4000/favorites", {
+      params: {
+        _expand: ["user", "pitch"],
+      },
+    });
     yield put({
       type: SUCCESS(FAVORITE_ACTION.GET_FAVORITE_LIST),
       payload: {

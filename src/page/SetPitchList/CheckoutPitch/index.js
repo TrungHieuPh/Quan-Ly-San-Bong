@@ -37,7 +37,15 @@ const CheckoutPage = () => {
 
   return (
     <S.Wrapper>
-      <Steps current={step}>
+      <Steps
+        current={step}
+        style={{
+          boxShadow: "rgb(0 0 0 / 50%) 0px 0px 5px",
+          padding: "15px 20px 15px 20px",
+          backgroundColor: " whitesmoke",
+          borderRadius: 5,
+        }}
+      >
         <Steps.Step title="Chọn thời gian" />
         <Steps.Step title="Info" />
         <Steps.Step title="Payment" />

@@ -8,3 +8,9 @@ export const postReviewAction = createAction(
 export const getReviewListAction = createAction(
   REQUEST(REVIEW_ACTION.GET_REVIEW_LIST)
 );
+export const updateReviewAction = createAction(
+  REQUEST(REVIEW_ACTION.UPDATE_REVIEW)
+);
+export const deleteReviewAction = createAction(
+  REQUEST(REVIEW_ACTION.DELETE_REVIEW)
+);

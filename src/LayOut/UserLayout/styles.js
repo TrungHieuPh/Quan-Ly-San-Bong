@@ -1,15 +1,23 @@
 import styled, { css } from "styled-components";
 
 export const Wrapper = styled.div`
-  min-height: calc(100vh - 263px);
-  width: 1265px;
   margin: 0 auto;
+
+  max-width: 1325px;
+  width: 100%;
+  display: flex;
 `;
-export const Container = styled.div`
-  background-color: #e5e5e5;
+export const MainContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex: 1;
+  width: 100%;
+  /*  float: left;
+  transform: scale(1.5); */
   background-repeat: no-repeat;
   background-size: cover;
   object-fit: cover;
+  margin: 0 auto;
   background-image: url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=5000&q=200");
 `;
 export const Header = styled.div`

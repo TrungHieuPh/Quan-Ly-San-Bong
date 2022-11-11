@@ -4,7 +4,7 @@ import Slider from "../Slider";
 import { useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Space, Button, Dropdown, Menu, Spin } from "antd";
+import { Space, Button, Dropdown, Menu, Row, Col } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import video from "../../videobg.mp4";
 import { logoutAction } from "../../redux/actions/";
@@ -34,21 +34,24 @@ function HeaderUser() {
     <S.TopWrapper>
       {/*  <Spin spinning={userInfo.loading}> */}
       {/* <div style={{ width: "max-content" }}>Sự kiện</div> */}
+
       <div className="fixNav">
         <div>
           <div className="logo">
             <Link to="/">
-              <h2 className={styles.logo}>sport</h2>
+              <h6 className={styles.logo}>sport</h6>
             </Link>
           </div>
         </div>
       </div>
+
       <div>
         <Navigation />
       </div>
+
       {userInfo.data.fullName ? (
         <Dropdown
-          style={{ minWidth: 110 }}
+          /*  style={{ minWidth: 110 }} */
           overlay={
             <Menu>
               {userInfo.data.role === "admin" && (

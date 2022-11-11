@@ -1,14 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  Button,
-  Select,
-  Calendar,
-  Avatar,
-  Radio,
-  List,
-  Form,
-  Item,
-} from "antd";
+import { Button, Row, Calendar, Avatar, Radio, Col, Form, Item } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -21,14 +12,12 @@ import {
   getPitchDetailAction,
   getOderListAction,
   getArbitrationAction,
-  bookingPitchAction,
   getComboAction,
   setCheckoutTimeSelectAction,
 } from "../../../../redux/actions";
 import { ROUTES } from "../../../../constants/routers";
 const TimeSelect = ({ setStep }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { pitchDetail } = useSelector((state) => state.product);
   console.log(pitchDetail, "pitchDetail");
   const { pitch } = useSelector((state) => state.product);
@@ -57,7 +46,7 @@ const TimeSelect = ({ setStep }) => {
   }
 
   const handleSubmitTimeSelectForm = (values) => {
-    /*   console.log(
+    console.log(
       {
         ...values,
         date: dateSelected,
@@ -74,7 +63,7 @@ const TimeSelect = ({ setStep }) => {
         },
       },
       "av "
-    ); */
+    );
 
     dispatch(
       setCheckoutTimeSelectAction({
@@ -133,7 +122,7 @@ const TimeSelect = ({ setStep }) => {
           key={item.id}
           name="option"
           value={item.id}
-          style={{ margin: 6 }}
+          style={{ margin: 2, fontSize: 13 }}
         >
           {item.name}
         </Radio.Button>
@@ -195,7 +184,6 @@ const TimeSelect = ({ setStep }) => {
   const renderTimeShootOptions = useMemo(() => {
     return pitchDetail.data.times?.map((item, index) => {
       return (
-        /*  <Col span={24} > */
         <Radio.Button
           key={item.id}
           name="option"
@@ -204,7 +192,6 @@ const TimeSelect = ({ setStep }) => {
         >
           {item.name}
         </Radio.Button>
-        /*  </Col> */
       );
     });
   }, [pitchDetail.data]);
@@ -240,7 +227,7 @@ const TimeSelect = ({ setStep }) => {
             }}
           >
             {/*   <Avatar size={100} icon={<UserOutlined />} /> */}
-            <h2 style={{ margin: 16 }}>Bạn ơi, chọn ngày ở đây !</h2>
+            <S.ItemTitle>Bạn ơi, chọn ngày ở đây !</S.ItemTitle>
             <Form.Item
               label=""
               name="date"
@@ -263,19 +250,13 @@ const TimeSelect = ({ setStep }) => {
                 defaultValue={dateSelected}
                 style={{
                   margin: "30px  60px 60px",
-                  backgroundColor: "#425B76",
+                  backgroundColor: "white",
                 }}
               />
             </Form.Item>
           </div>
 
-          <div
-            style={{
-              width: "40%",
-              border: "1px solid white",
-              backgroundColor: "white",
-            }}
-          >
+          <S.WrapperLeft>
             <h2>Thời gian nào là thuận tiện nhất?</h2>
             <Form.Item
               label=""
@@ -296,13 +277,16 @@ const TimeSelect = ({ setStep }) => {
                   padding: 25,
                   textAlign: "center",
                   display: "flex",
-                  flexDirection: "column",
+                  flexdirection: "column",
+                  boxShadow: "rgb(0 0 0 / 50%) -1px 1px 7px",
+                  backgroundColor: "whitesmoke",
+                  borderRadius: 5,
                 }}
               >
                 {renderTimeShootOptions}
               </Radio.Group>
             </Form.Item>
-            <div style={{ margin: 16 }}>
+            <S.ItemArbitration>
               <h3>Bạn có muốn thêm trọng tài?</h3>
               <Radio.Group
                 onChange={(e) => setSelectedOptionArbitration(e.target.value)}
@@ -310,37 +294,35 @@ const TimeSelect = ({ setStep }) => {
               >
                 {renderArbitrationList}
               </Radio.Group>
-            </div>
-            <div style={{ margin: 16 }}>
+            </S.ItemArbitration>
+            <S.ItemCombo>
               <h3>Bạn có muốn thêm combo nước để tiết kiệm chi phí?</h3>
               <Radio.Group
+                style={{ display: "flex", width: "100%" }}
                 onChange={(e) => setSelectedOptionCombo(e.target.value)}
                 /* defaultValue={selectedOptionArbitration} */
               >
                 {renderComboList}
               </Radio.Group>
-            </div>
-            <div
-              style={{
-                padding: "0px 10px",
-                borderTop: "1px solid #ddd",
-              }}
-            >
-              <h5> Hóa đơn</h5>
-              <div>
+            </S.ItemCombo>
+            <S.ItemReceipt>
+              <h2 style={{ borderBottom: "1px solid black " }}> Hóa đơn</h2>
+              <h3>
                 Giá gốc: {parseFloat(pitchDetail.data.price).toLocaleString()}
-              </div>
-              <div>
+              </h3>
+              <h4>
                 Thuê trọng tài:
                 {parseFloat(bonusPrice).toLocaleString()}{" "}
-              </div>
-              <div>
+              </h4>
+              <h4>
                 Combo Nước uống:
                 {parseFloat(bonusPriceCombo).toLocaleString()}{" "}
-              </div>
-              <h3>{parseFloat(productPriceCombo).toLocaleString()}</h3>
-            </div>
-          </div>
+              </h4>
+              <h2 style={{ borderTop: "1px solid black" }}>
+                Tổng: {parseFloat(productPriceCombo).toLocaleString()}
+              </h2>
+            </S.ItemReceipt>
+          </S.WrapperLeft>
         </div>
       </Form>
       <div>{renderPitchOrder()}</div>

@@ -1,9 +1,28 @@
-import { notification } from "antd";
+import { notification, Modal } from "antd";
 import { takeEvery, put } from "redux-saga/effects";
 import axios from "axios";
 
 import { USER_ACTION, REQUEST, SUCCESS, FAIL } from "../constants";
+import { ROUTES } from "../../constants/routers";
+import moment from "moment";
 
+const countDown = () => {
+  let secondsToGo = 2;
+  const modal = Modal.success({
+    title: "Thay đổi mật khẩu thành công!",
+    content: `This modal will be destroyed after ${secondsToGo} second.`,
+  });
+  const timer = setInterval(() => {
+    secondsToGo -= 1;
+    modal.update({
+      content: `This modal will be destroyed after ${secondsToGo} second.`,
+    });
+  }, 1000);
+  setTimeout(() => {
+    clearInterval(timer);
+    modal.destroy();
+  }, secondsToGo * 1000);
+};
 function* loginSaga(action) {
   try {
     const { data, callback } = action.payload;
@@ -86,6 +105,30 @@ function* changePasswordSaga(action) {
       password: data.newPassword,
     });
     yield callback.clearForm();
+    countDown();
+    yield put({
+      type: SUCCESS(USER_ACTION.CHANGE_PASSWORD),
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(USER_ACTION.CHANGE_PASSWORD),
+      payload: {
+        error: "Lấy không được",
+      },
+    });
+  }
+}
+function* updateAddressUser(action) {
+  try {
+    const { id, callback, date, fullName, ...info } = action.payload;
+
+    yield axios.patch(`http://localhost:4000/users/${id}`, {
+      date: moment(date).format("DD/MM/YYYY"),
+      fullName: fullName,
+      info,
+    });
+    yield callback.clearForm();
+    countDown();
     yield put({
       type: SUCCESS(USER_ACTION.CHANGE_PASSWORD),
     });
@@ -104,4 +147,5 @@ export default function* userSaga() {
   yield takeEvery(REQUEST(USER_ACTION.REGISTER), registerSaga);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_INFO), getUserInfoSaga);
   yield takeEvery(REQUEST(USER_ACTION.CHANGE_PASSWORD), changePasswordSaga);
+  yield takeEvery(REQUEST(USER_ACTION.UPDATE_ADDRESS_USER), updateAddressUser);
 }

@@ -1,4 +1,6 @@
 import React from "react";
+import { Row, Col } from "antd";
+
 import { Outlet, Navigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -26,19 +28,16 @@ const UserLayout = () => {
     return <Navigate to={ROUTES.LOGIN} />;
   } */
   return (
-    <S.Container>
+    <>
       <HeaderUser />
-
-      <S.Wrapper>
-        <Outlet />
-        {/* <Profile />
-        </Outlet> */}
-
-        <S.Line></S.Line>
-      </S.Wrapper>
-
+      <S.MainContainer>
+        <S.Wrapper>
+          <Outlet />
+          <S.Line></S.Line>
+        </S.Wrapper>
+      </S.MainContainer>
       <Footer />
-    </S.Container>
+    </>
   );
 };
 

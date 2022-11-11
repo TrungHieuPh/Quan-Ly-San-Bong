@@ -54,3 +54,55 @@ export const Image = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
 `;
+
+export const ItemText = styled.h2`
+  display: flex;
+  align-items: center;
+`;
+export const WrapperContainer = styled.div`
+  box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
+  background-color: white;
+  height: max-content;
+  margin: 50px;
+`;
+export const ContentBottom = styled.div`
+  box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
+  background-color: whitesmoke;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 5px;
+`;
+export const ContentTop = styled.div`
+  box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
+  background-color: whitesmoke;
+  margin: 16px;
+  padding: 16px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 5px;
+`;
+export const ContentTopItem = styled.h1`
+  box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
+  background-color: whitesmoke;
+  margin: 16px;
+  padding: 16px;
+  text-align: center;
+  width: max-content;
+  text-align: center;
+  border-radius: 5px;
+  color: #1890ff;
+`;
+export const ContentTopTitle = styled.h1`
+  box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
+  background-color: whitesmoke;
+  margin: 0px 0px 10px -40px;
+  padding: 20px;
+  width: max-content;
+  text-align: center;
+  border-radius: 3px;
+  color: #1890ff;
+  position: relative;
+  bottom: 30px;
+`;
