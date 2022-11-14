@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { Button, Row, Col, Tag } from "antd";
+import { Button, Row, Col, Tag, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link, generatePath } from "react-router-dom";
 import { useEffect } from "react";
@@ -42,6 +42,7 @@ import {
   FaGripLinesVertical,
   FaCalendarDay,
   FaTag,
+  FaEye,
 } from "react-icons/fa";
 import { ROUTES } from "../../constants/routers";
 
@@ -77,7 +78,7 @@ function HomePage() {
             <Row gutter={[16, 16]}>
               <Col
                 md={{ span: 24, offset: 0 }}
-                xs={{ span: 20, offset: 6 }}
+                xs={{ span: 20, offset: 0 }}
                 className={styles.itemTitle}
               >
                 {/*   <span className={styles.new}>New</span> */}
@@ -173,15 +174,42 @@ function HomePage() {
   };
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 2000,
+    speed: 5000,
     autoplaySpeed: 2000,
     cssEase: "linear",
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
+
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24}>
@@ -233,35 +261,193 @@ function HomePage() {
             </Row>
           </Col>
           <Col xs={24}>
+            <h2 className={styles.titleView}>
+              {" "}
+              <FaEye style={{ color: "#1890ff" }} />
+              Xem nhanh
+            </h2>
+
             <Row
               gutter={[16, 24]}
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 color: "#820014",
-                width: "100%",
                 marginTop: 50,
               }}
             >
               {renderPitch()}
             </Row>
-            <Row justify="center">
-              <Button
-                type="link"
-                style={{
-                  margin: "15px 0px 15px 0px",
-                  width: "100%",
-                  color: "whitesmoke",
-                  fontSize: 20,
-                }}
-                onClick={() => navigate(ROUTES.USER.PITCH_LIST)}
-              >
-                Xem Thêm
-              </Button>
-            </Row>
-            {/*  */}
           </Col>
-
+          <Col span={24}>
+            <Row gutter={[16, 16]}>
+              <Col
+                md={{ span: 12, order: 1 }}
+                xs={{ span: 24, order: 1 }}
+                style={{
+                  color: "white",
+                  width: "100%",
+                  boxShadow: "rgb(0 0 0 / 60%) 0px 27px 47px",
+                  borderRadius: 8,
+                  padding: "20px 30px 10px 30px",
+                }}
+              >
+                <h2 className={styles.titleCombo}>Combo nước</h2>
+                <p className={styles.ContentCombo}>
+                  Ở đây chúng tôi có bao gồm 3 combo từ nhỏ đến lớn để người
+                  dùng lựa chọn tiết kiệm chi phí của đội. Mùa hè đã tới và cũng
+                  là lúc việc chơi bóng trở nên khó khăn hơn dưới cái nắng chói
+                  chang hay bầu không khí hầm hập của sân bóng cỏ nhân tạo. Cơ
+                  thể bạn chắc chắn sẽ mau chóng trở nên nóng nực và mệt mỏi vì
+                  thiếu nước. Tuy nhiên, bạn vẫn còn phân vân không biết thức
+                  uống nào thích hợp cho cơ thể khi đá bóng ? Hãy để chúng tôi
+                  đưa ra những lựa chọn để bạn có thể lựa chọn nước uống một
+                  cách hiệu quả và tiết kiệm nhất:
+                  <ul className={styles.ulCombo}>
+                    <li>
+                      Combo nước nhỏ: phù hợp với 5 người trở xuống với mức giá
+                      là 25.000{" "}
+                    </li>
+                    <li>
+                      Combo nước vừa: phù hợp từ 5 người đến 7 người với mức giá
+                      là 40.000{" "}
+                    </li>
+                    <li>
+                      Combo nước nhỏ: phù hợp với trên 7 người với mức giá là
+                      50.000{" "}
+                    </li>
+                  </ul>
+                </p>
+              </Col>
+              <Col
+                md={{ span: 12, order: 1 }}
+                xs={{ span: 24, order: 2 }}
+                style={{
+                  color: "white",
+                  width: "100%",
+                  boxShadow: "rgb(0 0 0 / 60%) 0px 27px 47px",
+                  borderRadius: 8,
+                  padding: "20px 30px 10px 30px",
+                }}
+              >
+                <h2 className={styles.titleCombo}>Trọng tài</h2>
+                <p className={styles.ContentCombo}>
+                  Trọng tài là người điều khiển một trận đấu trong bóng đá.
+                  Trọng tài có những nhiệm vụ thực thi luật bóng đá để điều
+                  khiển trận đấu đã được giao, là người đưa ra quyết định cuối
+                  cùng về một tình huống nào đó mà không thể thay đổi hay phản
+                  đối được. Một trọng tài (phải) đang giơ thẻ vàng cho một cầu
+                  thủ đã phạm lỗi và iải quyết các sự cố như: bóng vượt qua vạch
+                  giới hạn, bóng có vượt qua vạch vôi hay không. Sân chúng tôi
+                  có đội ngũ trọng tài vô cùng chất lượng cùng với sự tận tình
+                  và nhiệt huyết trong mỗi trận đầu hứa hẹn đem đến những trận
+                  đầu công bằng cho cả hai đội và hài lòng khán giả.
+                  <ul className={styles.ulCombo}>
+                    <li>Giá thuê trọng tài là 50.000 trên một trận đấu</li>
+                  </ul>
+                  <span style={{ color: "red", fontSize: 20 }}>*</span>Bạn cũng
+                  có thể không thê thêm trọng tài
+                </p>
+              </Col>
+            </Row>
+          </Col>
+          <Col>
+            <Sliders {...settings}>
+              <div>
+                <img
+                  style={{
+                    width: 410,
+                    height: "auto",
+                    margin: "15px 0px 15px 0px",
+                    objectFit: "cover",
+                  }}
+                  src={piture6}
+                />
+                <img
+                  style={{
+                    width: 410,
+                    height: "auto",
+                    margin: "15px 0px 15px 0px",
+                    objectFit: "cover",
+                  }}
+                  src={piture7}
+                />
+              </div>
+              <div>
+                <img
+                  style={{
+                    width: 374,
+                    height: "auto",
+                    margin: "15px 0px 0px 20px  ",
+                    objectFit: "cover",
+                  }}
+                  src={piture5}
+                />
+              </div>
+              <div>
+                <img
+                  style={{
+                    width: 410,
+                    height: "auto",
+                    margin: "15px 0px 15px 0px",
+                    objectFit: "cover",
+                  }}
+                  src={soccer2}
+                />
+                <img
+                  style={{
+                    width: 410,
+                    height: "auto",
+                    margin: "15px 0px 15px 0px",
+                    objectFit: "cover",
+                  }}
+                  src={soccer3}
+                />
+              </div>
+              <div>
+                <img
+                  style={{
+                    width: 350,
+                    height: "auto",
+                    margin: "15px 0px 0px 35px  ",
+                    objectFit: "cover",
+                  }}
+                  src={imageHome}
+                />
+              </div>
+              <div>
+                <img
+                  style={{
+                    width: 410,
+                    height: "auto",
+                    margin: "15px 0px 15px 15px",
+                    objectFit: "cover",
+                  }}
+                  src={imageright}
+                />
+                <img
+                  style={{
+                    width: 410,
+                    height: "auto",
+                    margin: "15px 0px 15px 15px",
+                    objectFit: "cover",
+                  }}
+                  src={piture4}
+                />
+              </div>
+              <div>
+                <img
+                  style={{
+                    width: 339,
+                    height: "auto",
+                    margin: "15px 0px 0px 43px  ",
+                    objectFit: "cover",
+                  }}
+                  src={piture2}
+                />
+              </div>
+            </Sliders>
+          </Col>
           {/* Render san */}
           <div className={styles.contentStyle}>
             <div className="main" style={{ width: "100%" }}>
@@ -318,22 +504,7 @@ function HomePage() {
             </div>
           </Row>
           <Col md={24} xs={24}></Col>
-          {/*  <div className={styles.ItemWrapperCarousel}>
-          <Carousel autoplay effect={"scrollx"}>
-            <div>
-              <img ClassName={styles.ItemCarousel} src={soccer} />
-            </div>
-            <div>
-              <h3 ClassName={styles.ItemCarousel}>2</h3>
-            </div>
-            <div>
-              <h3 ClassName={styles.ItemCarousel}>3</h3>
-            </div>
-            <div>
-              <h3 ClassName={styles.ItemCarousel}>4</h3>
-            </div>
-          </Carousel>
-        </div> */}
+
           {/*   </Spin> */}
         </Row>
       </Col>

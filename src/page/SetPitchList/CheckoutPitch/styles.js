@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { Form } from "antd";
+import { Form, Radio } from "antd";
 
 export const Wrapper = styled.div`
   padding: 50px 50px;
   background-color: white;
   border-radius: 5px;
+  width: 100%;
 `;
 
 export const ProductContent = styled.div`
@@ -21,7 +22,6 @@ export const CustomForm = styled(Form)`
 `;
 export const WrapperLeft = styled.div`
   padding: 10px;
-  width: 40%;
   border: 1px solid white;
   background-color: white;
 `;
@@ -54,6 +54,14 @@ export const ItemTitle = styled.h2`
   padding: 13px;
   width: max-content;
   display: inline-table;
+`;
+export const ItemTitleTimeSelect = styled.h2`
+  color: white;
+  padding: 10px;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+
+  font-weight: 500;
 `;
 export const ItemTitleInfo = styled.h2`
   font-size: 30px;
@@ -91,4 +99,16 @@ export const ItemImagePayment = styled.img`
   height: 35px;
   width: 80px;
   object-fit: cover;
+`;
+export const ItemRadioBank = styled(Radio)`
+  border: 1px solid rgb(204, 204, 204);
+  padding: 5px;
+  margin: 10px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 65px;
+  cursor: pointer;
+  width: max-content;
 `;

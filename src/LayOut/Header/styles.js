@@ -1,4 +1,6 @@
 import styled, { css } from "styled-components";
+import { FaBars } from "react-icons/fa";
+import { Button } from "antd";
 
 export const HeaderContainer = styled.header`
   display: flex;
@@ -59,13 +61,13 @@ export const TopWrapper = styled.div`
   align-items: center;
   padding: 0 24px;
   height: 56px;
-  background-color: #00474f;
   top: 0;
   width: 100%;
   position: sticky;
-  background-color: #00474f;
+  background-color: #e5e5e5;
   z-index: 10;
-  width: 100% & h2, & h4 {
+  width: 100%;
+  & > h2 & h4 {
     color: white;
   }
 `;
@@ -73,3 +75,62 @@ export const TopWrapper = styled.div`
 export const Logos = styled.h2`
   font-family: "font-sh-imogen-agnes";
 `;
+export const ContainerWrapper = styled.header`
+  width: 100%;
+  background-color: #00474f;
+  top: 0;
+  position: sticky;
+  z-index: 99;
+  /*  @media screen and (max-width: 768px) {
+  }
+  & .nav-btn {
+    padding: 5px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--textColor);
+    visibility: hidden;
+    opacity: 0;
+    font-size: 1.8rem;
+  } */
+`;
+/* export const Bars = styled(FaBars)`
+  display: none;
+  color: #fff;
+
+  @media screen and (max-width: 768px) {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, 75%);
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+`;
+export const ButtonNav = styled(Button)`
+  padding: 5px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--textColor);
+  visibility: hidden;
+  opacity: 0;
+  font-size: 1.8rem;
+  @media screen and (max-width: 768px) {
+    visibility: visible;
+    opacity: 1;
+  }
+`;
+export const responsive_nav = styled.div`
+  transform: none;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+  & .expanded {
+    display: block;
+  }
+`;
+ */

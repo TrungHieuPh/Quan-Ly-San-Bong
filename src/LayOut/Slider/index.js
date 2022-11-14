@@ -19,7 +19,7 @@ const Slider = () => {
             </div>
           </Col>
           <Col md={24} xs={24}>
-            <Row gutter={[12, 12]}>
+            <Row gutter={[16, 16]}>
               <Col md={24} xs={24}>
                 <h1 className={styles.Itemslogan}>
                   Ghi bàn trong bất kỳ trận đấu nào luôn là khoảnh khắc hạnh

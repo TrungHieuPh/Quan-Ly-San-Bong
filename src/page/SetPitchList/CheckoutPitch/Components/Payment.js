@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 
-import { Row, Button, Card, Radio, Col, Input, Form } from "antd";
+import { Row, Button, Card, Radio, Col, Input, Form, DatePicker } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { bookingPitchAction } from "../../../../redux/actions";
@@ -17,19 +17,19 @@ import VCB from "../../../../Images/bank/VCB.jpg";
 import viettinbank from "../../../../Images/bank/viettinbank.png";
 
 const Payment = ({ setStep }) => {
+  /*   const [selectBank, setSelectBank] = useState(); */
   const { checkoutInfo, CheckoutTimeSelect } = useSelector(
     (state) => state.checkout
   );
 
   const { id } = useParams();
-  console.log(id);
   const { userInfo } = useSelector((state) => state.user);
   const { pitchDetail } = useSelector((state) => state.product);
 
   const dispatch = useDispatch();
   const [paymentForm] = Form.useForm();
   const handleSubmitPaymentForm = (values) => {
-    /*   console.log(
+    /*  console.log(
       {
         ...values,
         ...checkoutInfo,
@@ -65,6 +65,7 @@ const Payment = ({ setStep }) => {
     );
     setStep(3);
   };
+
   return (
     <>
       <S.ItemTitlePayment>Payment</S.ItemTitlePayment>
@@ -138,6 +139,11 @@ const Payment = ({ setStep }) => {
                       required: true,
                       message: "Bạn chưa nhập nội dung.!",
                     },
+                    {
+                      pattern:
+                        /(^4[0-9]{12}(?:[0-9]{3})?$)|(^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$)|(3[47][0-9]{13})|(^3(?:0[0-5]|[68][0-9])[0-9]{11}$)|(^6(?:011|5[0-9]{2})[0-9]{12}$)|(^(?:2131|1800|35\d{3})\d{11}$)/,
+                      message: "Nhập số thẻ chưa đúng",
+                    },
                   ]}
                 >
                   <Input />
@@ -162,9 +168,14 @@ const Payment = ({ setStep }) => {
                       required: true,
                       message: "Bạn chưa nhập nội dung.!",
                     },
+                    /*   {
+                      pattern:
+                        /^(0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-([12]\d{3})/,
+                      message: "Nhập số thẻ chưa đúng",
+                    }, */
                   ]}
                 >
-                  <Input />
+                  <DatePicker />
                 </Form.Item>
                 <Form.Item
                   label="Mã bảo mật:"
@@ -206,7 +217,12 @@ const Payment = ({ setStep }) => {
                   rules={[
                     {
                       required: true,
-                      message: "Bạn chưa nhập nội dung.!",
+                      message: "Bạn chưa nhập nội dung thẻ!",
+                    },
+                    {
+                      pattern:
+                        /(^4[0-9]{12}(?:[0-9]{3})?$)|(^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$)|(3[47][0-9]{13})|(^3(?:0[0-5]|[68][0-9])[0-9]{11}$)|(^6(?:011|5[0-9]{2})[0-9]{12}$)|(^(?:2131|1800|35\d{3})\d{11}$)/,
+                      message: "Nhập số thẻ chưa đúng",
                     },
                   ]}
                 >
@@ -222,14 +238,18 @@ const Payment = ({ setStep }) => {
                     },
                   ]}
                 >
-                  <Radio.Group>
+                  <Radio.Group
+                  /*  onChange={(e) => setSelectBank(e.target.value)}
+                    defaultValue={selectBank} */
+                  >
                     <Row>
                       <Col span={8}>
-                        <Radio.Button
-                          value="vietcombank"
+                        <Radio
+                          value="VCB"
                           style={{
-                            border: " 1px dashed rgb(204, 204, 204)",
+                            border: " 1px solid rgb(204, 204, 204)",
                             padding: 5,
+                            margin: 10,
                             borderRadius: 3,
                             display: "flex",
                             alignItems: "center",
@@ -240,14 +260,15 @@ const Payment = ({ setStep }) => {
                           }}
                         >
                           <S.ItemImagePayment src={VCB} alt="" />
-                        </Radio.Button>
+                        </Radio>
                       </Col>
                       <Col span={8}>
-                        <Radio.Button
-                          value="viettinbank"
+                        <S.ItemRadioBank
+                          value="VTB"
                           style={{
-                            border: " 1px dashed rgb(204, 204, 204)",
+                            border: " 1px solid rgb(204, 204, 204)",
                             padding: 5,
+                            margin: 10,
                             borderRadius: 3,
                             display: "flex",
                             alignItems: "center",
@@ -260,13 +281,13 @@ const Payment = ({ setStep }) => {
                           <S.ItemImagePayment
                             src={viettinbank}
                           ></S.ItemImagePayment>
-                        </Radio.Button>
+                        </S.ItemRadioBank>
                       </Col>
                       <Col span={8}>
-                        <Radio.Button
+                        <S.ItemRadioBank
                           value="SCB"
                           style={{
-                            border: " 1px dashed rgb(204, 204, 204)",
+                            border: " 1px solid rgb(204, 204, 204)",
                             padding: 5,
                             borderRadius: 3,
                             display: "flex",
@@ -278,13 +299,13 @@ const Payment = ({ setStep }) => {
                           }}
                         >
                           <S.ItemImagePayment src={SCB}></S.ItemImagePayment>
-                        </Radio.Button>
+                        </S.ItemRadioBank>
                       </Col>
                       <Col span={8}>
-                        <Radio.Button
+                        <S.ItemRadioBank
                           value="BIDV"
                           style={{
-                            border: " 1px dashed rgb(204, 204, 204)",
+                            border: " 1px solid rgb(204, 204, 204)",
                             padding: 5,
                             borderRadius: 3,
                             display: "flex",
@@ -296,13 +317,13 @@ const Payment = ({ setStep }) => {
                           }}
                         >
                           <S.ItemImagePayment src={BIDV} />
-                        </Radio.Button>
+                        </S.ItemRadioBank>
                       </Col>
                       <Col span={8}>
-                        <Radio.Button
+                        <S.ItemRadioBank
                           value="SCB"
                           style={{
-                            border: " 1px dashed rgb(204, 204, 204)",
+                            border: " 1px solid rgb(204, 204, 204)",
                             padding: 5,
                             borderRadius: 3,
                             display: "flex",
@@ -314,13 +335,13 @@ const Payment = ({ setStep }) => {
                           }}
                         >
                           <S.ItemImagePayment src={SCB} />
-                        </Radio.Button>
+                        </S.ItemRadioBank>
                       </Col>
                       <Col span={8}>
-                        <Radio.Button
+                        <S.ItemRadioBank
                           value="DAB"
                           style={{
-                            border: " 1px dashed rgb(204, 204, 204)",
+                            border: " 1px solid rgb(204, 204, 204)",
                             padding: 5,
                             borderRadius: 3,
                             display: "flex",
@@ -332,13 +353,13 @@ const Payment = ({ setStep }) => {
                           }}
                         >
                           <S.ItemImagePayment src={DAB} />
-                        </Radio.Button>
+                        </S.ItemRadioBank>
                       </Col>
                       <Col span={8}>
-                        <Radio.Button
+                        <S.ItemRadioBank
                           value="ACB"
                           style={{
-                            border: " 1px dashed rgb(204, 204, 204)",
+                            border: " 1px solid rgb(204, 204, 204)",
                             padding: 5,
                             borderRadius: 3,
                             display: "flex",
@@ -350,13 +371,13 @@ const Payment = ({ setStep }) => {
                           }}
                         >
                           <S.ItemImagePayment src={ACB} />
-                        </Radio.Button>
+                        </S.ItemRadioBank>
                       </Col>
                       <Col span={8}>
-                        <Radio
+                        <S.ItemRadioBank
                           value="MB"
                           style={{
-                            border: " 1px dashed rgb(204, 204, 204)",
+                            border: " 1px solid rgb(204, 204, 204)",
                             padding: 5,
                             borderRadius: 3,
                             display: "flex",
@@ -368,13 +389,13 @@ const Payment = ({ setStep }) => {
                           }}
                         >
                           <S.ItemImagePayment src={MB} />
-                        </Radio>
+                        </S.ItemRadioBank>
                       </Col>
                       <Col span={8}>
-                        <Radio
+                        <S.ItemRadioBank
                           value="TCB"
                           style={{
-                            border: " 1px dashed rgb(204, 204, 204)",
+                            border: " 1px solid rgb(204, 204, 204)",
                             padding: 5,
                             borderRadius: 3,
                             display: "flex",
@@ -386,7 +407,7 @@ const Payment = ({ setStep }) => {
                           }}
                         >
                           <S.ItemImagePayment src={TCB} />
-                        </Radio>
+                        </S.ItemRadioBank>
                         <Form.Item
                           noStyle
                           shouldUpdate={(prevValues, currentValues) =>
@@ -425,6 +446,7 @@ const Payment = ({ setStep }) => {
                                       required: true,
                                       message: "Bạn chưa nhập nội dung.!",
                                     },
+                                    {},
                                   ]}
                                 >
                                   <Input />
@@ -484,9 +506,14 @@ const Payment = ({ setStep }) => {
                           name="cardnumber"
                           rules={[
                             {
+                              pattern:
+                                /(^4[0-9]{12}(?:[0-9]{3})?$)|(^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$)|(3[47][0-9]{13})|(^3(?:0[0-5]|[68][0-9])[0-9]{11}$)|(^6(?:011|5[0-9]{2})[0-9]{12}$)|(^(?:2131|1800|35\d{3})\d{11}$)/,
+                              message: "Nhập số thẻ từ 14 đến 16 số",
+                            },
+                            /*   {
                               required: true,
                               message: "Bạn chưa nhập nội dung.!",
-                            },
+                            }, */
                           ]}
                         >
                           <Input />
@@ -557,7 +584,7 @@ const Payment = ({ setStep }) => {
             boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
           }}
         >
-          Đặt sân !
+          Tiếp tục
         </Button>
       </Row>
     </>

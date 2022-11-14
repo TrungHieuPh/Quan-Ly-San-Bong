@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Input, Button } from "antd";
 import { useNavigate } from "react-router-dom";
+import slug from "slug";
 
 import { ROUTES } from "../../constants/routers";
 import { registerAction } from "../../redux/actions";
@@ -32,6 +33,7 @@ const RegisterPage = () => {
       registerAction({
         data: {
           fullName: values.fullName,
+          slug: slug(values.fullName),
           email: values.email,
           password: values.password,
           role: "user",

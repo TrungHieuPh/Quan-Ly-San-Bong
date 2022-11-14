@@ -29,11 +29,10 @@ const UserLayout = () => {
   } */
   return (
     <>
-      <HeaderUser />
       <S.MainContainer>
+        <HeaderUser />
         <S.Wrapper>
           <Outlet />
-          <S.Line></S.Line>
         </S.Wrapper>
       </S.MainContainer>
       <Footer />

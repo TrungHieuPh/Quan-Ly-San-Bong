@@ -64,6 +64,7 @@ export const WrapperContainer = styled.div`
   background-color: white;
   height: max-content;
   margin: 50px;
+  width: 100%;
 `;
 export const ContentBottom = styled.div`
   box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;

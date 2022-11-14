@@ -2,6 +2,7 @@ import { takeEvery, put } from "redux-saga/effects";
 import axios from "axios";
 
 import { REVIEW_ACTION, REQUEST, SUCCESS, FAIL } from "../constants";
+import { REVIEW_LIST_LIMIT } from "../../constants/paginations";
 
 function* getReviewListSaga(action) {
   try {
@@ -58,39 +59,22 @@ function* postReviewSaga(action) {
     });
   }
 }
-function* updateReviewSaga(action) {
-  try {
-    const { values, id } = action.payload;
-    const result = yield axios.patch(
-      `http://localhost:4000/reviews/${id}`,
-      values
-    );
-    yield put({
-      type: SUCCESS(REVIEW_ACTION.UPDATE_REVIEW),
-      payload: {
-        data: result.data,
-      },
-    });
-    yield put({ type: FAIL(REVIEW_ACTION.DELETE_REVIEW) });
-  } catch (e) {
-    yield put({
-      type: "UPDATE_PRODUCT_FAIL",
-      payload: {
-        error: "Đã có lỗi xảy ra!",
-      },
-    });
-  }
-}
 
 function* DeleteReviewSaga(action) {
   try {
     const { id } = action.payload;
     yield axios.delete(`http://localhost:4000/reviews/${id}`);
-    yield put({ type: "DELETE_PRODUCT_SUCCESS" });
-    yield put({ type: "GET_PRODUCT_LIST_REQUEST" });
+    yield put({ type: SUCCESS(REVIEW_ACTION.DELETE_REVIEW) });
+    yield put({
+      type: REQUEST(REVIEW_ACTION.GET_REVIEW_LIST),
+      payload: {
+        page: 1,
+        limit: REVIEW_LIST_LIMIT,
+      },
+    });
   } catch (e) {
     yield put({
-      type: "DELETE_PRODUCT_FAIL",
+      type: FAIL(REVIEW_ACTION.DELETE_REVIEW),
       payload: {
         error: "Đã có lỗi xảy ra!",
       },
@@ -101,6 +85,5 @@ function* DeleteReviewSaga(action) {
 export default function* reviewSaga() {
   yield takeEvery(REQUEST(REVIEW_ACTION.GET_REVIEW_LIST), getReviewListSaga);
   yield takeEvery(REQUEST(REVIEW_ACTION.POST_REVIEW), postReviewSaga);
-  yield takeEvery(REQUEST(REVIEW_ACTION.UPDATE_REVIEW), updateReviewSaga);
   yield takeEvery(REQUEST(REVIEW_ACTION.DELETE_REVIEW), DeleteReviewSaga);
 }

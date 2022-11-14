@@ -218,113 +218,129 @@ const TimeSelect = ({ setStep }) => {
             boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
           }}
         >
-          <div
-            style={{
-              width: "60%",
-              backgroundColor: "#425B76",
-              textAlign: "center",
-              boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
-            }}
-          >
-            {/*   <Avatar size={100} icon={<UserOutlined />} /> */}
-            <S.ItemTitle>Bạn ơi, chọn ngày ở đây !</S.ItemTitle>
-            <Form.Item
-              label=""
-              name="date"
-              rules={[
-                {
-                  required: true,
-                  message: "vui lòng chọn ngày đặt sân !",
-                },
-              ]}
-              style={{
-                boxShadow: "rgb(0 0 0 / 50%) -1px 1px 7px",
-                margin: 16,
-                borderRadius: 10,
-              }}
-            >
-              <Calendar
-                disabledDate={disabledDate}
-                fullscreen={false}
-                onChange={(values) => handleSelectedDate(values)}
-                defaultValue={dateSelected}
+          <Row gutter={[16, 16]}>
+            <Col md={{ span: 10, order: 1 }} xs={{ span: 24, order: 1 }}>
+              <div
                 style={{
-                  margin: "30px  60px 60px",
-                  backgroundColor: "white",
-                }}
-              />
-            </Form.Item>
-          </div>
-
-          <S.WrapperLeft>
-            <h2>Thời gian nào là thuận tiện nhất?</h2>
-            <Form.Item
-              label=""
-              name="timeoption"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng chọn khung giờ của sân",
-                },
-              ]}
-            >
-              <Radio.Group
-                onChange={(e) => setSelectedOption(e.target.value)}
-                defaultValue={selectedOption}
-                style={{
-                  /*    position: "relative",
-              top: 75, */
-                  padding: 25,
-                  textAlign: "center",
-                  display: "flex",
-                  flexdirection: "column",
-                  boxShadow: "rgb(0 0 0 / 50%) -1px 1px 7px",
-                  backgroundColor: "whitesmoke",
                   borderRadius: 5,
+                  paddingBottom: 100,
+                  backgroundColor: "#425B76",
+                  textAlign: "center",
+                  boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
                 }}
               >
-                {renderTimeShootOptions}
-              </Radio.Group>
-            </Form.Item>
-            <S.ItemArbitration>
-              <h3>Bạn có muốn thêm trọng tài?</h3>
-              <Radio.Group
-                onChange={(e) => setSelectedOptionArbitration(e.target.value)}
-                defaultValue={selectedOptionArbitration}
-              >
-                {renderArbitrationList}
-              </Radio.Group>
-            </S.ItemArbitration>
-            <S.ItemCombo>
-              <h3>Bạn có muốn thêm combo nước để tiết kiệm chi phí?</h3>
-              <Radio.Group
-                style={{ display: "flex", width: "100%" }}
-                onChange={(e) => setSelectedOptionCombo(e.target.value)}
-                /* defaultValue={selectedOptionArbitration} */
-              >
-                {renderComboList}
-              </Radio.Group>
-            </S.ItemCombo>
-            <S.ItemReceipt>
-              <h2 style={{ borderBottom: "1px solid black " }}> Hóa đơn</h2>
-              <h3>
-                Giá gốc: {parseFloat(pitchDetail.data.price).toLocaleString()}
-              </h3>
-              <h4>
-                Thuê trọng tài:
-                {parseFloat(bonusPrice).toLocaleString()}{" "}
-              </h4>
-              <h4>
-                Combo Nước uống:
-                {parseFloat(bonusPriceCombo).toLocaleString()}{" "}
-              </h4>
-              <h2 style={{ borderTop: "1px solid black" }}>
-                Tổng: {parseFloat(productPriceCombo).toLocaleString()}
-              </h2>
-            </S.ItemReceipt>
-          </S.WrapperLeft>
+                {/*   <Avatar size={100} icon={<UserOutlined />} /> */}
+                <S.ItemTitleTimeSelect>
+                  Bạn ơi, chọn ngày ở đây !
+                </S.ItemTitleTimeSelect>
+                <Form.Item
+                  label=""
+                  name="date"
+                  rules={[
+                    {
+                      required: true,
+                      message: "vui lòng chọn ngày đặt sân !",
+                    },
+                  ]}
+                  style={{
+                    boxShadow: "rgb(0 0 0 / 50%) -1px 1px 7px",
+                    margin: 16,
+                    borderRadius: 10,
+                  }}
+                >
+                  <Calendar
+                    disabledDate={disabledDate}
+                    fullscreen={false}
+                    onChange={(values) => handleSelectedDate(values)}
+                    defaultValue={dateSelected}
+                    style={{
+                      margin: "10px 10px 10px",
+                      backgroundColor: "white",
+                    }}
+                  />
+                </Form.Item>
+              </div>
+            </Col>
+            <Col md={{ span: 10, order: 1 }} xs={{ span: 24, order: 2 }}>
+              <S.WrapperLeft>
+                <h2>Thời gian nào là thuận tiện nhất?</h2>
+                <Form.Item
+                  label=""
+                  name="timeoption"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng chọn khung giờ của sân",
+                    },
+                  ]}
+                >
+                  <Radio.Group
+                    onChange={(e) => setSelectedOption(e.target.value)}
+                    defaultValue={selectedOption}
+                    style={{
+                      /*    position: "relative",
+              top: 75, */
+                      padding: 10,
+                      textAlign: "center",
+                      display: "flex",
+                      flexdirection: "column",
+                      boxShadow: "rgb(0 0 0 / 50%) -1px 1px 7px",
+                      backgroundColor: "whitesmoke",
+                      borderRadius: 5,
+                      flexDirection: "column",
+                    }}
+                  >
+                    {renderTimeShootOptions}
+                  </Radio.Group>
+                </Form.Item>
+                <S.ItemArbitration>
+                  <h3>Bạn có muốn thêm trọng tài?</h3>
+                  <Radio.Group
+                    onChange={(e) =>
+                      setSelectedOptionArbitration(e.target.value)
+                    }
+                    defaultValue={selectedOptionArbitration}
+                  >
+                    {renderArbitrationList}
+                  </Radio.Group>
+                </S.ItemArbitration>
+                <S.ItemCombo>
+                  <h3>Bạn có muốn thêm combo nước để tiết kiệm chi phí?</h3>
+                  <Radio.Group
+                    style={{ display: "flex", width: "100%" }}
+                    onChange={(e) => setSelectedOptionCombo(e.target.value)}
+                    /* defaultValue={selectedOptionArbitration} */
+                  >
+                    {renderComboList}
+                  </Radio.Group>
+                </S.ItemCombo>
+              </S.WrapperLeft>
+            </Col>
+            {/*  <div style={{ width: "20%" }}> */}
+            <Col md={{ span: 4, order: 1 }} xs={{ span: 24, order: 3 }}>
+              <S.ItemReceipt style={{ margin: 6 }}>
+                <h2 style={{ borderBottom: "1px solid black " }}> Hóa đơn</h2>
+                <h3>
+                  Giá gốc: {parseFloat(pitchDetail.data.price).toLocaleString()}
+                </h3>
+                <h4>
+                  Thuê trọng tài:
+                  {parseFloat(bonusPrice).toLocaleString()}{" "}
+                </h4>
+                <h4>
+                  Combo Nước uống:
+                  {parseFloat(bonusPriceCombo).toLocaleString()}{" "}
+                </h4>
+                <h2 style={{ borderTop: "1px solid black" }}>
+                  Tổng: {parseFloat(productPriceCombo).toLocaleString()}
+                </h2>
+              </S.ItemReceipt>
+            </Col>
+          </Row>
         </div>
+        {/*   </div> */}
       </Form>
+
       <div>{renderPitchOrder()}</div>
     </>
   );

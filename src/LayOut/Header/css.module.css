@@ -2,7 +2,11 @@
   font-family: myFirstFont;
   src: url("../../Images/SH\ Imogen\ Agnes.ttf");
 }
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .logo {
   font-family: myFirstFont;
   font-size: 70px;
@@ -26,3 +30,233 @@
   color: beige;
   font-family: Courier New;
 }
+
+.nav-btn {
+  display: none;
+}
+.header {
+  width: 100%;
+  height: 60px;
+  margin: 0 auto;
+}
+.containerNavigate {
+  /*   width: 1265px;
+ */
+  margin: 0 auto;
+  max-width: 1265px;
+}
+.navigation {
+  position: sticky;
+  height: 90px;
+  z-index: 5;
+  top: -1px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 0 12px rgb(0 0 0 / 10%);
+}
+.navigation::after {
+  transform: scale(3);
+  height: 100vh;
+  margin: 0;
+  display: grid;
+}
+.add-shadow {
+  box-shadow: 0 0 12px rgb(0 0 0 / 10%);
+}
+
+.fixNav,
+.moveNav {
+  width: 100%;
+  height: 42px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 30px 30px 0px 30px;
+}
+
+.nav {
+  height: 90px;
+  display: inline-block;
+}
+
+.nav li {
+  display: inline-block;
+  padding: 0 32px;
+}
+
+.nav .select {
+  padding: 0;
+  display: flex;
+  width: 100%;
+}
+.navBtn {
+  display: none;
+}
+.logoNav {
+  padding: 10px;
+}
+@media screen and (max-width: 1024px) {
+  .nav .select {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    position: fixed;
+    top: 55px;
+    right: -300px;
+    box-shadow: 0 40px 60px rgb(0 0 0);
+    height: 100vh;
+    background-color: beige;
+    width: 300px;
+    padding: 40px 0 0 10px;
+    transition: 0.3s ease-in-out;
+  }
+  .navBtn {
+    display: block;
+  }
+  .selectActive {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    position: fixed;
+    top: 55px;
+    right: 0px;
+    box-shadow: 0 40px 60px rgb(0 0 0);
+    height: 100vh;
+    background-color: beige;
+    width: 300px;
+    padding: 40px 0 0 10px;
+    transition: 0.3s ease-in-out;
+  }
+  .logoNav {
+    display: none;
+  }
+}
+
+.nav .select > li {
+  display: flex;
+  width: max-content;
+  justify-content: space-around;
+}
+.nav li a {
+  position: relative;
+  color: black;
+  text-decoration: none;
+  line-height: 38px;
+  padding: 12px 0;
+}
+
+/*Begin Hover header */
+
+.nav li a:hover,
+.nav .isActive {
+  color: #1890ff;
+  text-shadow: -2px 4px 3px rgb(0 0 0 / 50%);
+}
+
+/* #nav .is-active::after {
+  background: #1c6cc1;
+  height: 3px;
+  opacity: 1;
+  width: 100%;
+  left: 0;
+} */
+
+.nav li a:hover::after {
+  left: 0;
+  width: 100%;
+  opacity: 1;
+}
+
+.nav a::after {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  content: "";
+  background: #1c6cc1;
+  opacity: 0;
+  transition: all ease 0.3s;
+}
+
+a {
+  margin: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+.userNav {
+  display: flex;
+  align-items: baseline;
+  font-size: 15px;
+  color: #e84749;
+}
+
+.HeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  height: 56px;
+  background-color: #00474f;
+}
+.logo {
+  width: max-content;
+  height: 140px;
+  padding: 10px;
+  font-size: 50px;
+  margin: 0 auto;
+}
+.logo img {
+  width: 85px !important;
+  height: 85px !important;
+}
+.useNav {
+  display: flex;
+  align-items: baseline;
+  font-size: 15px;
+  color: #e84749;
+}
+
+/* @media screen and (max-width: 1024px) {
+  .nav-btn {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  header nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background-color: var(--mainColor);
+    transition: 1s;
+     transform: translateY(-100vh);
+  }
+
+  header .responsive_nav {
+    transform: none;
+  }
+
+  nav .nav-close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+  }
+
+  nav li {
+    font-size: 1.5rem;
+  }
+} */

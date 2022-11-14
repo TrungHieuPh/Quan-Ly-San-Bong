@@ -88,36 +88,6 @@ const reviewReducer = createReducer(initialState, {
     };
   },
 
-  [REQUEST(REVIEW_ACTION.UPDATE_REVIEW)]: (state, action) => {
-    return {
-      ...state,
-      updateReviewData: {
-        ...state.updateReviewData,
-        loading: true,
-        error: "",
-      },
-    };
-  },
-  [SUCCESS(REVIEW_ACTION.UPDATE_REVIEW)]: (state, action) => {
-    return {
-      ...state,
-      updateReviewData: {
-        ...state.updateReviewData,
-        loading: false,
-      },
-    };
-  },
-  [FAIL(REVIEW_ACTION.UPDATE_REVIEW)]: (state, action) => {
-    const { error } = action.payload;
-    return {
-      ...state,
-      updateReviewData: {
-        ...state.updateReviewData,
-        loading: false,
-        error: error,
-      },
-    };
-  },
   /*   [SUCCESS(REVIEW_ACTION.DELETE_REVIEW)]: (state, action) => {
     const { data } = action.payload;
     const newReviewList = [...state.reviewList.data];

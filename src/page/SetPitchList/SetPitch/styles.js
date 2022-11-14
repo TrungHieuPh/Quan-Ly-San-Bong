@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Form, Button, Col, Row } from "antd";
 
 export const Wrapper = styled.div`
+  width: 100%;
   margin: 0 auto;
   position: relative;
 `;
@@ -64,15 +65,14 @@ export const DetailsTh = styled.div`
   text-align: left;
 `;
 export const DetailsThs = styled.div`
-  white-space: nowrap;
+  width: 100%;
+  text-align: center;
   vertical-align: top;
   color: #f5222d;
-  font-size: 60px;
   display: inline-flex;
-  font-weight: bold;
-  text-align: left;
+  justify-content: center;
   padding: 25px 10px 40px 10px;
-  margin: 16px;
+  margin: 16px 0 0 0;
   background-color: whitesmoke;
   border-radius: 7px;
   box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
@@ -80,6 +80,12 @@ export const DetailsThs = styled.div`
   & img {
     height: 50px;
     width: 50px;
+  }
+  & div {
+    font-weight: bold;
+    text-align: left;
+    color: #f5222d;
+    font-size: 55px;
   }
 `;
 export const DetailsTd = styled.td`
@@ -99,7 +105,7 @@ export const Main = styled.div`
 
 export const Center = styled.div`
   float: right;
-  width: 110%;
+  width: 100%;
 `;
 /* left */
 export const Left = styled.div`
@@ -265,9 +271,10 @@ export const CustomForm = styled(Form)`
 export const ButtonSetPitch = styled(Button)`
   font-weight: 600;
   padding: 10px;
-  margin: 10px;
+  margin: 10px 0 0 0;
   height: max-content;
   border-radius: 5px;
+
   & > :hover {
     background-color: red;
   }
@@ -278,13 +285,13 @@ export const ButtonSetPitchHover = styled.div`
   } */
 `;
 export const SearchBooking = styled.div`
+  width: 100%;
   display: flex;
   position: relative;
   bottom: 20px;
   border: "1px solid #ddd";
   justify-content: space-around;
   align-items: center;
-  height: 140px;
   background-color: white;
   box-shadow: rgb(0 0 0 / 50%) 0px 1px 1px;
   border-radius: 5px;
@@ -299,12 +306,13 @@ export const SearchItem = styled.div`
   width: 18%;
 `;
 export const WrapperContent = styled.div`
+  width: 100%;
   border: 1px solid white;
   background-color: white;
   border-radius: 7px;
 `;
 export const ContentLeft = styled.div`
-  width: 65%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -315,9 +323,9 @@ export const ContentLeft = styled.div`
   box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
 `;
 export const ContentRight = styled.div`
+  width: 100%;
   background-color: whitesmoke;
   text-align: center;
-  width: 45%;
   padding: 16px;
   margin: 8px;
   box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
@@ -337,11 +345,11 @@ export const priceFrom = styled.div`
   padding: 0px 10px;
   background-color: whitesmoke;
   border-radius: 5px;
-  height: 125px;
   width: max-content;
   box-shadow: rgb(0 0 0 / 60%) 0px 1px 10px;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
+  border: 20px solid white;
 `;
 export const ItemIconContent = styled.div`
   display: flex;
@@ -352,4 +360,27 @@ export const ItemPrice = styled.h3`
   display: flex;
   color: rgb(245, 34, 45);
   font-weight: 700;
+  font-size: 32px;
+`;
+/* export const ButtonLike = styled(Button)`
+ display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 30px;
+    background-color: whitesmoke;
+    height: 100px;
+    box-shadow: rgb(0 0 0 / 60%) 0px 1px 7px;
+    border: 15px solid white;
+    border-radius: 5px;
+`; */
+export const TotalRating = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 16px;
+  font-size: 30px;
+  border: 15px solid white;
+  background-color: whitesmoke;
+  box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
+  border-radius: 5px;
 `;

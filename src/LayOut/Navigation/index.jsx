@@ -1,21 +1,46 @@
-import { useEffect } from "react";
-import { useNavigate, Navigate, useLocation, Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Space, Button, Dropdown, Menu, Row, Col } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Row, Col } from "antd";
+import { getTeamListAction } from "../../redux/actions";
 
 import styles from "./styles.module.css";
-import { logoutAction } from "../../redux/actions/";
 import { ROUTES } from "../../constants/routers";
 
-import goal from "../../Images/goal.png";
 import award from "../../Images/award.gif";
 
 const Navigation = () => {
-  const { userInfo } = useSelector((state) => state.user);
+  const navRef = useRef();
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { teamList } = useSelector((state) => state.team);
+  console.log(teamList.data, "hieu");
+
+  useEffect(() => {
+    dispatch(getTeamListAction());
+  }, []);
+
+  const showNavbar = () => {
+    navRef.current.classList.toggle("responsive_nav");
+  };
+  /*  const renderFilterTeam = () => { */
+  /*   return filterParams.teamId.map((filterItem) => { */
+  /*       const teamData = teamList.data.find(
+            (teamItem) => teamItem.id === filterItem
+          );
+          console.log(teamData, "aaaa");
+          if (!teamData) return null;
+          return (
+            <Tag
+              key={filterItem}
+              closable
+              onClose={() => handleClearTeamFilter(filterItem)}
+            >
+              {teamData.name}
+            </Tag>
+          );
+        });
+      }; */
 
   return (
     <div className="containerNavigate">
@@ -38,6 +63,24 @@ const Navigation = () => {
                       Đặt Sân
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      className={styles.isActive}
+                      to={ROUTES.USER.PITCH_LIST}
+                      /*   to={( teamList.data.find((teamItem) => teamItem.id === 1) &&
+                          dispatch(
+                            getPitchListAction({
+                              params: {
+                                teamId: 1,
+                                page: 1,
+                                limit: PITCH_LIST_LIMIT,
+                              },
+                            })
+                          )))} */
+                    >
+                      Sân 5
+                    </Link>
+                  </li>
                 </li>
                 <div className="logo">
                   <Link to="/">
@@ -50,9 +93,10 @@ const Navigation = () => {
                       className={styles.isActive}
                       to={ROUTES.USER.PITCH_HISTORY}
                     >
-                      Lịch Sử
+                      Sân 7
                     </Link>
                   </li>
+
                   <li>
                     <Link
                       className={styles.isActive}
@@ -70,4 +114,5 @@ const Navigation = () => {
     </div>
   );
 };
+
 export default Navigation;

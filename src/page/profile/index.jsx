@@ -319,6 +319,7 @@ const Profile = () => {
         },
       })
     );
+    window.location.reload();
   };
 
   const tableColumns = [

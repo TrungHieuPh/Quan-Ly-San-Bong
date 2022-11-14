@@ -8,3 +8,4 @@ export * from "./location.action";
 export * from "./arbitration.action";
 export * from "./combo.action";
 export * from "./checkout.action";
+export * from "./team.action";

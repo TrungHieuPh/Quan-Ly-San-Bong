@@ -10,10 +10,11 @@ import {
   DatePicker,
   Form,
   Spin,
+  Checkbox,
 } from "antd";
 import React from "react";
 import { useEffect } from "react";
-import { generatePath, useNavigate } from "react-router-dom";
+import { generatePath, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {
@@ -21,6 +22,7 @@ import {
   getTimeShootListAction,
   getOderListAction,
   getReviewListAction,
+  getTeamListAction,
 } from "../../../redux/actions";
 import * as S from "./styles";
 import calendar from "../../../Images/calendar.gif";
@@ -36,27 +38,29 @@ import moment from "moment";
 
 function HomePitch() {
   const [filterParams, setFilterParams] = useState({
+    teamId: [],
     keyword: "",
     price: [0, 10000000],
     sortFilter: "",
     timeShootId: [],
     dateSelected: undefined,
   });
+  console.log(filterParams, "asc");
 
   const [selectedOption, setSelectedOption] = useState();
-  console.log(selectedOption, "ssss");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pitch } = useSelector((state) => state.product);
-  const { pitchDetail } = useSelector((state) => state.product);
+  const { teamList } = useSelector((state) => state.team);
   const { bookingList } = useSelector((state) => state.booking);
   const { reviewList } = useSelector((state) => state.review);
-  console.log(reviewList, "reviewList");
 
   const { userInfo } = useSelector((state) => state.user);
   const { timeShootList } = useSelector((state) => state.timeShoot);
+
   const [registerForm] = Form.useForm();
+
   useEffect(() => {
     dispatch(
       getPitchListAction({
@@ -69,6 +73,7 @@ function HomePitch() {
     dispatch(getTimeShootListAction());
     dispatch(getOderListAction({}));
     dispatch(getReviewListAction({ userId: userInfo.data.id }));
+    dispatch(getTeamListAction());
   }, [userInfo.data]);
 
   const handleFilter = (key, value) => {
@@ -88,35 +93,6 @@ function HomePitch() {
     );
   };
 
-  const handleShowMore = () => {
-    dispatch(
-      getPitchListAction({
-        params: {
-          ...filterParams,
-          page: pitch.meta.page + 1,
-          limit: PITCH_LIST_LIMIT,
-        },
-        more: true,
-      })
-    );
-  };
-
-  const handleClearKeywordFilter = () => {
-    setFilterParams({
-      ...filterParams,
-      keyword: "",
-    });
-    dispatch(
-      getPitchListAction({
-        params: {
-          ...filterParams,
-          keyword: "",
-          page: 1,
-          limit: PITCH_LIST_LIMIT,
-        },
-      })
-    );
-  };
   const handleChangeSort = (value) => {
     setFilterParams({
       ...filterParams,
@@ -169,7 +145,81 @@ function HomePitch() {
       })
     );
   };
+  const handleClearKeywordFilter = () => {
+    setFilterParams({
+      ...filterParams,
+      keyword: "",
+    });
+    dispatch(
+      getPitchListAction({
+        params: {
+          ...filterParams,
+          keyword: "",
+          page: 1,
+          limit: PITCH_LIST_LIMIT,
+        },
+      })
+    );
+  };
+  const handleShowMore = () => {
+    dispatch(
+      getPitchListAction({
+        params: {
+          ...filterParams,
+          page: pitch.meta.page + 1,
+          limit: PITCH_LIST_LIMIT,
+        },
+        more: true,
+      })
+    );
+  };
 
+  const renderTeamOptions = () => {
+    return teamList.data.map((item, index) => {
+      return (
+        <Col span={24} key={item.id}>
+          <Checkbox value={item.id}>{item.name}</Checkbox>
+        </Col>
+      );
+    });
+  };
+
+  const renderFilterTeam = () => {
+    console.log(filterParams.teamId, "hieu");
+    return filterParams.teamId.map((filterItem) => {
+      const teamData = teamList.data.find(
+        (teamItem) => teamItem.id === filterItem
+      );
+      console.log(teamData, "aaaa");
+      if (!teamData) return null;
+      return (
+        <Tag
+          key={filterItem}
+          closable
+          onClose={() => handleClearTeamFilter(filterItem)}
+        >
+          {teamData.name}
+        </Tag>
+      );
+    });
+  };
+  const handleClearTeamFilter = (id) => {
+    const newTeamId = filterParams.teamId.filter((item) => item !== id);
+    setFilterParams({
+      ...filterParams,
+      teamId: newTeamId,
+    });
+    dispatch(
+      getPitchListAction({
+        params: {
+          ...filterParams,
+          teamId: newTeamId,
+          page: 1,
+          limit: PITCH_LIST_LIMIT,
+        },
+      })
+    );
+  };
   const day = new Date();
   const dateTime =
     day.setHours("23") +
@@ -188,16 +238,6 @@ function HomePitch() {
         ...filterParams,
         dateSelected: moment(value).format("DD/MM/YYYY"),
       });
-      /*   dispatch(
-        getPitchListAction({
-          params: {
-            ...filterParams,
-            page: 1,
-            limit: PITCH_LIST_LIMIT,
-          },
-          dateSelected: moment(value).format("DD/MM/YYYY"),
-        })
-      ); */
     } else {
       setFilterParams({
         ...filterParams,
@@ -205,101 +245,6 @@ function HomePitch() {
       });
     }
   }
-
-  /* const handleCheckDateTimeOrder = (id) => {
-    let isDisabled = false;
-    if (filterParams.dateSelected)
-      Array.from(bookingList.data).forEach((bookingItem, bookingIndex) => {
-        if (
-          moment(filterParams.dateSelected, "DD/MM/YYYY").valueOf() ===
-            moment(bookingItem.timeSelect, "DD/MM/YYYY").valueOf() &&
-          selectedOption === bookingItem.timeId
-        ) {
-          isDisabled = true;
-        }
-      });
-    return (
-      <>
-        {userInfo.data.id && (
-          <div>
-            {isDisabled && (
-              <Button type="primary" block disabled danger>
-                Đặt Sân
-              </Button>
-            )}
-            {!isDisabled && (
-              <Button
-                htmlType="submit"
-                type="primary"
-                block
-                danger
-                onClick={() => setIds(id)}
-              >
-                Đặt Sân
-              </Button>
-            )}
-          </div>
-        )}
-      </>
-    );
-  }; */
-  /*   const handleSetPitch = (id) => {
-    let isDisabled = false;
-    if (filterParams.dateSelected)
-      Array.from(bookingList.data).forEach((bookingItem, bookingIndex) => {
-        if (
-          moment(filterParams.dateSelected, "DD/MM/YYYY").valueOf() ===
-            moment(bookingItem.timeSelect, "DD/MM/YYYY").valueOf() &&
-          selectedOption === bookingItem.timeId
-        ) {
-          isDisabled = true;
-        }
-      });
-    return (
-      <>
-        {userInfo.data.id && (
-          <div>
-            {isDisabled && (
-              <Button type="primary" block disabled danger>
-                Đặt Sân
-              </Button>
-            )}
-            {!isDisabled && (
-              <Button
-                htmlType="submit"
-                type="primary"
-                block
-                danger
-               
-              >
-                Đặt Sân
-              </Button>
-            )}
-          </div>
-        )}
-      </>
-    );
-  }; */
-  /* const handleSelectOption = useMemo(() => {
-    return pitch.data.map((item) => {
-      return (
-        <Radio.Group
-          key={item.times?.id}
-          name="option"
-          value={item.times?.id}
-          style={{ margin: 6 }}
-        >
-          {item.times.map((itemtime) => {
-            return <Radio.Button>{itemtime.name}</Radio.Button>;
-          })}
-        </Radio.Group>
-      );
-    });
-  },[]); */
-  /*   const avengerRating = reviewList.data
-    .map((item) => item.rate)
-    .reduce((total, rate) => total + rate, 0);
-  const countAverageRating = avengerRating / reviewList.data.length || 0; */
   const renderPitchList = () => {
     return pitch.data.map((item) => {
       /*     if (filterParams.dateSelected !== undefined) { */
@@ -315,8 +260,8 @@ function HomePitch() {
             borderRadius: 10,
           }}
         >
-          <div>
-            <div
+          <Row gutter={[16, 16]}>
+            {/*  <div
               style={{
                 fontSize: "20px",
                 display: "flex",
@@ -324,137 +269,154 @@ function HomePitch() {
                 alignContent: "space-around",
                 justifyContent: "space-around",
               }}
+            > */}
+            <Col
+              md={{ span: 8, order: 1 }}
+              xs={{ span: 12, order: 1 }}
+              style={{ width: "100%" }}
             >
-              <div style={{ width: "30%" }}>
+              <img
+                key={item.images[0]?.id}
+                src={item.images[0]?.url}
+                alt={item.images[0]?.name}
+                style={{
+                  width: "220px",
+                  height: "220px",
+                  objectFit: "cover",
+                  margin: 16,
+                  borderRadius: 6,
+                }}
+              />
+            </Col>
+            <Col
+              md={{ span: 16, order: 1 }}
+              xs={{ span: 24, order: 1 }}
+              style={{ width: "100%" }}
+            >
+              <Space
+                style={{
+                  alignItems: "start",
+                }}
+              >
                 <img
-                  key={item.images[0]?.id}
-                  src={item.images[0]?.url}
-                  alt={item.images[0]?.name}
-                  style={{
-                    width: "220px",
-                    height: "220px",
-                    objectFit: "cover",
-                    margin: 16,
-                    borderRadius: 6,
-                  }}
+                  src={flag}
+                  alt=""
+                  style={{ height: "50px", width: "50px" }}
                 />
-              </div>
-              <div style={{ width: "60%" }}>
-                <Space
+                <h2 style={{ fontSize: 26, color: "#cf1322" }}> {item.name}</h2>
+              </Space>
+              <div
+                style={{
+                  display: "flex",
+                  alignContent: "center",
+                  justifyContent: "flex-start",
+                }}
+              >
+                <h2 style={{ fontFamily: "cursive" }}>
+                  {item.reviews
+                    .map((item) => {
+                      return item.rate;
+                    })
+                    .reduce((total, rate) => total + rate, 0) /
+                    item.reviews.length || 0}
+                  <FaStar style={{ color: "#faad14" }} />
+                </h2>
+                &nbsp; || &nbsp;
+                <h2 style={{ fontFamily: "cursive" }}>
+                  {item.reviews.length}
+                  <FaCommentDots style={{ color: "#8c8c8c" }} />
+                </h2>
+                <div
                   style={{
-                    alignItems: "start",
+                    fontSize: 20,
+                    display: "flex",
+                    color: "#cf1322",
                   }}
                 >
                   <img
-                    src={flag}
+                    src={locations}
+                    style={{
+                      width: 30,
+                      height: 30,
+                    }}
                     alt=""
-                    style={{ height: "50px", width: "50px" }}
                   />
-                  <h3 style={{ fontSize: 26, color: "#cf1322" }}>
-                    {" "}
-                    {item.name}
-                  </h3>
-                </Space>
-                <Row gutter={(16, 16)}>
-                  <Col span={12}>
-                    <h6>Khung giờ:</h6>
-                    {item.times?.map((itemTime) => {
-                      return (
-                        <Tag
-                          onChange={(e) => setSelectedOption(e.target.value)}
-                          size="small"
-                          style={{ color: "#cf1322" }}
-                        >
-                          {itemTime.name}
-                        </Tag>
-                      );
-                    })}
-                  </Col>
-                  <Col span={12}>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignContent: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <h4 style={{ fontFamily: "cursive" }}>
-                        {item.reviews
-                          .map((item) => {
-                            return item.rate;
-                          })
-                          .reduce((total, rate) => total + rate, 0) /
-                          item.reviews.length || 0}
-                        <FaStar style={{ color: "#faad14" }} />
-                      </h4>
-                      &nbsp; || &nbsp;
-                      <h4 style={{ fontFamily: "cursive" }}>
-                        {item.reviews.length}
-                        <FaCommentDots style={{ color: "#8c8c8c" }} />
-                      </h4>
-                    </div>
-                    <S.ItemPrice>
-                      <h6 style={{ fontSize: 12, color: "#cf1322" }}>
-                        Giá chỉ từ
-                      </h6>
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <img
-                          src={cashback}
-                          style={{
-                            width: 40,
-                            height: 40,
-                          }}
-                          alt=""
-                        />
-                        {parseFloat(item.price).toLocaleString()}đ
-                      </div>
-                    </S.ItemPrice>
-                    <div
-                      style={{
-                        fontSize: 20,
-                        display: "flex",
-                        color: "#cf1322",
-                      }}
-                    >
+                  {item.address}
+                </div>
+              </div>
+              <Row gutter={(16, 16)}>
+                <Col md={{ span: 10, order: 1 }} xs={{ span: 12, order: 1 }}>
+                  <h6>Khung giờ:</h6>
+                  {item.times?.map((itemTime) => {
+                    return (
+                      <Tag
+                        onChange={(e) => setSelectedOption(e.target.value)}
+                        size="small"
+                        style={{ color: "#cf1322" }}
+                      >
+                        {itemTime.name}
+                      </Tag>
+                    );
+                  })}
+                </Col>
+                <Col md={{ span: 14, order: 1 }} xs={{ span: 12, order: 1 }}>
+                  <S.ItemPrice>
+                    <h6 style={{ fontSize: 12, color: "#cf1322" }}>
+                      Giá chỉ từ
+                    </h6>
+                    <div style={{ display: "flex", alignItems: "center" }}>
                       <img
-                        src={locations}
+                        src={cashback}
                         style={{
-                          width: 30,
-                          height: 30,
+                          width: 40,
+                          height: 40,
                         }}
                         alt=""
                       />
-                      {item.address}
+                      {parseFloat(item.price).toLocaleString()}đ
                     </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={24}>
-                    <Button
-                      type="primary"
-                      block
-                      danger
-                      onClick={() => navigate(`/pitch/${item.id}/setpitch`)}
+                  </S.ItemPrice>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Row gutter={[16, 16]}>
+                    <Col
+                      md={{ span: 12, order: 1 }}
+                      xs={{ span: 24, order: 1 }}
                     >
-                      Chi tiết
-                    </Button>
-                    <Button
-                      type="primary"
-                      block
-                      danger
-                      onClick={() =>
-                        navigate(
-                          generatePath(ROUTES.USER.CHECKOUT, { id: item.id })
-                        )
-                      }
+                      <Button
+                        type="primary"
+                        block
+                        danger
+                        onClick={() => navigate(`/pitch/${item.id}/setpitch`)}
+                      >
+                        Chi tiết
+                      </Button>
+                    </Col>
+                    <Col
+                      md={{ span: 12, order: 1 }}
+                      xs={{ span: 24, order: 2 }}
                     >
-                      Đặt sân
-                    </Button>
-                  </Col>
-                </Row>
-              </div>
-            </div>
-          </div>
+                      <Button
+                        type="primary"
+                        block
+                        danger
+                        onClick={() =>
+                          navigate(
+                            generatePath(ROUTES.USER.CHECKOUT, { id: item.id })
+                          )
+                        }
+                      >
+                        Đặt sân
+                      </Button>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
+            {/* </div> */}
+          </Row>
         </Col>
       );
     });
@@ -518,19 +480,25 @@ function HomePitch() {
                         <Form.Item
                           label=""
                           name="date"
-                          rules={[
+                          /*   rules={[
                             {
                               required: true,
                               message: "Bạn chưa chọn ngày!",
                             },
-                          ]}
+                          ]} */
                         >
-                          <DatePicker
-                            bordered="true"
-                            disabledDate={disabledDate}
-                            style={{ fontSize: 30, width: "100%" }}
-                            onChange={(values) => handleSelectedDate(values)}
-                            initialValues={filterParams.dateSelected}
+                          <Input
+                            placeholder="Nhập từ khóa tìm kiếm"
+                            onChange={(e) =>
+                              handleFilter("keyword", e.target.value)
+                            }
+                            value={filterParams.keyword}
+                            prefix={<SearchOutlined />}
+                            style={{
+                              backgroundColor: "white",
+                              boxShadow: " rgb(0 0 0 / 50%) -1px 1px 8px",
+                              margin: "0px 0px 10px 0px",
+                            }}
                           />
                         </Form.Item>
                       </Col>
@@ -543,20 +511,6 @@ function HomePitch() {
                       style={{ marginBottom: 16, padding: 16 }}
                     >
                       <Col Col md={6} xs={24}>
-                        <Input
-                          placeholder="Nhập từ khóa tìm kiếm"
-                          onChange={(e) =>
-                            handleFilter("keyword", e.target.value)
-                          }
-                          value={filterParams.keyword}
-                          prefix={<SearchOutlined />}
-                          style={{
-                            backgroundColor: "white",
-                            boxShadow: " rgb(0 0 0 / 50%) -1px 1px 8px",
-                            margin: "0px 0px 10px 0px",
-                          }}
-                        />
-
                         <Select
                           placeholder="Sắp xếp theo"
                           allowClear
@@ -576,20 +530,30 @@ function HomePitch() {
                             Giá giảm dần
                           </Select.Option>
                         </Select>
+
+                        <Checkbox.Group
+                          onChange={(value) => handleFilter("teamId", value)}
+                          value={filterParams.teamId}
+                        >
+                          <Row>{renderTeamOptions()}</Row>
+                        </Checkbox.Group>
                       </Col>
                       <Col md={16} xs={24}>
                         <Row gutter={[16, 16]}>
                           <div style={{ marginBottom: 16 }}>
                             <Col>
-                              {renderFilterTimeShoot()}
-                              {filterParams.keyword && (
-                                <Tag
-                                  closable
-                                  onClose={() => handleClearKeywordFilter()}
-                                >
-                                  Keyword: {filterParams.keyword}
-                                </Tag>
-                              )}
+                              <Space>
+                                {renderFilterTimeShoot()}
+                                {renderFilterTeam()}
+                                {filterParams.keyword && (
+                                  <Tag
+                                    closable
+                                    onClose={() => handleClearKeywordFilter()}
+                                  >
+                                    Keyword: {filterParams.keyword}
+                                  </Tag>
+                                )}
+                              </Space>
                             </Col>
                           </div>
                         </Row>

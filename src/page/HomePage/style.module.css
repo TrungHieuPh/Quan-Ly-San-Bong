@@ -51,6 +51,25 @@
   width: 100%;
   justify-content: space-between;
 }
+.titleView {
+  margin-top: 70px;
+  text-align: center;
+  color: #fff;
+  font-size: 40px;
+}
+.titleCombo {
+  text-align: center;
+  font-family: "myFirstFont";
+  color: aqua;
+  font-size: 100px;
+}
+.ContentCombo {
+  color: black;
+  background-color: #e5e5e5;
+  box-shadow: rgb(0 0 0 / 60%) 0px 4px 5px;
+  border-radius: 8px;
+  padding: 20px 30px 10px 30px;
+}
 .Images {
   /* position: absolute; */
   left: 0;
@@ -86,6 +105,10 @@ img {
   z-index: 20;
   text-decoration: none;
 }
+.ulCombo li {
+  list-style-type: square;
+}
+
 .gifs > h3 {
   font-size: 14px;
   color: red;
@@ -109,14 +132,7 @@ li {
 .contentCenter {
   padding-top: 100px;
 }
-tbody > tr > td {
-  max-width: 10ch;
-}
-.titlePitch {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #ddd;
-}
+
 .items {
   border: 1px solid #938888;
   height: auto;
@@ -148,46 +164,14 @@ tbody > tr > td {
   box-shadow: rgb(0 0 0 / 50%) -1px 1px 5px;
   border-radius: 3px;
 }
-/* .itemTitle img {
-  position: relative;
-  top: 5px;
-  width: 40px !important;
-  height: 80px !important;
-} */
+
 .itemTitle :hover {
   background-color: bluebird;
   text-decoration: underline 0.5px;
   font-weight: 600;
   transition: all 0.4s ease 0s;
 }
-.wrapperNavigate {
-  width: 100%;
-  position: absolute;
-}
-.text {
-  margin: 16px;
-  color: black;
-  font-size: 35px;
-  font-weight: 500;
-}
-.new {
-  display: inline-block;
-  margin: 13px 0px 10px -2px;
-  padding: 3px 8px;
-  border-radius: 3px;
-  background: #f44a4f;
-  font-size: 10px;
-  color: #fff;
-  line-height: 1;
-  vertical-align: top;
-  font-weight: normal;
-}
-.text {
-  margin: 16px;
-  color: black;
-  font-size: 35px;
-  font-weight: 500;
-}
+
 .wrapperContent2 {
   margin-top: 32px;
 }
@@ -249,16 +233,7 @@ a {
   width: 100%;
   height: 100%;
 }
-.ContentContainer1 {
-  width: 100%;
-  color: whitesmoke;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  height: 230px;
-  align-items: center;
-  margin: 0 auto;
-}
+
 .contentWrapperButton {
   width: 90%;
   display: flex;
@@ -280,261 +255,17 @@ a {
   justify-content: center;
 }
 
-.ContentContainer3 {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.ContentContainer3::after {
-  display: block;
-  clear: both;
-  content: "";
-}
-.ContentLeft3 {
-  float: left;
-  width: 50%;
-  margin-bottom: 0;
-  padding-right: 1px;
-}
-.ContentLeft3:hover {
-  position: relative;
-  z-index: 2;
-  transform: scale(1.05) translate3d(2%, 0, 0);
-  transition: all 0.3s ease;
-}
-.ContentLeft3 ul li:hover {
-  background: rgba(0, 0, 0, 0.7);
-  filter: blur(15px);
-  opacity: 0.7;
-}
-.ContentThumb {
-  overflow: hidden;
-  position: relative;
-  z-index: 2;
-  padding-top: 75.7672%;
-  -webkit-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-}
-.ContentItem .ImageLeft :hover {
-  background: rgba(0, 0, 0, 0.7);
-  filter: blur(15px);
-  opacity: 0.7;
-}
-.ContentItem {
-  transition: all 0.3s ease;
-  height: 450px;
-}
-.ContentLeft3 img {
-  width: 633px;
-  height: auto;
-}
-
-.ContentThumb img {
-  width: 100%;
-  height: auto;
-  /*  min-height: 100%; */
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 0;
-  -webkit-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-}
-/* .ContentThumb img:hover {
-  filter: blur(15px) !important;
-  opacity: 0.7;
-} */
-
-.ContentCaption {
-  position: relative;
-  /* position: absolute; */
-  z-index: 3;
-  top: -425px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: flex-end;
-  padding: 0 10px;
-  opacity: 0;
-}
-.ContentCaption:hover {
-  opacity: 1;
-  transition: all 0.3s ease 0s;
-}
-.ContentCapDesc {
-  color: white;
-  text-align: right;
-  text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 2px;
-  margin-bottom: 30px;
-  line-height: 2.2;
-  transition: all 0.2s ease;
-  /* opacity: 0; */
-}
-.ContentCapDesc:hover {
-  opacity: 1;
-}
-.ContentCapTitle {
-  transform: translate3d(110px, 0, 0);
-  color: white;
-  text-align: right;
-  font-family: ImogenAgnes;
-  font-size: 100px;
-  font-weight: 600;
-  line-height: 0.6;
-  transition: all 0.2s ease;
-  text-transform: uppercase;
-  line-height: 2.2;
-}
-.ContentCapContent:hover {
-  opacity: 1;
-}
-.ContentCapContent {
-  position: absolute;
-  z-index: 2;
-  top: 50px;
-  bottom: 5px;
-  left: 10px;
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  overflow: hidden;
-  transition: all 0.2s ease;
-}
-/* hover Right*/
-.ContentRight3 {
-  float: left;
-  width: 50%;
-  margin-bottom: 0;
-  padding-right: 1px;
-}
-.ContentRight3:hover {
-  position: relative;
-  z-index: 2;
-}
-.ContentItemRight {
-  position: relative;
-  z-index: 1;
-}
-.ContentItemRight:hover {
-  transform: scale(1.05) translate3d(-2%, 0, 0);
-  transition: all 0.3s ease 0s;
-}
-.ContentRight3 img {
-  width: 633px;
-  height: auto;
-}
-.ContentThumbRight {
-  overflow: hidden;
-  position: relative;
-  z-index: 2;
-  padding-top: 66.7672%;
-  transition: all 0.2s ease 0s;
-  background: rgb(255, 255, 255);
-}
-.ContentThumbRight img {
-  width: 100%;
-  height: auto;
-  min-height: 100%;
-  position: absolute;
-  z-index: 2;
-  top: 0px;
-  left: 0px;
-  transition: all 0.2s ease 0s;
-}
 img :hover {
   filter: blur(15px);
   opacity: 0.7;
 }
-.ContentCaptionRight {
-  position: absolute;
-  z-index: 3;
-  inset: 0px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: flex-end;
-  padding: 0px 10px;
-  align-items: flex-start;
-  padding: 0px 15px;
-  transition: all 0.3s ease 0s;
-  opacity: 0;
-}
-.ContentCaptionRight:hover {
-  opacity: 1;
-  transition: all 0.3s ease 0s;
-}
-.ContentCapDescRight {
-  color: rgb(255, 255, 255);
-  text-align: right;
-  text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 2px;
-  margin-bottom: 30px;
-  line-height: 2.2;
-  transition: all 0.2s ease 0s;
-  text-align: left;
-}
-.ContentCapDescRight:hover {
-  opacity: 1;
-}
-.ContentCapTitleRight {
-  transform: translate3d(-110px, 0, 0);
-  color: white;
-  text-align: right;
-  font-family: ImogenAgnes;
-  font-size: 100px;
-  font-weight: 600;
-  line-height: 0.6;
-  transition: all 0.2s ease;
-  text-transform: uppercase;
-  line-height: 2.2;
-}
+
 /* .ContentCapTitleRight:hover {
   opacity: 1;
 } */
-.ContentCapContentRight {
-  position: absolute;
-  z-index: 2;
-  top: 50px;
-  bottom: 5px;
-  left: 10px;
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  overflow: hidden;
-  transition: all 0.2s ease 0s;
-  right: 26.455%;
-  left: auto;
-  text-align: right;
-  left: auto;
-  right: 10px;
-}
-.ContentCapContentRight:hover {
-  opacity: 1;
-}
-.ContentContainer3::after {
-  clear: both;
-  content: ".";
-  display: block;
-  width: 0px;
-  height: 0px;
-  position: none;
-}
+
 /* Carousel */
-.ItemCarousel {
-  height: "160px";
-  color: "#fff";
-  line-height: "160px";
-  text-align: "center";
-  background-color: #364d79;
-}
+
 .DatePickers {
   position: relative;
   text-align: center;

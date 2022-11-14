@@ -8,9 +8,13 @@ function* getPitchListSaga(action) {
     const { params, more, dateSelected } = action.payload;
     const result = yield axios.get(`http://localhost:4000/pitchs`, {
       params: {
+        _expand: "team",
         _embed: ["times", "images", "favorites", "reviews"],
         _page: params.page,
         _limit: params.limit,
+        ...(params.teamId && {
+          teamId: params.teamId,
+        }),
         ...(params.keyword && {
           q: params.keyword,
         }),

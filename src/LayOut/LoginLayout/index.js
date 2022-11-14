@@ -1,5 +1,6 @@
 import { Outlet, Navigate } from "react-router-dom";
 
+import * as S from "./styles";
 import Footer from "../Footer";
 
 import { ROUTES } from "../../constants/routers";
@@ -10,7 +11,9 @@ function LoginLayout() {
   if (accessToken) return <Navigate to={ROUTES.USER.HOME} />;
   return (
     <>
-      <Outlet />
+      <S.MainContainer>
+        <Outlet />
+      </S.MainContainer>
       <Footer />
     </>
   );

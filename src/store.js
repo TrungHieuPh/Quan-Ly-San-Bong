@@ -10,6 +10,7 @@ import arbitrationReducer from "./redux/reducers/arbitration.reducer";
 import comboReducer from "./redux/reducers/combo.reducer";
 import CheckoutReducer from "./redux/reducers/checkout.reducer";
 import favoriteReducer from "./redux/reducers/favorite.reducer";
+import teamReducer from "./redux/reducers/team.reducer";
 
 import rootSaga from "./redux/sagas";
 
@@ -27,6 +28,7 @@ const store = configureStore({
     combo: comboReducer,
     checkout: CheckoutReducer,
     favorite: favoriteReducer,
+    team: teamReducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({

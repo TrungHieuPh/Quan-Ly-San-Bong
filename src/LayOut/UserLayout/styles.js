@@ -3,13 +3,13 @@ import styled, { css } from "styled-components";
 export const Wrapper = styled.div`
   margin: 0 auto;
 
-  max-width: 1325px;
+  max-width: 1252px;
   width: 100%;
   display: flex;
 `;
 export const MainContainer = styled.div`
   position: relative;
-  display: flex;
+  /*  display: flex; */
   flex: 1;
   width: 100%;
   /*  float: left;
@@ -20,6 +20,7 @@ export const MainContainer = styled.div`
   margin: 0 auto;
   background-image: url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=5000&q=200");
 `;
+
 export const Header = styled.div`
   color: #fff;
   padding: 0 12px;
