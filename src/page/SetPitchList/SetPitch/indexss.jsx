@@ -66,7 +66,6 @@ function SetPitch() {
   const { pitchDetail } = useSelector((state) => state.product);
   const { userInfo } = useSelector((state) => state.user);
   const { bookingList } = useSelector((state) => state.booking);
-  console.log(bookingList.data, "booking");
 
   const [updateForm] = Form.useForm();
 
@@ -109,7 +108,6 @@ function SetPitch() {
     let isDisabled = false;
     if (dateSelected)
       Array.from(bookingList.data).forEach((bookingItem, bookingIndex) => {
-        console.log(typeof bookingItem.idTime, "bookingItem");
         if (
           moment(dateSelected, "DD/MM/YYYY").unix() ===
             moment(bookingItem.timeSelect, "DD/MM/YYYY").unix() &&
@@ -118,7 +116,6 @@ function SetPitch() {
           isDisabled = true;
         }
       });
-    console.log(isDisabled, "isDisabled");
 
     return (
       <>

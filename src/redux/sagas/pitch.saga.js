@@ -56,7 +56,7 @@ function* getPitchDetailSaga(action) {
     const { id } = action.payload;
     const result = yield axios.get(`http://localhost:4000/pitchs/${id}`, {
       params: {
-        _embed: ["times", "images", "favorites", "reviews"],
+        _embed: ["times", "images", "favorites", "reviews", "orders"],
       },
     });
     yield put({

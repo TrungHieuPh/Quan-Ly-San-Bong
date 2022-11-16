@@ -143,7 +143,6 @@ const UpdatePitch = () => {
               <ReactQuill
                 theme="snow"
                 onChange={(value) => {
-                  console.log(value);
                   updateForm.setFieldsValue({ content: value });
                 }}
               />

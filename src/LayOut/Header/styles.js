@@ -45,20 +45,6 @@ export const UseNav = styled.div`
   color: #e84749;
 `;
 export const TopWrapper = styled.div`
-  /*  max-width: 100%;
-  height: 55px;
-  position: sticky;
-  top: 0;
-  background-color: #820014;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-right: 40px;
-  padding-left: 40px; */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 0 24px;
   height: 56px;
   top: 0;
@@ -81,6 +67,8 @@ export const ContainerWrapper = styled.header`
   top: 0;
   position: sticky;
   z-index: 99;
+  box-shadow: rgb(0 0 0 / 60%) 0px 4px 5px;
+
   /*  @media screen and (max-width: 768px) {
   }
   & .nav-btn {

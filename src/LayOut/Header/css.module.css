@@ -85,57 +85,38 @@
   display: inline-block;
   padding: 0 32px;
 }
+.select li {
+  position: relative;
+}
 
-.nav .select {
+.select {
   padding: 0;
   display: flex;
   width: 100%;
 }
+
+.select li::after {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  width: 0;
+  height: 3px;
+  background-color: #1890ff;
+  transition: all 0.3s ease;
+}
+
+.select li:hover:after {
+  left: 0;
+  width: 100%;
+}
+
 .navBtn {
   display: none;
 }
 .logoNav {
   padding: 10px;
-}
-@media screen and (max-width: 1024px) {
-  .nav .select {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: flex-start;
-    position: fixed;
-    top: 55px;
-    right: -300px;
-    box-shadow: 0 40px 60px rgb(0 0 0);
-    height: 100vh;
-    background-color: beige;
-    width: 300px;
-    padding: 40px 0 0 10px;
-    transition: 0.3s ease-in-out;
-  }
-  .navBtn {
-    display: block;
-  }
-  .selectActive {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: flex-start;
-    position: fixed;
-    top: 55px;
-    right: 0px;
-    box-shadow: 0 40px 60px rgb(0 0 0);
-    height: 100vh;
-    background-color: beige;
-    width: 300px;
-    padding: 40px 0 0 10px;
-    transition: 0.3s ease-in-out;
-  }
-  .logoNav {
-    display: none;
-  }
 }
 
 .nav .select > li {
@@ -207,12 +188,54 @@ a {
   background-color: #00474f;
 }
 .logo {
-  width: max-content;
-  height: 140px;
-  padding: 10px;
-  font-size: 50px;
-  margin: 0 auto;
+  height: 93px;
+  width: 98%;
+  padding: 0px;
+  font-size: 87px;
+  position: absolute;
+  margin: 0px auto;
+  top: -40px;
+  text-align: center;
 }
+.logo:hover {
+  color: #1890ff;
+  font-size: 110px;
+  transition: 0.2s ease;
+  padding: 0px 0 15px 0;
+}
+.sdt {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.sdt:hover::after {
+  left: 0;
+  width: 100%;
+  opacity: 1;
+}
+
+.sdt::after {
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  width: 0;
+  height: 3px;
+  content: "";
+  background: #1c6cc1;
+  opacity: 0;
+  transition: all ease 0.3s;
+}
+.sdt h4 {
+  font-size: 18px;
+  color: #003a8c;
+}
+.sdt h4:hover {
+  color: #1890ff;
+  transition: 0.2s ease;
+  /*  padding: 0px 0 15px 0; */
+}
+
 .logo img {
   width: 85px !important;
   height: 85px !important;
@@ -223,40 +246,85 @@ a {
   font-size: 15px;
   color: #e84749;
 }
+.IconFb {
+  color: rgb(19, 156, 247);
+  height: 25px;
+  width: 25px;
+}
+.IconPhone {
+  color: #ad2102;
+  height: 20px;
+  width: 20px;
+}
 
-/* @media screen and (max-width: 1024px) {
-  .nav-btn {
-    visibility: visible;
-    opacity: 1;
-  }
-
-  header nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+@media screen and (max-width: 768px) {
+  .select {
+    padding: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    background-color: var(--mainColor);
-    transition: 1s;
-     transform: translateY(-100vh);
+    width: 100%;
+    align-items: flex-start;
+    position: fixed;
+    top: 55px;
+    right: -300px;
+    box-shadow: 0 40px 60px rgb(0 0 0);
+    height: 100vh;
+    background-color: beige;
+    width: 300px;
+    padding: 40px 0 0 10px;
+    transition: 0.3s ease-in-out;
+  }
+  .navBtn {
+    display: block;
+  }
+  .selectActive {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    position: fixed;
+    top: 55px;
+    right: 0px;
+    box-shadow: 0 40px 60px rgb(0 0 0);
+    height: 100vh;
+    background-color: beige;
+    width: 300px;
+    padding: 40px 0 0 10px;
+    transition: 0.3s ease-in-out;
+  }
+  .logoNav {
+    display: none;
+  }
+  .selectLeft {
+    display: flex;
+  }
+  .selectLeft img {
+    position: relative;
+    bottom: 12px;
+    right: 30px;
+    height: 20px !important;
+    width: 20px !important;
+  }
+  .sdt {
+    position: relative;
+    right: 70px;
+    top: 15px;
+    font-size: 13px;
   }
 
-  header .responsive_nav {
-    transform: none;
+  .fb {
+    position: relative;
+    right: 166px;
+    bottom: 23px;
+    height: 10px;
   }
-
-  nav .nav-close-btn {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
+  .IconFb {
+    height: 20px;
+    width: 20px;
   }
-
-  nav li {
-    font-size: 1.5rem;
+  .IconPhone {
+    height: 15px;
+    width: 15px;
   }
-} */
+}

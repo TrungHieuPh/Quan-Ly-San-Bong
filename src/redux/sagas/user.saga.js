@@ -9,13 +9,13 @@ import moment from "moment";
 const countDown = () => {
   let secondsToGo = 2;
   const modal = Modal.success({
-    title: "Thay đổi mật khẩu thành công!",
-    content: `This modal will be destroyed after ${secondsToGo} second.`,
+    title: "Thay đổi thông tin thành công!",
+    content: `Tiếp tục trong ${secondsToGo} giây.`,
   });
   const timer = setInterval(() => {
     secondsToGo -= 1;
     modal.update({
-      content: `This modal will be destroyed after ${secondsToGo} second.`,
+      content: `Tiếp tục trong ${secondsToGo} giây.`,
     });
   }, 1000);
   setTimeout(() => {
@@ -34,11 +34,12 @@ function* loginSaga(action) {
         data: result.data.user,
       },
     });
-    if (result.data?.user?.role === "admin") {
+    /*  if (result.data?.user?.role === "admin") {
       yield callback.goToDashboard();
     } else {
       yield callback.goToHome();
-    }
+    } */
+    yield callback.goToHome();
   } catch (e) {
     yield put({
       type: FAIL(USER_ACTION.LOGIN),
@@ -53,7 +54,6 @@ function* registerSaga(action) {
   try {
     const { data, callback } = action.payload;
     const result = yield axios.post("http://localhost:4000/register", data);
-    console.log(data, "sss");
     yield put({
       type: SUCCESS(USER_ACTION.REGISTER),
       payload: {
@@ -62,7 +62,6 @@ function* registerSaga(action) {
     });
     yield callback.goToLogin();
   } catch (e) {
-    console.log(e);
     yield put({
       type: FAIL(USER_ACTION.REGISTER),
       payload: {
@@ -132,6 +131,7 @@ function* updateAddressUser(action) {
     yield put({
       type: SUCCESS(USER_ACTION.CHANGE_PASSWORD),
     });
+    yield callback.reload();
   } catch (e) {
     yield put({
       type: FAIL(USER_ACTION.CHANGE_PASSWORD),

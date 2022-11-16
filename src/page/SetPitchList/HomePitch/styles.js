@@ -6,7 +6,6 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   position: relative;
   min-height: calc(100vh - 310px);
-  background-color: #fbcec978;
 `;
 
 export const TopWrapper = styled.div`
@@ -68,4 +67,10 @@ export const ItemPrice = styled.h2`
   background-color: whitesmoke;
   border-radius: 3px;
   padding: 5px;
+`;
+export const ItemImagePitch = styled.img`
+  object-fit: cover;
+  height: 150px;
+  border-radius: 6px;
+  width: 150px;
 `;

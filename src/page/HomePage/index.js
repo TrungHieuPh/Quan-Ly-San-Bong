@@ -1,10 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { Button, Row, Col, Tag, Space } from "antd";
+import { Button, Row, Col, Tag, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link, generatePath } from "react-router-dom";
 import { useEffect } from "react";
-import Moment from "react-moment";
-import moment from "moment";
 import Sliders from "react-slick";
 
 import { getPitchListAction } from "../../redux/actions/";
@@ -17,6 +15,10 @@ import click from "../../Images/click.gif";
 import locations from "../../Images/locations.gif";
 import yuan from "../../Images/yuan.gif";
 import stopwatch from "../../Images/stopwatch.gif";
+import location from "../../Images/location.gif";
+import podium from "../../Images/podium.gif";
+import calendar from "../../Images/calendar.gif";
+import smartphone from "../../Images/smartphone.gif";
 
 import elite from "../../Images/elite.png";
 import rating from "../../Images/rating.png";
@@ -35,40 +37,33 @@ import piture7 from "../../Images/piture7.jpg";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-/* import fooball from "../../Images/fooballPlayer.gif"; */
-import {
-  FaCalendarMinus,
-  FaDollarSign,
-  FaGripLinesVertical,
-  FaCalendarDay,
-  FaTag,
-  FaEye,
-} from "react-icons/fa";
+
+import { FaEye } from "react-icons/fa";
 import { ROUTES } from "../../constants/routers";
 
 function HomePage() {
   const { pitch } = useSelector((state) => state.product);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const dateFormat = "YYYY:MM:DD";
-  const today = new Date();
+
   useEffect(() => {
     dispatch(
       getPitchListAction({
         params: {
           page: 1,
-          limit: 3,
+          limit: 4,
         },
       })
     );
   }, []);
 
   const renderPitch = () => {
-    if (pitch.loading) return <div>Loading...</div>;
+    if (pitch.loading)
+      return <Spin size="small" style={{ textAlign: "center" }} />;
     return pitch.data.map((item, index) => {
       return (
         <Col
-          md={{ span: 7, flex: 1 }}
+          md={{ span: 11, offset: 1 }}
           /*   sm={{ span: 18, flex: 1 }} */
           xs={24}
           key={item.id}
@@ -82,41 +77,44 @@ function HomePage() {
                 className={styles.itemTitle}
               >
                 {/*   <span className={styles.new}>New</span> */}
-                <img src={soccerarea} style={{ width: 35, height: 35 }} />
+                <img src={soccerarea} style={{ width: 50, height: 50 }} />
                 <Button
                   type="link"
                   onClick={() => navigate(`/pitch/${item.id}/setPitch`)}
                   primary
-                  style={{
-                    fontSize: 22,
-                    fontWeight: 600,
-                    padding: 2,
-                    color: "#820014",
-                  }}
                 >
                   {item.name}
                 </Button>
               </Col>
-              <Row style={{ /* display: "flex", */ width: "100%" }}>
+              <Row
+                style={{ /* display: "flex", */ width: "100%" }}
+                justify="space-around"
+              >
                 <Col
-                  md={{ span: 12, offset: 0 }}
-                  xs={{ span: 8, order: 1, offset: 4 }}
+                  md={{ span: 10, offset: 1 }}
+                  xs={{ span: 10, order: 1, offset: 1 }}
                 >
-                  <img
-                    key={item.images[0]?.id}
-                    src={item.images[0]?.url}
-                    alt={item.images[0]?.name}
-                    style={{
-                      objectFit: "cover",
-                      height: "150px",
-                      margin: 16,
-                      borderRadius: 6,
-                      width: "150px",
-                    }}
-                  />
+                  <div>
+                    <Sliders {...settingses}>
+                      {item.images.map((item) => {
+                        return (
+                          <img
+                            key={item.id}
+                            src={item.url}
+                            alt={item.name}
+                            className={styles.ItemImagePitch}
+                          />
+                        );
+                      })}
+                    </Sliders>
+                  </div>
                 </Col>
 
-                <Col md={12} xs={{ span: 12, order: 1 }} style={{ padding: 0 }}>
+                <Col
+                  md={{ span: 10, offset: 2 }}
+                  xs={{ span: 10, order: 3 }}
+                  style={{ padding: 0 }}
+                >
                   <div className={styles.itemPrice}>
                     <img
                       src={yuan}
@@ -171,6 +169,13 @@ function HomePage() {
         </Col>
       );
     });
+  };
+  const settingses = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
 
   const settings = {
@@ -235,36 +240,72 @@ function HomePage() {
           <Col md={24} sm={24} xs={24}>
             <Slider />
           </Col>
-          <Col xs={24} md={24}>
+
+          <Col xs={24} md={24} className={styles.WrapperMaxim}>
+            <div>
+              <h1>Tại sao lại cần Sport?</h1>
+              <p>NỀN TẢNG ĐẶT SÂN - TÌM ĐỐI ĐẦU TIÊN TẠI VIỆT NAM</p>
+            </div>
+
             <Row gutter={[16, 16]}>
               <Col
                 md={{ span: 8, order: 2 }}
                 sm={{ span: 24, order: 2 }}
                 xs={{ span: 24, order: 1 }}
-                /* offset="24" */
               >
                 <div className={styles.contentWrapperButton}>
-                  <Link>Điểm Đến</Link>
+                  <h2>
+                    <img
+                      src={location}
+                      alt=""
+                      style={{ width: 100, height: 100, margin: "0 auto" }}
+                    />{" "}
+                    <h3>Tìm kiếm và đặt sân bóng online</h3>
+                  </h2>
+                  <p>
+                    Thông tin sân gần vị trí của bạn nhất, đặt sân online, tiện
+                    lợi, dễ dàng
+                  </p>
                 </div>
               </Col>
               <Col md={{ span: 8, order: 2 }} xs={{ span: 24, order: 2 }}>
                 <div className={styles.contentWrapperButton}>
-                  <Link>Ưu Đãi</Link>
+                  <h2>
+                    <img
+                      src={calendar}
+                      alt=""
+                      style={{ width: 100, height: 100, margin: "0 auto" }}
+                    />
+
+                    <h3> Công cụ quản lý sân bóng online</h3>
+                  </h2>
+                  <p>
+                    Quản lý lịch đặt đơn giản, tiếp nhận đặt sân online dễ dàng,
+                    lấp đầy sân trống
+                  </p>
                 </div>
               </Col>
               <Col md={{ span: 8, order: 2 }} xs={{ span: 24, order: 3 }}>
                 <div className={styles.contentWrapperButton}>
-                  <Link>Giải Đấu</Link>
+                  <h2>
+                    <img
+                      src={podium}
+                      alt=""
+                      style={{ width: 100, height: 100, margin: "0 auto" }}
+                    />
+                    <h3>Tổ chức các giải đấu với nhau</h3>
+                  </h2>
+                  <p>
+                    Thường xuyên tổ chức các giải đấu hàng tuần hàng tháng, tạo
+                    môi trường vui vẻ lành mạnh
+                  </p>
                 </div>
               </Col>
-              {/*     </div> */}
             </Row>
           </Col>
-          <Col xs={24}>
-            <h2 className={styles.titleView}>
-              {" "}
-              <FaEye style={{ color: "#1890ff" }} />
-              Xem nhanh
+          <Col xs={24} className={styles.WrapperQuickView}>
+            <h2>
+              <img src={smartphone} alt="" /> Xem nhanh sân
             </h2>
 
             <Row
@@ -279,7 +320,7 @@ function HomePage() {
               {renderPitch()}
             </Row>
           </Col>
-          <Col span={24}>
+          <Col span={24} className={styles.WrapperCombo}>
             <Row gutter={[16, 16]}>
               <Col
                 md={{ span: 12, order: 1 }}
@@ -455,55 +496,63 @@ function HomePage() {
             </div>
           </div>
           {/* Abou */}
+          {/*  <div className={styles.wrapperContent2}>
+            <div className={styles.ContainerContent2}> */}
           <Row gutter={[16, 16]}>
-            <div className={styles.wrapperContent2}>
-              <div className={styles.ContainerContent2}>
-                <Row gutter={[24, 24]}>
-                  <Col md={{ span: 24, order: 2 }} xs={{ span: 24, order: 3 }}>
-                    {" "}
-                    <p style={{ color: "whitesmoke" }}>
-                      Tự hào khi là một thành viên của chúng tôi.
-                    </p>
-                  </Col>
-                  <Col md={{ span: 12, order: 4 }} xs={{ span: 20, order: 3 }}>
-                    <Link
-                      to={ROUTES.USER.PITCH_ABOUT}
-                      className={styles.defauBtn}
-                      danger
-                      type="primary"
-                    >
-                      About
-                    </Link>
-                  </Col>
+            <Col
+              md={{ span: 12, order: 1 }}
+              xs={{ span: 24, order: 2 }}
+              style={{ textAlign: "center" }}
+            >
+              <Row gutter={[16, 16]} align="middle">
+                <Col md={{ span: 24, order: 2 }} xs={{ span: 24, order: 2 }}>
+                  <p style={{ color: "whitesmoke", fontSize: 20 }}>
+                    Tự hào khi là một thành viên của chúng tôi.
+                  </p>
+                </Col>
+                <Col md={{ span: 24, order: 4 }} xs={{ span: 24, order: 3 }}>
+                  <Link
+                    to={ROUTES.USER.PITCH_ABOUT}
+                    className={styles.defauBtn}
+                    danger
+                    type="primary"
+                    style={{ fontSize: 25 }}
+                  >
+                    Về chúng tôi
+                  </Link>
+                </Col>
 
-                  <div className={styles.Contentleft2} gutter={[16, 16]}>
+                <Col md={{ span: 24, order: 1 }} xs={{ span: 24, order: 1 }}>
+                  <Row gutter={[16, 16]} align="middle">
                     <Col
-                      md={{ span: 12, order: 1 }}
-                      xs={{ span: 20, order: 2 }}
+                      md={{ span: 24, order: 1 }}
+                      xs={{ span: 24, order: 1 }}
                     >
-                      <img src={elite} />
+                      <img
+                        src={elite}
+                        style={{ display: "inline", height: 170, width: 170 }}
+                      />
                     </Col>
                     <Col
-                      md={{ span: 12, order: 1 }}
-                      xs={{ span: 20, order: 2 }}
+                      md={{ span: 24, order: 1 }}
+                      xs={{ span: 24, order: 1 }}
                     >
-                      <h2 style={{ color: "whitesmoke" }}>
+                      <h2 style={{ color: "whitesmoke", fontSize: 40 }}>
                         Sự thân thiện và môi trường phát triển{" "}
                       </h2>
                     </Col>
-                  </div>
-                </Row>
-                <Row gutter={[16, 16]}>
-                  <Col md={{ span: 24, order: 4 }} xs={{ span: 16, order: 1 }}>
-                    <div className={styles.ContentRight2}>
-                      <img src={rating} />
-                    </div>
-                  </Col>
-                </Row>
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
+
+            <Col md={{ span: 12, order: 1 }} xs={{ span: 24, order: 1 }}>
+              <div className={styles.ContentRight2}>
+                <img src={rating} />
               </div>
-            </div>
+            </Col>
           </Row>
-          <Col md={24} xs={24}></Col>
+          {/*  */}
 
           {/*   </Spin> */}
         </Row>

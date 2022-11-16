@@ -29,12 +29,13 @@ const Payment = ({ setStep }) => {
   const dispatch = useDispatch();
   const [paymentForm] = Form.useForm();
   const handleSubmitPaymentForm = (values) => {
-    /*  console.log(
+    console.log(
       {
         ...values,
         ...checkoutInfo,
         userId: userInfo.data.id,
         date: CheckoutTimeSelect.date,
+        status: CheckoutTimeSelect.status,
         timeOption: CheckoutTimeSelect.timeoption,
         PitchOrder: {
           pitchId: parseInt(id),
@@ -47,13 +48,14 @@ const Payment = ({ setStep }) => {
         },
       },
       "values1"
-    ); */
+    );
     dispatch(
       bookingPitchAction({
         ...values,
         ...checkoutInfo,
         userId: userInfo.data.id,
         date: CheckoutTimeSelect.date,
+        status: CheckoutTimeSelect.status,
         timeOption: CheckoutTimeSelect.timeoption,
         totalPrice: CheckoutTimeSelect.totalPrice,
         pitchId: parseInt(id),
