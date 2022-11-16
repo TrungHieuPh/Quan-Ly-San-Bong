@@ -25,7 +25,7 @@ import {
   getTeamListAction,
 } from "../../../redux/actions";
 import * as S from "./styles";
-import calendar from "../../../Images/calendar.gif";
+import search from "../../../Images/search.gif";
 import locations from "../../../Images/locations.gif";
 import cashback from "../../../Images/cashback.gif";
 import flag from "../../../Images/flag.gif";
@@ -45,7 +45,6 @@ function HomePitch() {
     timeShootId: [],
     dateSelected: undefined,
   });
-  console.log(filterParams, "asc");
 
   const [selectedOption, setSelectedOption] = useState();
 
@@ -185,12 +184,10 @@ function HomePitch() {
   };
 
   const renderFilterTeam = () => {
-    console.log(filterParams.teamId, "hieu");
     return filterParams.teamId.map((filterItem) => {
       const teamData = teamList.data.find(
         (teamItem) => teamItem.id === filterItem
       );
-      console.log(teamData, "aaaa");
       if (!teamData) return null;
       return (
         <Tag
@@ -432,7 +429,7 @@ function HomePitch() {
                 size="small"
                 bordered="false"
                 style={{
-                  marginTop: 16,
+                  margin: "16px 0 32px 0",
                   wordWrap: "break-word",
                   backgroundColor: "#E5E5E5",
                 }}
@@ -469,11 +466,11 @@ function HomePitch() {
                         }}
                       >
                         <img
-                          src={calendar}
+                          src={search}
                           alt=""
                           style={{ height: "50px", width: "50px" }}
                         />
-                        <h1>Ngày đặt sân:</h1>
+                        <h1>Tìm kiếm</h1>
                       </div>
 
                       <Col span={24}>
@@ -505,12 +502,50 @@ function HomePitch() {
                     </Row>
                   </Col>
 
-                  <Col md={{ span: 24, order: 2 }} xs={{ span: 24, order: 1 }}>
+                  <Col
+                    md={{ span: 24, order: 2 }}
+                    xs={{ span: 24, order: 1 }}
+                    style={{
+                      border: " 1px solid white",
+                      backgroundColor: " white",
+                      boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+                      borderRadius: 5,
+                      padding: "15px 35px",
+                    }}
+                  >
+                    <Row gutter={[16, 16]}>
+                      <div style={{ marginBottom: 16 }}>
+                        <Col>
+                          <Space>
+                            {renderFilterTimeShoot()}
+                            {renderFilterTeam()}
+                            {filterParams.keyword && (
+                              <Tag
+                                closable
+                                onClose={() => handleClearKeywordFilter()}
+                              >
+                                Keyword: {filterParams.keyword}
+                              </Tag>
+                            )}
+                          </Space>
+                        </Col>
+                      </div>
+                    </Row>
                     <Row
                       gutter={[24, 24]}
                       style={{ marginBottom: 16, padding: 16 }}
                     >
-                      <Col Col md={6} xs={24}>
+                      <Col
+                        Col
+                        md={6}
+                        xs={24}
+                        style={{
+                          border: " 1px solid white",
+                          backgroundColor: " white",
+                          boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+                          borderRadius: 5,
+                        }}
+                      >
                         <Select
                           placeholder="Sắp xếp theo"
                           allowClear
@@ -535,29 +570,13 @@ function HomePitch() {
                           onChange={(value) => handleFilter("teamId", value)}
                           value={filterParams.teamId}
                         >
-                          <Row>{renderTeamOptions()}</Row>
+                          <Row>
+                            <h3>Lọc Theo</h3>
+                            {renderTeamOptions()}
+                          </Row>
                         </Checkbox.Group>
                       </Col>
-                      <Col md={16} xs={24}>
-                        <Row gutter={[16, 16]}>
-                          <div style={{ marginBottom: 16 }}>
-                            <Col>
-                              <Space>
-                                {renderFilterTimeShoot()}
-                                {renderFilterTeam()}
-                                {filterParams.keyword && (
-                                  <Tag
-                                    closable
-                                    onClose={() => handleClearKeywordFilter()}
-                                  >
-                                    Keyword: {filterParams.keyword}
-                                  </Tag>
-                                )}
-                              </Space>
-                            </Col>
-                          </div>
-                        </Row>
-
+                      <Col md={18} xs={24}>
                         <Row gutter={[16, 16]}>{renderPitchList()}</Row>
 
                         {pitch.data.length !== pitch.meta.total && (

@@ -12,12 +12,18 @@ import {
   Modal,
   Select,
   DatePicker,
+  Divider,
   Calendar,
+  Space,
 } from "antd";
 
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, Link, generatePath, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { UserOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  HistoryOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
 import { ROUTES } from "../../constants/routers";
 import moment from "moment";
 import "antd/dist/antd.css";
@@ -26,7 +32,11 @@ import {
   FaLocationArrow,
   FaPhone,
   FaBirthdayCake,
+  FaHammer,
+  FaUser,
 } from "react-icons/fa";
+import edit from "../../Images/edit.gif";
+import login from "../../Images/login.gif";
 import {
   getOderListAction,
   getPitchDetailAction,
@@ -37,6 +47,7 @@ import {
   updateAddressUser,
   getFavoriteList,
   getReviewListAction,
+  getPitchListAction,
 } from "../../redux/actions";
 import * as S from "./style";
 
@@ -44,11 +55,25 @@ const CollectionCreateForm = ({ open, onCreate, onCancel }) => {
   const [form] = Form.useForm();
   const [birthday, setBirthday] = useState();
   const { userInfo } = useSelector((state) => state.user);
+
   function handleSelectedDate(values) {
     setBirthday(moment(values).format("DD/MM/YYYY"));
   }
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    dispatch(getPitchDetailAction());
+    dispatch(getCityListAction());
+    dispatch(getPitchListAction());
+  }, []);
+  useEffect(() => {
+    dispatch(
+      getPitchListAction({
+        params: {
+          page: 1,
+        },
+      })
+    );
+  }, []);
   const { cityList, districtList, wardList } = useSelector(
     (state) => state.location
   );
@@ -86,7 +111,7 @@ const CollectionCreateForm = ({ open, onCreate, onCancel }) => {
     <Modal
       open={open}
       title="Cập nhập thông tin cá nhân"
-      okText="Create"
+      okText="Cập nhập"
       cancelText="Cancel"
       onCancel={onCancel}
       onOk={() => {
@@ -96,9 +121,7 @@ const CollectionCreateForm = ({ open, onCreate, onCancel }) => {
             form.resetFields();
             onCreate(values);
           })
-          .catch((info) => {
-            console.log("Validate Failed:", info);
-          });
+          .catch((info) => {});
       }}
     >
       <Form
@@ -106,9 +129,9 @@ const CollectionCreateForm = ({ open, onCreate, onCancel }) => {
         layout="vertical"
         name="form_in_modal"
         initialValues={{
-          name: userInfo.data.fullName,
-          phone: "",
-          address: "",
+          fullName: userInfo.data.fullName || "",
+          phone: userInfo.data.info?.phone || "",
+          address: userInfo.data?.info?.address || "",
           date: "",
           cityCode: undefined,
           districtCode: undefined,
@@ -239,16 +262,19 @@ const Profile = () => {
   const [changePasswordForm] = Form.useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { state } = useLocation();
+
   const [open, setOpen] = useState(false);
   const { userInfo } = useSelector((state) => state.user);
   const { bookingList } = useSelector((state) => state.booking);
   const { favoriteList } = useSelector((state) => state.favorite);
-  console.log(favoriteList, "favoriteList");
+  const { reviewList } = useSelector((state) => state.review);
+
+  const { pitch } = useSelector((state) => state.product);
 
   const { cityList, districtList, wardList } = useSelector(
     (state) => state.location
   );
-  const { pathname } = useLocation();
 
   const onCreate = (values) => {
     const { cityCode, districtCode, wardCode, ...otherValues } = values;
@@ -257,15 +283,6 @@ const Profile = () => {
       (item) => item.code === districtCode
     );
     const wardData = wardList.data.find((item) => item.code === wardCode);
-    /*  console.log(
-      {
-        ...otherValues,
-        cityName: cityData.name,
-        districtName: districtData.name,
-        wardName: wardData.name,
-      },
-      "action"
-    ); */
     dispatch(
       updateAddressUser({
         id: userInfo.data.id,
@@ -278,6 +295,8 @@ const Profile = () => {
         wardName: wardData.name,
         callback: {
           clearForm: () => changePasswordForm.resetFields(),
+          goToHome: () => navigate(state?.prevPath || ROUTES.USER.HOME),
+          reload: () => window.location.reload(),
         },
       })
     );
@@ -288,14 +307,11 @@ const Profile = () => {
   useEffect(() => {
     if (userInfo.data.id) {
       dispatch(getOderListAction({ userId: userInfo.data.id }));
-      dispatch(getPitchDetailAction());
       dispatch(getFavoriteList({ userId: userInfo.data.id }));
       dispatch(getReviewListAction({ userId: userInfo.data.id }));
     }
   }, [userInfo.data]);
-  useEffect(() => {
-    dispatch(getCityListAction());
-  }, []);
+
   const handleChangePassword = (values) => {
     /* console.log(
       {
@@ -319,7 +335,6 @@ const Profile = () => {
         },
       })
     );
-    window.location.reload();
   };
 
   const tableColumns = [
@@ -346,6 +361,29 @@ const Profile = () => {
       key: "createdAt",
       render: (createdAt) => moment(createdAt).format("DD/MM/YYYY HH:mm"),
     },
+    {
+      title: "Chức năng chọn",
+      dataIndex: "pitchId",
+      key: "action",
+      render: (id) => {
+        return (
+          <Space>
+            <Link to={generatePath(ROUTES.USER.PITCH_DETAIL, { id: id })}>
+              <h3>Xem chi tiết</h3>
+            </Link>
+          </Space>
+          /* pitch.data.map((item, index) => {
+            return (
+              <Link
+                to={generatePath(ROUTES.ADMIN.UPDATE_PITCH, { id: item.id })}
+              >
+                Update
+              </Link>
+            );
+          }) */
+        );
+      },
+    },
   ];
   const tableColumnFavorite = [
     {
@@ -353,38 +391,51 @@ const Profile = () => {
       dataIndex: "id",
       key: "id",
     },
+
     {
-      title: "Tên ",
+      title: "Tên sân",
       dataIndex: "pitchName",
       key: "pitchName",
     },
-    {
-      title: "Tên sân",
-      dataIndex: "fullName",
-      key: "fullName",
-      /*  render: (fullName) => fullName, */
-    },
 
     {
-      title: "Date",
+      title: "Ngày",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (createdAt) => moment(createdAt).format("DD/MM/YYYY HH:mm"),
     },
   ];
+
   return (
     <S.WrapperContainer>
-      <S.ContentTopTitle>Hồ sơ cá nhân</S.ContentTopTitle>
+      <S.ContentTopTitle>
+        <img src={edit} alt="" style={{ width: 50, height: 50 }} /> Hồ sơ cá
+        nhân
+      </S.ContentTopTitle>
       <Tabs tabPosition="left" defaultActiveKey="1">
-        <Tabs.TabPane tab="Thông tin cá nhân" key="1">
+        <Tabs.TabPane
+          tab={
+            <span>
+              <UserOutlined />
+              Thông tin cá nhân
+            </span>
+          }
+          key="1"
+        >
           <S.ContentTop>
             <Avatar
+              shape="square"
               size={150}
               icon={<UserOutlined />}
-              style={{ boxShadow: "rgb(0 0 0 / 50%) 0px 1px 12px" }}
+              style={{
+                width: 280,
+                height: 290,
+                fontSize: 160,
+                boxShadow: "rgb(0 0 0 / 50%) 0px 1px 12px",
+              }}
             />
             <S.ContentTopItem>{userInfo.data.fullName}</S.ContentTopItem>
-            <div>
+            <S.ButtonUpdateInfo>
               <Button
                 type="link"
                 danger
@@ -392,49 +443,71 @@ const Profile = () => {
                   setOpen(true);
                 }}
               >
-                Cập nhập thông tin.
+                <FaHammer style={{ color: "#1890ff" }} />
+                &nbsp; Cập nhập thông tin.
               </Button>
-            </div>
+            </S.ButtonUpdateInfo>
           </S.ContentTop>
           <S.ContentBottom>
             <S.ItemText>
-              <FaEnvelope />
-              &nbsp; Email:&nbsp; {userInfo.data.email}
+              &nbsp;
+              <div style={{ fontSize: 18 }}>
+                <FaEnvelope />
+                Email:
+              </div>{" "}
+              &nbsp; <h6>{userInfo.data.email}</h6>
             </S.ItemText>
 
             <S.ItemText>
-              <FaLocationArrow /> &nbsp; Địa chỉ: &nbsp;
-              {userInfo.data.info ? (
-                <div>
-                  {userInfo.data?.info?.address +
-                    "-" +
-                    userInfo.data?.info?.wardName +
-                    "-" +
-                    userInfo.data?.info?.districtName +
-                    "-" +
-                    userInfo.data?.info?.cityName}
-                </div>
-              ) : (
-                <div>Bạn chưa có địa chỉ</div>
-              )}
+              <div style={{ fontSize: 18 }}>
+                {" "}
+                <FaLocationArrow /> Địa chỉ:
+              </div>
+              &nbsp; &nbsp;
+              <h6>
+                {userInfo.data.info ? (
+                  <div>
+                    {userInfo.data?.info?.address +
+                      "-" +
+                      userInfo.data?.info?.wardName +
+                      "-" +
+                      userInfo.data?.info?.districtName +
+                      "-" +
+                      userInfo.data?.info?.cityName}
+                  </div>
+                ) : (
+                  <div>Bạn chưa có địa chỉ</div>
+                )}
+              </h6>
             </S.ItemText>
             <S.ItemText>
-              <FaPhone />
-              &nbsp; Điện thoại: &nbsp;
-              {userInfo.data.info ? (
-                <div>{userInfo.data?.info?.phone}</div>
-              ) : (
-                <div>Bạn chưa có số điện thoại</div>
-              )}
+              <div style={{ fontSize: 18 }}>
+                <FaPhone /> Điện thoại:
+              </div>
+              &nbsp; &nbsp;
+              <h6>
+                {userInfo.data.info ? (
+                  <div>{userInfo.data?.info?.phone}</div>
+                ) : (
+                  <div>Bạn chưa có số điện thoại</div>
+                )}
+              </h6>
             </S.ItemText>
             <S.ItemText>
-              <FaBirthdayCake />
-              &nbsp; Ngày sinh: &nbsp;
-              {userInfo.data.date ? (
-                <div>{userInfo.data.date}</div>
-              ) : (
-                <div>Bạn Chưa có ngày sinh</div>
-              )}
+              <div style={{ fontSize: 18 }}>
+                {" "}
+                <FaBirthdayCake />
+                Ngày sinh:
+              </div>
+              &nbsp; &nbsp;
+              <h6>
+                {" "}
+                {userInfo.data.date ? (
+                  <div>{userInfo.data.date}</div>
+                ) : (
+                  <div>Bạn Chưa có ngày sinh</div>
+                )}
+              </h6>
             </S.ItemText>
 
             <CollectionCreateForm
@@ -446,7 +519,15 @@ const Profile = () => {
             />
           </S.ContentBottom>
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Lịch sử" key="2">
+        <Tabs.TabPane
+          tab={
+            <span>
+              <HistoryOutlined />
+              Lịch sử
+            </span>
+          }
+          key="2"
+        >
           <Tabs>
             <Tabs.TabPane tab="Lịch sử đặt sân" key="1">
               <Table
@@ -462,11 +543,32 @@ const Profile = () => {
                 }}
                 expandable={{
                   expandedRowRender: (record) => (
-                    <Row gutter={16}>
-                      <Col span={6}>Combo nước: {record.comboName}</Col>
-                      <Col span={6}>Trọng tài: {record.arbitrationName}</Col>
-                      <Col span={6}>SĐT: {record.sdt}</Col>
-                      <Col span={6}>{record.comboName}</Col>
+                    <Row gutter={20}>
+                      <Col span={6}>
+                        {" "}
+                        <Divider orientation="left">Combo</Divider>{" "}
+                        {record.comboName}
+                      </Col>
+                      <Col span={6}>
+                        {" "}
+                        <Divider orientation="left">Trọng tài</Divider>{" "}
+                        {record.arbitrationName}
+                      </Col>
+                      <Col span={6}>
+                        {" "}
+                        <Divider orientation="left">Điện thoại</Divider>{" "}
+                        {record.sdt}
+                      </Col>
+                      <Col span={6}>
+                        {" "}
+                        <Divider orientation="left">Phương thức</Divider>{" "}
+                        {record.method}
+                      </Col>
+                      <Col span={6}>
+                        {" "}
+                        <Divider orientation="left">Số tài khoản</Divider>{" "}
+                        {record.cardnumber}
+                      </Col>
                     </Row>
                   ),
                 }}
@@ -475,7 +577,9 @@ const Profile = () => {
             <Tabs.TabPane tab="Lịch sử yêu thích" key="2">
               <Table
                 columns={tableColumnFavorite}
-                dataSource={favoriteList.data}
+                dataSource={favoriteList.data.filter((item) => {
+                  return item.userId === userInfo.data.id;
+                })}
                 rowKey="id"
                 pagination={false}
                 style={{
@@ -484,22 +588,42 @@ const Profile = () => {
                   boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
                   borderRadius: 5,
                 }}
-                /*   expandable={{
-                  expandedRowRender: (record) => (
-                    <Row gutter={16}>
-                      <Col span={6}>Combo nước: {record.comboName}</Col>
-                      <Col span={6}>Trọng tài: {record.arbitrationName}</Col>
-                      <Col span={6}>SĐT: {record.sdt}</Col>
-                      <Col span={6}>{record.comboName}</Col>
-                    </Row>
-                  ),
-                }} */
               />
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Lịch sử bình luận" key="3"></Tabs.TabPane>
+            <Tabs.TabPane tab="Lịch sử bình luận" key="3">
+              <Table
+                columns={tableColumnFavorite}
+                dataSource={reviewList.data.filter((item) => {
+                  return item.userId === userInfo.data.id;
+                })}
+                rowKey="id"
+                pagination={false}
+                style={{
+                  margin: 16,
+                  padding: 16,
+                  boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+                  borderRadius: 5,
+                }}
+                expandable={{
+                  expandedRowRender: (record) => (
+                    <Row gutter={16}>
+                      <Col span={6}>Nội dung bình luận: - {record.comment}</Col>
+                    </Row>
+                  ),
+                }}
+              />
+            </Tabs.TabPane>
           </Tabs>
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Đổi mật khẩu" key="3">
+        <Tabs.TabPane
+          tab={
+            <span>
+              <SettingOutlined />
+              Đổi mật khẩu
+            </span>
+          }
+          key="3"
+        >
           <Form
             form={changePasswordForm}
             name="changePasswordForm"
@@ -517,6 +641,27 @@ const Profile = () => {
               borderRadius: 5,
             }}
           >
+            <h1
+              style={{
+                width: "45%",
+                padding: 16,
+                margin: " 0 auto",
+                boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+                borderRadius: 5,
+                fontSize: 40,
+                display: "flex",
+              }}
+            >
+              <img
+                src={login}
+                alt=""
+                style={{
+                  width: 70,
+                  height: 70,
+                }}
+              />
+              Đổi mật khẩu
+            </h1>
             <Form.Item
               label="Mật khẩu cũ"
               name="oldPassword"

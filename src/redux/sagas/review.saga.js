@@ -10,7 +10,7 @@ function* getReviewListSaga(action) {
     const result = yield axios.get("http://localhost:4000/reviews", {
       params: {
         pitchId: pitchId,
-        _expand: "user",
+        _expand: ["user"],
         _sort: "id",
         _order: "desc",
       },

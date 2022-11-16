@@ -57,7 +57,7 @@ export const Image = styled.div`
 
 export const ItemText = styled.h2`
   display: flex;
-  align-items: center;
+  align-items: baseline;
 `;
 export const WrapperContainer = styled.div`
   box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
@@ -74,28 +74,23 @@ export const ContentBottom = styled.div`
   border-radius: 5px;
 `;
 export const ContentTop = styled.div`
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
-  background-color: whitesmoke;
   margin: 16px;
   padding: 16px;
   text-align: center;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
   border-radius: 5px;
 `;
 export const ContentTopItem = styled.h1`
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
-  background-color: whitesmoke;
-  margin: 16px;
+height:0,
+  margin: 15px;
   padding: 16px;
-  text-align: center;
-  width: max-content;
   text-align: center;
   border-radius: 5px;
   color: #1890ff;
+  position: relative;
+  bottom: 110px;
 `;
 export const ContentTopTitle = styled.h1`
+  display: flex;
   box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
   background-color: whitesmoke;
   margin: 0px 0px 10px -40px;
@@ -107,3 +102,52 @@ export const ContentTopTitle = styled.h1`
   position: relative;
   bottom: 30px;
 `;
+export const ButtonUpdateInfo = styled.div`
+  font-weight: bold;
+  position: relative;
+  bottom: 140px;
+  font-size: 20px;
+  height: 0;
+  & :hover {
+    & :after {
+      left: 0;
+      width: 100%;
+    }
+  }
+  & :after {
+    position: absolute;
+    content: "";
+    bottom: -9px;
+    left: 50%;
+    right: 10px;
+    width: 0;
+    height: 3px;
+    background-color: #1890ff;
+    transition: all 0.3s ease;
+  }
+  & Button {
+    font-size: 20px;
+  }
+`;
+/* .select {
+  padding: 0;
+  display: flex;
+  width: 100%;
+}
+
+.select li::after {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  width: 0;
+  height: 3px;
+  background-color: #1890ff;
+  transition: all 0.3s ease;
+}
+
+.select li:hover:after {
+  left: 0;
+  width: 100%;
+} */

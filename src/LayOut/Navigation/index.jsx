@@ -14,7 +14,6 @@ const Navigation = () => {
 
   const dispatch = useDispatch();
   const { teamList } = useSelector((state) => state.team);
-  console.log(teamList.data, "hieu");
 
   useEffect(() => {
     dispatch(getTeamListAction());

@@ -1,15 +1,18 @@
 .Itemslogan {
   position: relative;
-  bottom: 200px;
+  bottom: 230px;
   font-size: 30px;
   color: #ffff;
   font-family: Courier New;
   padding: 0px 40px 0px 40px;
+  margin: 20px;
+
   text-align: center;
+  box-shadow: 0 0 12px rgb(0 0 0 / 50%);
 }
 .sloganEnglish {
   position: relative;
-  bottom: 200px;
+  bottom: 230px;
   font-size: 19px;
   text-align: center;
   color: beige;

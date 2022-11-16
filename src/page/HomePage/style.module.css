@@ -21,6 +21,9 @@
 }
 .ButtonSetPitch:hover {
   background-color: #096dd9;
+  font-size: 50px;
+  width: 110px;
+  height: 110px;
   transition: all 0.3s ease 0s;
 }
 
@@ -51,12 +54,7 @@
   width: 100%;
   justify-content: space-between;
 }
-.titleView {
-  margin-top: 70px;
-  text-align: center;
-  color: #fff;
-  font-size: 40px;
-}
+
 .titleCombo {
   text-align: center;
   font-family: "myFirstFont";
@@ -134,6 +132,7 @@ li {
 }
 
 .items {
+  margin: 0 auto;
   border: 1px solid #938888;
   height: auto;
   width: 31%;
@@ -147,21 +146,28 @@ li {
 .items:hover {
   background-color: #d89614;
 }
+
 .itemTitle {
   color: black;
   display: flex;
-  align-items: stretch;
+  align-items: unset;
   /*  box-shadow: rgb(0 0 0 / 50%) -1px 1px 5px;
   border-radius: 3px; */
+}
+.itemTitle button {
+  font-size: 33px;
+  font-weight: 600;
+  padding: 2px;
+  color: rgb(130, 0, 20);
 }
 .itemPrice {
   color: rgb(130, 0, 20);
   display: flex;
   align-items: center;
   font-size: 30px;
-  padding: 3px;
+  padding: 0 20px 0 20px;
   width: max-content;
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 5px;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 3px;
   border-radius: 3px;
 }
 
@@ -208,6 +214,7 @@ li {
   background: linear-gradient(90deg, #ff0080 0%, #ff8c00 100%);
 }
 .defauBtn {
+  font-size: 15px;
   border: 0;
   z-index: 1;
   border-radius: 4px;
@@ -231,40 +238,47 @@ a {
 }
 .ContentRight2 img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .contentWrapperButton {
   width: 90%;
-  display: flex;
-  height: 100px;
-  text-align: center;
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
-  align-items: center;
-  justify-content: space-around;
-  color: whitesmoke;
+  background-color: whitesmoke;
   margin: 0 auto;
   text-align: center;
+  padding: 30px;
+  border-radius: 7px;
+  box-shadow: rgb(0 0 0 / 60%) 0px 0px 3px;
 }
-.contentWrapperButton a {
+.contentWrapperButton h2 {
+  align-items: center;
+  justify-content: space-around;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
   letter-spacing: 5px;
   text-transform: uppercase;
   font-size: 27px;
   font-weight: 600;
   justify-content: center;
 }
+.contentWrapperButton h3 {
+  color: #a8071a;
+  box-shadow: 0 0 2px rgb(0 0 0 / 30%);
+  border-radius: 5px;
+}
+.contentWrapperButton p {
+  color: #ce7b7b;
+  padding-top: 25px;
+}
 
 img :hover {
   filter: blur(15px);
   opacity: 0.7;
 }
-
-/* .ContentCapTitleRight:hover {
-  opacity: 1;
-} */
-
-/* Carousel */
 
 .DatePickers {
   position: relative;
@@ -277,4 +291,50 @@ img :hover {
   background: rgba(255, 255, 255, 0.333);
   border-radius: 8px;
   color: #fff;
+}
+.ItemImagePitch {
+  object-fit: cover;
+  height: 170px !important;
+  border-radius: 6px;
+  /* width: 150px !important; */
+}
+.WrapperMaxim {
+  padding: 32px;
+  background-color: white;
+  text-align: center;
+  border-radius: 7px;
+}
+.WrapperMaxim h1 {
+  color: #a8071a;
+  font-size: 65px;
+}
+.WrapperMaxim p {
+  padding: 10px;
+  font-size: 20px;
+  color: #ff7a45;
+}
+.WrapperQuickView {
+  padding: 32px;
+  background-color: white;
+  text-align: center;
+  margin: 80px auto;
+  border-radius: 7px;
+}
+.WrapperQuickView h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #a8071a;
+  font-size: 65px;
+}
+.WrapperQuickView img {
+  height: 80px;
+  width: 80px;
+}
+.WrapperCombo {
+  padding: 32px;
+  background-color: white;
+  text-align: center;
+  margin: 80px auto;
+  border-radius: 7px;
 }

@@ -45,7 +45,6 @@ const Info = ({ setStep }) => {
     );
 
     const wardData = wardList.data.find((item) => item.code === wardCode); */
-    console.log(values);
     dispatch(
       setCheckoutInfoAction({
         ...otherValues,

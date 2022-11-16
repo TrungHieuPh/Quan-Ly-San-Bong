@@ -13,7 +13,6 @@ const UserPitchList = () => {
   const { pitch } = useSelector((state) => state.product);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log(pitch, "abc");
   useEffect(() => {
     dispatch(
       getPitchListAction({

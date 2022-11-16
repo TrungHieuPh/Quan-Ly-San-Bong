@@ -19,7 +19,6 @@ import { ROUTES } from "../../../../constants/routers";
 const TimeSelect = ({ setStep }) => {
   const dispatch = useDispatch();
   const { pitchDetail } = useSelector((state) => state.product);
-  console.log(pitchDetail, "pitchDetail");
   const { pitch } = useSelector((state) => state.product);
   const { userInfo } = useSelector((state) => state.user);
   const { bookingList } = useSelector((state) => state.booking);
@@ -50,6 +49,8 @@ const TimeSelect = ({ setStep }) => {
       {
         ...values,
         date: dateSelected,
+
+        status: "block",
         totalPrice: parseInt(productPriceCombo),
         pitchBonus: {
           arbitrationSelect: selectedOptionArbitration
@@ -64,11 +65,12 @@ const TimeSelect = ({ setStep }) => {
       },
       "av "
     );
-
+    /* 
     dispatch(
       setCheckoutTimeSelectAction({
         ...values,
         date: dateSelected,
+        status: "block",
         totalPrice: parseInt(productPriceCombo),
         pitchBonus: {
           arbitrationSelect: selectedOptionArbitration
@@ -82,7 +84,7 @@ const TimeSelect = ({ setStep }) => {
         },
       })
     );
-    setStep(1);
+    setStep(1); */
   };
 
   const selectedOptionData = arbitrationList.data?.find(
@@ -181,6 +183,34 @@ const TimeSelect = ({ setStep }) => {
     );
   };
 
+  const isBlock = pitchDetail.data.orders?.map((item) => {
+    return item.timeOption;
+  });
+
+  const isDayBlock = bookingList.data.map((item) => {
+    if (
+      moment(item.date, "DD/MM/YYYY").valueOf() ===
+        moment(dateSelected, "DD/MM/YYYY").valueOf() &&
+      parseInt(id) === item.pitchId
+    ) {
+      return item.id;
+    }
+  });
+  /*    className={
+            isBlock.includes((items) => items === item.id) &&
+            isDayBlock.every((items) => items === true)
+              ? true
+              : false
+          } */
+  /*  console.log(
+    isBlock.map((item) => {
+      return item;
+    }),
+    "isBloc"
+  ); */
+  /*   for (let i = 0; i < isBlock.length; i++) {
+    return isBlock[i];
+  } */
   const renderTimeShootOptions = useMemo(() => {
     return pitchDetail.data.times?.map((item, index) => {
       return (
@@ -197,9 +227,11 @@ const TimeSelect = ({ setStep }) => {
   }, [pitchDetail.data]);
 
   const day = new Date();
-  day.setDate(day.getDate());
+  const dayFormat = moment(day).format("DD/MM/YYYY");
   const disabledDate = (current) => {
-    return current && current.valueOf() < day;
+    return (
+      current && current.valueOf() < moment(dayFormat, "DD/MM/YYYY").valueOf()
+    );
   };
 
   return (
@@ -278,8 +310,6 @@ const TimeSelect = ({ setStep }) => {
                     onChange={(e) => setSelectedOption(e.target.value)}
                     defaultValue={selectedOption}
                     style={{
-                      /*    position: "relative",
-              top: 75, */
                       padding: 10,
                       textAlign: "center",
                       display: "flex",

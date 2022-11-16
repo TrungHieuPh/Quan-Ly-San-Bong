@@ -286,6 +286,7 @@ export const ButtonSetPitchHover = styled.div`
 `;
 export const SearchBooking = styled.div`
   width: 100%;
+  padding: 15px 10px 15px 10px;
   display: flex;
   position: relative;
   bottom: 20px;
@@ -333,16 +334,16 @@ export const ContentRight = styled.div`
   border-radius: 15px;
 `;
 export const WrapperReview = styled.div`
-  margin-top: 30px;
+  margin: 15px 0 50px 0;
   background-color: white;
   box-shadow: rgb(0 0 0 / 50%) -1px 1px 3px;
   padding: 16px;
-  border-radius: 10px;
+  border-radius: 5px;
 `;
 export const priceFrom = styled.div`
   display: flex;
   font-size: 35px;
-  padding: 0px 10px;
+  padding: 10px 0px 0px 10px;
   background-color: whitesmoke;
   border-radius: 5px;
   width: max-content;
@@ -383,4 +384,11 @@ export const TotalRating = styled.div`
   background-color: whitesmoke;
   box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
   border-radius: 5px;
+`;
+export const TitlePanner = styled.h1`
+  color: #1890ff;
+  font-weight: 700;
+  padding-top: 40px;
+  font-size: 80px;
+  box-shadow: rgb(0 0 0) 0px 5px 35px;
 `;

@@ -8,7 +8,6 @@ const accessToken = localStorage.getItem("accessToken");
 function* bookingSaga(action) {
   try {
     const { ...orderData } = action.payload;
-    console.log(orderData, "aaa");
     const result = yield axios.post("http://localhost:4000/orders", orderData);
     /*  for (let i = 0; i <= PitchOrder.length; i++) {
       console.log(i, "i");

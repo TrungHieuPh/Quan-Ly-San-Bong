@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { ROUTES } from "../../../constants/routers";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaGripLinesVertical } from "react-icons/fa";
 
 import * as S from "./styles";
 import document from "../../../Images/document.gif";
@@ -50,15 +50,7 @@ function SetPitch() {
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.user);
   const { reviewList } = useSelector((state) => state.review);
-  console.log(
-    reviewList.data?.map((item) => {
-      return (
-        item.userId ===
-        userInfo.data.id /* && dispatch(getReviewListAction(item)) */
-      );
-    }),
-    "a"
-  );
+
   const { pitchDetail } = useSelector((state) => state.product);
   const { pitch } = useSelector((state) => state.product);
 
@@ -102,6 +94,7 @@ function SetPitch() {
             unFavoritePitchAction({
               id: favoriteData.id,
               pitchId: pitchDetail.data.id,
+              pitchName: pitchDetail.data.name,
             })
           );
         }
@@ -110,6 +103,7 @@ function SetPitch() {
           favoritePitchAction({
             userId: userInfo.data.id,
             pitchId: pitchDetail.data.id,
+            pitchName: pitchDetail.data.name,
           })
         );
       }
@@ -125,7 +119,6 @@ function SetPitch() {
           (item) => item.userId === userInfo.data.id
         );
         if (ReviewData) {
-          console.log("abc");
           notification.warn({ message: "Bạn đã bình luận rồi" });
         }
       } else {
@@ -134,6 +127,7 @@ function SetPitch() {
             ...values,
             userId: userInfo.data.id,
             pitchId: pitchDetail.data.id,
+            pitchName: pitchDetail.data.name,
           })
         );
         window.location.reload();
@@ -218,14 +212,44 @@ function SetPitch() {
           <Col md={{ span: 24, order: 1 }} xs={{ span: 24, order: 1 }}>
             <S.Center>
               <S.BgTitle>
-                <h1 style={{ color: "#ffffff", paddingTop: 30 }}>
-                  {pitchDetail.data?.name}
-                </h1>
-                <h5
-                  style={{ color: " wheat", position: "relative", bottom: 20 }}
-                >
-                  Bóng đá | 5 sao
-                </h5>
+                <S.TitlePanner>{pitchDetail.data?.name}</S.TitlePanner>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <h5
+                    style={{
+                      color: "white",
+                      position: "relative",
+                      fontSize: 45,
+                      bottom: 20,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    Bóng đá
+                  </h5>
+                  <h5
+                    style={{
+                      color: "white",
+                      position: "relative",
+                      fontSize: 45,
+                      bottom: 20,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <FaGripLinesVertical style={{ color: "#1890ff" }} />
+                    {countAverageRating.toFixed()}
+                    <FaStar
+                      style={{
+                        width: 45,
+                        height: 70,
+                        color: "#ffc53d",
+                      }}
+                      alt=""
+                    />
+                  </h5>
+                </div>
               </S.BgTitle>
             </S.Center>
           </Col>
@@ -284,10 +308,11 @@ function SetPitch() {
                           display: "flex",
                           flexWrap: "nowrap",
                           justifyContent: "center",
+                          width: "98%",
                         }}
                       >
                         <Col
-                          md={{ span: 12, order: 2 }}
+                          md={{ span: 13, order: 1 }}
                           xs={{ span: 14, order: 1 }}
                           style={{
                             margin: 24,
@@ -327,11 +352,11 @@ function SetPitch() {
                           </S.TotalRating>
                         </Col>
                         <Col
-                          md={{ span: 7, order: 1 }}
+                          md={{ span: 8, order: 2 }}
                           xs={{ span: 10, order: 1 }}
                           style={{
                             display: "flex",
-                            flexdirection: "column",
+                            flexDirection: "column",
                             justifyContent: "space-around",
                             alignItems: "center",
                           }}
@@ -371,7 +396,11 @@ function SetPitch() {
                     <Col
                       md={{ span: 7, order: 1 }}
                       xs={{ span: 24, order: 3 }}
-                      style={{ display: "flex", flexDirection: "column" }}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
                     >
                       <S.priceFrom>
                         <div style={{ fontSize: 20, color: "red" }}>

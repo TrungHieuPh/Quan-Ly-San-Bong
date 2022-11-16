@@ -21,8 +21,7 @@ import Profile from "./page/profile";
 
 import LoginPage from "./page/LoginPage";
 import RegisterPage from "./page/RegisterPage";
-/* import ChangePassword from "./page/profile/component/ChangePassword";
- */ import { ROUTES } from "./constants/routers";
+import { ROUTES } from "./constants/routers";
 import { getUserInfoAction } from "./redux/actions";
 import UserLayout from "./LayOut/UserLayout";
 import styles from "./App.module.css";
