@@ -279,10 +279,16 @@ export const ButtonSetPitch = styled(Button)`
     background-color: red;
   }
 `;
-export const ButtonSetPitchHover = styled.div`
-  /*   & :hover {
+/* export const ButtonSetPitchHover = styled(Button)`
+  padding: 10px;
+  & :hover {
     background-color: red;
-  } */
+  }
+`; */
+export const ButtonHover = styled(Col)`
+  & :hover {
+    background-color: blue;
+  }
 `;
 export const SearchBooking = styled.div`
   width: 100%;

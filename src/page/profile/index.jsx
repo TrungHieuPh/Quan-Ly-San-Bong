@@ -23,10 +23,11 @@ import {
   UserOutlined,
   HistoryOutlined,
   SettingOutlined,
+  CarryOutOutlined,
 } from "@ant-design/icons";
 import { ROUTES } from "../../constants/routers";
 import moment from "moment";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import {
   FaEnvelope,
   FaLocationArrow,
@@ -263,10 +264,54 @@ const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { state } = useLocation();
-
+  const day = new Date();
+  const dayFormat = moment(day).format("DD/MM/YYYY");
+  /*   const disabledDate = (current) => {
+    return (
+      current && current.valueOf() < moment(dayFormat, "DD/MM/YYYY").valueOf()
+    );
+  }; */
   const [open, setOpen] = useState(false);
   const { userInfo } = useSelector((state) => state.user);
   const { bookingList } = useSelector((state) => state.booking);
+  const [history, setHistory] = useState();
+
+  const historyOffDay = bookingList.data.map((item, index) => {
+    if (
+      moment(item.date, "DD/MM/YYYY").valueOf() <
+      moment(dayFormat, "DD/MM/YYYY").valueOf()
+    ) {
+      return item;
+    }
+  });
+  const historyOnDay = bookingList.data.map((item, index) => {
+    if (
+      moment(item.date, "DD/MM/YYYY").valueOf() >=
+      moment(dayFormat, "DD/MM/YYYY").valueOf()
+    ) {
+      return item;
+    }
+  });
+
+  /*  console.log(
+    bookingList.data.map((item, index) => {
+      if (
+        moment(item.date, "DD/MM/YYYY").valueOf() <
+        moment(dayFormat, "DD/MM/YYYY").valueOf()
+      ) {
+        return item;
+      } else {
+        return */ /* { ...bookingList.data.filter((item) => item !== index) }; */
+  /*   }
+    }),
+    "aa"
+  ); */
+
+  /*   const newFavorites = state.pitchDetail.data.favorites?.filter(
+    (item) => item.id !== id
+  ); */
+  /*   const itemIndex = newReviewList.findIndex((item) => item.id === data.id); */
+
   const { favoriteList } = useSelector((state) => state.favorite);
   const { reviewList } = useSelector((state) => state.review);
 
@@ -356,10 +401,70 @@ const Profile = () => {
     },
 
     {
-      title: "Date",
+      title: "Thời gian đặt sân",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (createdAt) => moment(createdAt).format("DD/MM/YYYY HH:mm"),
+    },
+    {
+      title: "Ngày đặt sân",
+      dataIndex: "date",
+      key: "date",
+      /*  render: (date) => moment(createdAt).format("DD/MM/YYYY HH:mm"), */
+    },
+    {
+      title: "Chức năng chọn",
+      dataIndex: "pitchId",
+      key: "action",
+      render: (id) => {
+        return (
+          <Space>
+            <Link to={generatePath(ROUTES.USER.PITCH_DETAIL, { id: id })}>
+              <h3>Xem chi tiết</h3>
+            </Link>
+          </Space>
+          /* pitch.data.map((item, index) => {
+            return (
+              <Link
+                to={generatePath(ROUTES.ADMIN.UPDATE_PITCH, { id: item.id })}
+              >
+                Update
+              </Link>
+            );
+          }) */
+        );
+      },
+    },
+  ];
+  const tableColumnFollow = [
+    {
+      title: "Số thứ tự",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Tên sân",
+      dataIndex: "pitchName",
+      key: "pitchName",
+    },
+    {
+      title: "Giá",
+      dataIndex: "totalPrice",
+      key: "totalPrice",
+      render: (totalPrice) => `${totalPrice.toLocaleString()} VNĐ`,
+    },
+
+    {
+      title: "Khung giờ đã chọn",
+      dataIndex: "timeOption",
+      key: "timeOption",
+      render: (timeOption) => timeOption.name,
+    },
+    {
+      title: "Ngày đặt sân",
+      dataIndex: "date",
+      key: "date",
+      /*  render: (date) => moment(createdAt).format("DD/MM/YYYY HH:mm"), */
     },
     {
       title: "Chức năng chọn",
@@ -455,7 +560,7 @@ const Profile = () => {
                 <FaEnvelope />
                 Email:
               </div>{" "}
-              &nbsp; <h6>{userInfo.data.email}</h6>
+              &nbsp; <div>{userInfo.data.email}</div>
             </S.ItemText>
 
             <S.ItemText>
@@ -464,7 +569,7 @@ const Profile = () => {
                 <FaLocationArrow /> Địa chỉ:
               </div>
               &nbsp; &nbsp;
-              <h6>
+              <div>
                 {userInfo.data.info ? (
                   <div>
                     {userInfo.data?.info?.address +
@@ -478,20 +583,20 @@ const Profile = () => {
                 ) : (
                   <div>Bạn chưa có địa chỉ</div>
                 )}
-              </h6>
+              </div>
             </S.ItemText>
             <S.ItemText>
               <div style={{ fontSize: 18 }}>
                 <FaPhone /> Điện thoại:
               </div>
               &nbsp; &nbsp;
-              <h6>
+              <div>
                 {userInfo.data.info ? (
                   <div>{userInfo.data?.info?.phone}</div>
                 ) : (
                   <div>Bạn chưa có số điện thoại</div>
                 )}
-              </h6>
+              </div>
             </S.ItemText>
             <S.ItemText>
               <div style={{ fontSize: 18 }}>
@@ -500,14 +605,14 @@ const Profile = () => {
                 Ngày sinh:
               </div>
               &nbsp; &nbsp;
-              <h6>
+              <div>
                 {" "}
                 {userInfo.data.date ? (
                   <div>{userInfo.data.date}</div>
                 ) : (
                   <div>Bạn Chưa có ngày sinh</div>
                 )}
-              </h6>
+              </div>
             </S.ItemText>
 
             <CollectionCreateForm
@@ -522,17 +627,17 @@ const Profile = () => {
         <Tabs.TabPane
           tab={
             <span>
-              <HistoryOutlined />
-              Lịch sử
+              <CarryOutOutlined />
+              Theo dõi sân
             </span>
           }
           key="2"
         >
           <Tabs>
-            <Tabs.TabPane tab="Lịch sử đặt sân" key="1">
+            <Tabs.TabPane tab="Sân sắp diễn ra" key="1">
               <Table
-                columns={tableColumns}
-                dataSource={bookingList.data}
+                columns={tableColumnFollow}
+                dataSource={historyOnDay.filter((item) => item !== undefined)}
                 rowKey="id"
                 pagination={false}
                 style={{
@@ -565,6 +670,69 @@ const Profile = () => {
                         {record.method}
                       </Col>
                       <Col span={6}>
+                        {" "}
+                        <Divider orientation="left">Số tài khoản</Divider>{" "}
+                        {record.cardnumber}
+                      </Col>
+                    </Row>
+                  ),
+                }}
+              />
+            </Tabs.TabPane>
+          </Tabs>
+        </Tabs.TabPane>
+
+        <Tabs.TabPane
+          tab={
+            <span>
+              <HistoryOutlined />
+              Lịch sử
+            </span>
+          }
+          key="3"
+        >
+          <Tabs>
+            <Tabs.TabPane tab="Lịch sử đặt sân" key="1">
+              <Table
+                columns={tableColumns}
+                dataSource={historyOffDay.filter((item) => item !== undefined)}
+                rowKey="id"
+                pagination={false}
+                style={{
+                  margin: 16,
+                  padding: 16,
+                  boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+                  borderRadius: 5,
+                }}
+                expandable={{
+                  expandedRowRender: (record) => (
+                    <Row gutter={24}>
+                      <Col span={4}>
+                        {" "}
+                        <Divider orientation="left">Combo</Divider>{" "}
+                        {record.comboName}
+                      </Col>
+                      <Col span={4}>
+                        {" "}
+                        <Divider orientation="left">Trọng tài</Divider>{" "}
+                        {record.arbitrationName}
+                      </Col>
+                      <Col span={4}>
+                        {" "}
+                        <Divider orientation="left">Điện thoại</Divider>{" "}
+                        {record.sdt}
+                      </Col>
+                      <Col span={4}>
+                        {" "}
+                        <Divider orientation="left">Khung giờ</Divider>{" "}
+                        {record.timeOption.name}
+                      </Col>
+                      <Col span={4}>
+                        {" "}
+                        <Divider orientation="left">Phương thức</Divider>{" "}
+                        {record.method}
+                      </Col>
+                      <Col span={4}>
                         {" "}
                         <Divider orientation="left">Số tài khoản</Divider>{" "}
                         {record.cardnumber}
@@ -622,7 +790,7 @@ const Profile = () => {
               Đổi mật khẩu
             </span>
           }
-          key="3"
+          key="4"
         >
           <Form
             form={changePasswordForm}

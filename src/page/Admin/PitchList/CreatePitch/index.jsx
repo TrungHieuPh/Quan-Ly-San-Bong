@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import slug from "slug";
 
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 import * as S from "./styles";
 import "antd-notifications-messages/lib/styles/style.css";

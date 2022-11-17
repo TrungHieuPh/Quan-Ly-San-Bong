@@ -278,24 +278,33 @@ function SetPitch() {
                           navigate(generatePath(ROUTES.USER.CHECKOUT, { id }))
                         }
                       >
-                        Bạn muốn đặt sân không ?
-                        <h3
+                        <div
                           style={{
-                            display: "flex",
-                            alignItems: "center",
-                            alignContent: "space-around",
+                            width: "100%",
+                            margin: "5px 0px 5px 1px",
+                            padding: "5px 25px 1px 5px",
+                            borderRadius: " 7px",
                           }}
                         >
-                          <img
-                            src={wink}
+                          Bạn muốn đặt sân không ?
+                          <h3
                             style={{
-                              width: 50,
-                              height: 50,
+                              display: "flex",
+                              alignItems: "center",
+                              alignContent: "space-around",
                             }}
-                            alt=""
-                          />
-                          Hãy nhấn vào đây!
-                        </h3>
+                          >
+                            <img
+                              src={wink}
+                              style={{
+                                width: 50,
+                                height: 50,
+                              }}
+                              alt=""
+                            />
+                            Hãy nhấn vào đây!
+                          </h3>
+                        </div>
                       </S.ButtonSetPitch>
                     </Col>
                     <Col

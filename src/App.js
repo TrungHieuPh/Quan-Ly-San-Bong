@@ -55,10 +55,7 @@ function App() {
           <Route path={ROUTES.USER.SET_PITCH} element={<SetPitch />} />
           <Route path={ROUTES.USER.CREATE_PITCH} element={<CreatePitch />} />
           <Route path={ROUTES.USER.PROFILE} element={<Profile />} />
-          {/*   <Route
-            path={ROUTES.USER.CHANGE_PASSWORD}
-            element={<ChangePassword />}
-          /> */}
+
           <Route
             path={ROUTES.USER.PRODUCT_LIST_PAGE}
             element={<PitchListPage />}

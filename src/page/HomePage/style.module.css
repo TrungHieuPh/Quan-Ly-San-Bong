@@ -2,6 +2,10 @@
   font-family: ImogenAgnes;
   src: url("./../../Images/SH\ Imogen\ Agnes.ttf");
 }
+@font-face {
+  font-family: Avenida;
+  src: url("../../Images/be-vietnam-pro/UTM\ Avenida.ttf");
+}
 .ButtonSetPitch {
   display: flex;
   width: 100px;
@@ -58,7 +62,7 @@
 .titleCombo {
   text-align: center;
   font-family: "myFirstFont";
-  color: aqua;
+  color: #1890ff;
   font-size: 100px;
 }
 .ContentCombo {
@@ -159,10 +163,12 @@ li {
   font-weight: 600;
   padding: 2px;
   color: rgb(130, 0, 20);
+  font-family: ui-monospace;
 }
 .itemPrice {
   color: rgb(130, 0, 20);
   display: flex;
+  font-family: "slick";
   align-items: center;
   font-size: 30px;
   padding: 0 20px 0 20px;
@@ -269,6 +275,8 @@ a {
   color: #a8071a;
   box-shadow: 0 0 2px rgb(0 0 0 / 30%);
   border-radius: 5px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 .contentWrapperButton p {
   color: #ce7b7b;
@@ -298,6 +306,7 @@ img :hover {
   border-radius: 6px;
   /* width: 150px !important; */
 }
+
 .WrapperMaxim {
   padding: 32px;
   background-color: white;
@@ -306,12 +315,13 @@ img :hover {
 }
 .WrapperMaxim h1 {
   color: #a8071a;
-  font-size: 65px;
+  font-size: 90px;
+  font-family: avenida;
 }
 .WrapperMaxim p {
   padding: 10px;
   font-size: 20px;
-  color: #ff7a45;
+  color: #164c7e;
 }
 .WrapperQuickView {
   padding: 32px;
@@ -325,8 +335,10 @@ img :hover {
   justify-content: center;
   align-items: center;
   color: #a8071a;
-  font-size: 65px;
+  font-size: 90px;
+  font-family: Avenida;
 }
+
 .WrapperQuickView img {
   height: 80px;
   width: 80px;

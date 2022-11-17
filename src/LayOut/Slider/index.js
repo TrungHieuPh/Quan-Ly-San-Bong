@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "antd";
-import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
+import "antd/dist/antd.min.css";
 
 import video from "../../videobg.mp4";
 import styles from "../Slider/style.module.css";
