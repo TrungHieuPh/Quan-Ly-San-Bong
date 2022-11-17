@@ -23,7 +23,7 @@ import Sliders from "react-slick";
 import { getPitchListAction } from "../../redux/actions/";
 import Slider from "../../LayOut/Slider";
 import styles from "../HomePage/style.module.css";
-import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
+import "antd/dist/antd.min.css";
 
 import soccerarea from "../../Images/soccerarea.gif";
 import click from "../../Images/click.gif";

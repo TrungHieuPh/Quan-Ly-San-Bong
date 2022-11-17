@@ -22,12 +22,19 @@ const TimeSelect = ({ setStep }) => {
   const { pitch } = useSelector((state) => state.product);
   const { userInfo } = useSelector((state) => state.user);
   const { bookingList } = useSelector((state) => state.booking);
+  console.log(
+    bookingList.data.map((item) => {
+      return item.timeOption;
+    })
+  );
   const { arbitrationList } = useSelector((state) => state.arbitration);
   const { comboList } = useSelector((state) => state.combo);
 
   const { id } = useParams();
   const [form] = Form.useForm();
   const [dateSelected, setDateSelected] = useState();
+  console.log(dateSelected);
+
   const [selectedOption, setSelectedOption] = useState();
   const [selectedOptionArbitration, setSelectedOptionArbitration] =
     useState("");
@@ -45,11 +52,13 @@ const TimeSelect = ({ setStep }) => {
   }
 
   const handleSubmitTimeSelectForm = (values) => {
-    console.log(
+    /*    console.log(
       {
         ...values,
         date: dateSelected,
-
+        timeoption: pitchDetail.data.times?.find(
+          (item) => item.id === selectedOption
+        ),
         status: "block",
         totalPrice: parseInt(productPriceCombo),
         pitchBonus: {
@@ -64,12 +73,15 @@ const TimeSelect = ({ setStep }) => {
         },
       },
       "av "
-    );
-    /* 
+    ); */
+
     dispatch(
       setCheckoutTimeSelectAction({
         ...values,
         date: dateSelected,
+        timeoption: pitchDetail.data.times?.find(
+          (item) => item.id === selectedOption
+        ),
         status: "block",
         totalPrice: parseInt(productPriceCombo),
         pitchBonus: {
@@ -84,7 +96,7 @@ const TimeSelect = ({ setStep }) => {
         },
       })
     );
-    setStep(1); */
+    setStep(1);
   };
 
   const selectedOptionData = arbitrationList.data?.find(
@@ -124,7 +136,7 @@ const TimeSelect = ({ setStep }) => {
           key={item.id}
           name="option"
           value={item.id}
-          style={{ margin: 2, fontSize: 13 }}
+          style={{ margin: 2, fontSize: 12 }}
         >
           {item.name}
         </Radio.Button>
@@ -139,7 +151,7 @@ const TimeSelect = ({ setStep }) => {
         if (
           moment(dateSelected, "DD/MM/YYYY").valueOf() ===
             moment(bookingItem.date, "DD/MM/YYYY").valueOf() &&
-          selectedOption === bookingItem.timeOption
+          selectedOption === bookingItem.timeOption?.id
         ) {
           isDisabled = true;
         }
@@ -252,15 +264,7 @@ const TimeSelect = ({ setStep }) => {
         >
           <Row gutter={[16, 16]}>
             <Col md={{ span: 10, order: 1 }} xs={{ span: 24, order: 1 }}>
-              <div
-                style={{
-                  borderRadius: 5,
-                  paddingBottom: 100,
-                  backgroundColor: "#425B76",
-                  textAlign: "center",
-                  boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
-                }}
-              >
+              <S.div1>
                 {/*   <Avatar size={100} icon={<UserOutlined />} /> */}
                 <S.ItemTitleTimeSelect>
                   Bạn ơi, chọn ngày ở đây !
@@ -291,7 +295,7 @@ const TimeSelect = ({ setStep }) => {
                     }}
                   />
                 </Form.Item>
-              </div>
+              </S.div1>
             </Col>
             <Col md={{ span: 10, order: 1 }} xs={{ span: 24, order: 2 }}>
               <S.WrapperLeft>

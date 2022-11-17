@@ -29,7 +29,7 @@ const Payment = ({ setStep }) => {
   const dispatch = useDispatch();
   const [paymentForm] = Form.useForm();
   const handleSubmitPaymentForm = (values) => {
-    console.log(
+    /*  console.log(
       {
         ...values,
         ...checkoutInfo,
@@ -48,7 +48,7 @@ const Payment = ({ setStep }) => {
         },
       },
       "values1"
-    );
+    ); */
     dispatch(
       bookingPitchAction({
         ...values,

@@ -112,3 +112,10 @@ export const ItemRadioBank = styled(Radio)`
   cursor: pointer;
   width: max-content;
 `;
+export const div1 = styled.div`
+  border-radius: 5;
+  padding-bottom: 100px;
+  background-color: #425b76;
+  text-align: center;
+  box-shadow: rgb(0 0 0 / 80%) -5px 5px 10px;
+`;

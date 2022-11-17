@@ -7,8 +7,7 @@ import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
 import { getOderListAction } from "../../redux/actions";
 import { PITCH_LIST_LIMIT } from "../../constants/paginations";
 import { ROUTES } from "../../constants/routers";
-import "antd/dist/antd.css";
-
+import "antd/dist/antd.min.css";
 import {
   FaFutbol,
   FaCalendarDay,
@@ -90,7 +89,7 @@ function PitchHistory() {
 
       <div
         style={{
-          marginTop: 16,
+          margin: 16,
           wordWrap: "break-word",
           display: "flex",
           justifyContent: " space-around",

@@ -8,8 +8,7 @@ import Sliders from "react-slick";
 import { getPitchListAction } from "../../redux/actions/";
 import Slider from "../../LayOut/Slider";
 import styles from "../HomePage/style.module.css";
-import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
-
+import "antd/dist/antd.min.css";
 import soccerarea from "../../Images/soccerarea.gif";
 import click from "../../Images/click.gif";
 import locations from "../../Images/locations.gif";
@@ -135,10 +134,18 @@ function HomePage() {
                       }}
                       alt=""
                     />
-                    <h4>Địa chỉ: {item.address}</h4>
+                    <h4 style={{ fontFamily: "system-ui" }}>
+                      Địa chỉ: {item.address}
+                    </h4>
                   </div>
                   <div>
-                    <h5 style={{ display: "flex", alignItems: "center" }}>
+                    <h5
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        fontFamily: "system-ui",
+                      }}
+                    >
                       {" "}
                       <img
                         src={stopwatch}
@@ -155,7 +162,12 @@ function HomePage() {
                         <Tag
                           type="dashed"
                           danger
-                          style={{ fontSize: 12, margin: 1, borderRadius: 4 }}
+                          style={{
+                            fontSize: 12,
+                            margin: 1,
+                            borderRadius: 4,
+                            fontFamily: "monospace",
+                          }}
                         >
                           {itemTimes.name}
                         </Tag>
@@ -214,6 +226,21 @@ function HomePage() {
       },
     ],
   };
+  /*  window.addEventListener("scroll", reveal);
+  const reveal = () => {
+    var reveals = document.querySelectorAll(".reveal");
+    for (let i = 0; i < reveal.length; i++) {
+      var windowHeight = window.innerHeight;
+      var revealTop = reveals[i].getBoundingClientRect().top;
+      var revealPoint = 150;
+
+      if (revealTop < windowHeight - revealPoint) {
+        reveals[i].classList.add("active");
+      } else {
+        reveals[i].classList.remove("active");
+      }
+    }
+  }; */
 
   return (
     <Row gutter={[16, 16]}>
@@ -296,8 +323,8 @@ function HomePage() {
                     <h3>Tổ chức các giải đấu với nhau</h3>
                   </h2>
                   <p>
-                    Thường xuyên tổ chức các giải đấu hàng tuần hàng tháng, tạo
-                    môi trường vui vẻ lành mạnh
+                    Thường xuyên tổ chức các giải đấu vào hàng tháng, tạo môi
+                    trường vui vẻ lành mạnh
                   </p>
                 </div>
               </Col>

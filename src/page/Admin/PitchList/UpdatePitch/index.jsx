@@ -8,7 +8,7 @@ import ReactQuill from "react-quill";
 
 import * as S from "./styles";
 
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "antd-notifications-messages/lib/styles/style.css";
 
