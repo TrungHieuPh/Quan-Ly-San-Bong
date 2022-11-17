@@ -17,7 +17,8 @@ import { ROUTES } from "../../constants/routers";
 import { getTeamListAction, getPitchListAction } from "../../redux/actions";
 import { PITCH_LIST_LIMIT } from "../../constants/paginations";
 
-import award from "../../Images/award.gif";
+import mouse from "../../Images/mouse.gif";
+
 import vietnam from "../../Images/vietnam.png";
 
 import * as S from "./styles";
@@ -85,13 +86,13 @@ function HeaderUser() {
               </div>
             </Space>
           </Col>
-          <div className="fixNav" style={{ width: "100%" }}>
-            <div>
-              <div className="logo">
+          <div className="fixNav" style={{ width: "100%", height: 0 }}>
+            <div style={{ height: 0 }}>
+              <S.LogoWrapper>
                 <Link to="/">
                   <h1 className={styles.logo}>sport</h1>
                 </Link>
-              </div>
+              </S.LogoWrapper>
             </div>
           </div>
 
@@ -100,11 +101,27 @@ function HeaderUser() {
           >
             <nav className={isShowNavBar ? styles.selectActive : styles.select}>
               <li style={{ fontSize: 19, color: "#003a8c" }}>
-                <Link className={styles.isActive} to={ROUTES.USER.PITCH_LIST}>
+                <Link
+                  style={{ display: "flex" }}
+                  className={styles.isActive}
+                  to={ROUTES.USER.PITCH_LIST}
+                >
                   <FaCalendarAlt
-                    style={{ height: 15, width: 15, color: "#ad2102" }}
+                    style={{ height: 20, width: 20, color: "#ad2102" }}
                   />
                   Đặt Sân
+                  <img
+                    src={mouse}
+                    alt=""
+                    style={{
+                      position: "relative",
+                      right: 4,
+                      top: 2,
+                      height: 35,
+                      width: 35,
+                      transform: "rotate(315deg)",
+                    }}
+                  />
                 </Link>
               </li>
               &nbsp;&nbsp; &nbsp;&nbsp;

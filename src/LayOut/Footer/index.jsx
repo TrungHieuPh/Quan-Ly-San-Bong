@@ -8,7 +8,13 @@ function Footer(props) {
           <Col md={{ span: 24, order: 1 }} xs={{ span: 24, order: 1 }}>
             <Row gutter={[16, 16]}>
               <Col md={{ span: 6, order: 1 }} xs={{ span: 24, order: 1 }}>
-                <div style={{ fontSize: "20px", fontWeight: 500 }}>
+                <div
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: 900,
+                    color: "#003a8c",
+                  }}
+                >
                   Đăng ký nhận bản tin của chúng tôi
                 </div>
               </Col>
@@ -19,7 +25,7 @@ function Footer(props) {
                 />
               </Col>
               <Col md={{ span: 4, order: 2 }} xs={{ span: 24, order: 3 }}>
-                <Button danger block type="primary" style={{ borderRadius: 6 }}>
+                <Button block type="primary" style={{ borderRadius: 6 }}>
                   Gửi
                 </Button>
               </Col>

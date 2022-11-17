@@ -13,16 +13,23 @@ import {
 } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams, generatePath } from "react-router-dom";
+import {
+  useNavigate,
+  useParams,
+  generatePath,
+  useLocation,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { ROUTES } from "../../../constants/routers";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
-import { FaUser, FaGripLinesVertical } from "react-icons/fa";
+import { FaUser, FaGripLinesVertical, FaArrowLeft } from "react-icons/fa";
 
 import * as S from "./styles";
 import document from "../../../Images/document.gif";
+import mouse from "../../../Images/mouse.gif";
 import click from "../../../Images/click.gif";
+
 import wink from "../../../Images/wink.gif";
 import yuan from "../../../Images/yuan.gif";
 import image from "../../../Images/image.gif";
@@ -46,6 +53,7 @@ function SetPitch() {
   const [dateSelected, setDateSelected] = useState();
 
   const { id } = useParams();
+  const { state } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.user);
@@ -147,7 +155,13 @@ function SetPitch() {
     return reviewList.data?.map((item) => {
       if (parseInt(item.pitchId) === parseInt(id))
         return (
-          <div style={{ margin: 16, borderBottom: ".2px solid #e0dddd8f" }}>
+          <div
+            style={{
+              margin: 16,
+              borderBottom: ".2px solid #e0dddd8f",
+              color: "#003a8c",
+            }}
+          >
             <Space align="center">
               <h3>
                 <FaUser />
@@ -173,7 +187,7 @@ function SetPitch() {
                 </Popconfirm>
               )}
 
-              <div style={{ color: "#40a9ff" }}>
+              <div style={{ color: "#003a8c" }}>
                 {moment(item.createdAt).fromNow()}
               </div>
             </Space>
@@ -213,7 +227,34 @@ function SetPitch() {
             <S.Center>
               <S.BgTitle>
                 <S.TitlePanner>{pitchDetail.data?.name}</S.TitlePanner>
-                <div style={{ display: "flex", justifyContent: "center" }}>
+
+                <S.itemPanner>
+                  <div>
+                    <Button
+                      type="link"
+                      style={{
+                        float: "left",
+                        color: "#f5222d",
+                        fontSize: "large",
+                        fontWeight: 800,
+                      }}
+                      onClick={() => navigate(-1 || ROUTES.USER.HOME)}
+                    >
+                      <FaArrowLeft />
+                      Quay lại
+                    </Button>
+                    <img
+                      src={click}
+                      alt=""
+                      style={{
+                        height: 50,
+                        width: 50,
+                        position: "relative",
+                        bottom: 65,
+                        transform: "rotate(-180deg)",
+                      }}
+                    />
+                  </div>
                   <h5
                     style={{
                       color: "white",
@@ -249,7 +290,7 @@ function SetPitch() {
                       alt=""
                     />
                   </h5>
-                </div>
+                </S.itemPanner>
               </S.BgTitle>
             </S.Center>
           </Col>
@@ -261,14 +302,14 @@ function SetPitch() {
             <Spin spinning={pitchDetail.loading} style={{ width: "100%" }}>
               <div style={{ width: "100%" }}>
                 <S.SearchBooking>
-                  <Row guttet={[16, 16]}>
+                  <Row gutter={[16, 16]}>
                     <Col md={{ span: 7, order: 1 }} xs={{ span: 24, order: 1 }}>
                       <S.ButtonSetPitch
                         style={{
-                          fontSize: 25,
+                          fontSize: 24,
                           backgroundColor: "whitesmoke",
                           boxShadow: "rgb(0 0 0 / 60%) 0px 3px 5px",
-                          border: "20px solid white",
+                          border: "11px solid white",
                         }}
                         size="large"
                         type="link"
@@ -284,6 +325,7 @@ function SetPitch() {
                             margin: "5px 0px 5px 1px",
                             padding: "5px 25px 1px 5px",
                             borderRadius: " 7px",
+                            color: "#003a8c",
                           }}
                         >
                           Bạn muốn đặt sân không ?
@@ -295,10 +337,11 @@ function SetPitch() {
                             }}
                           >
                             <img
-                              src={wink}
+                              src={click}
                               style={{
-                                width: 50,
-                                height: 50,
+                                width: 60,
+                                height: 60,
+                                transform: "rotate(30deg)",
                               }}
                               alt=""
                             />
@@ -321,7 +364,7 @@ function SetPitch() {
                         }}
                       >
                         <Col
-                          md={{ span: 13, order: 1 }}
+                          md={{ span: 14, order: 1 }}
                           xs={{ span: 14, order: 1 }}
                           style={{
                             margin: 24,
@@ -332,7 +375,7 @@ function SetPitch() {
                             <div
                               style={{
                                 fontSize: 15,
-                                color: "red",
+                                color: "#003a8c",
                                 justifyContent: "space-around",
                                 alignItems: "flex-start",
                               }}
@@ -346,6 +389,7 @@ function SetPitch() {
                                 fontFamily: "monospace",
                                 display: "flex",
                                 alignItems: "center",
+                                color: "#a8071a",
                               }}
                             >
                               {countAverageRating.toFixed(1)} / 5
@@ -385,16 +429,19 @@ function SetPitch() {
                               backgroundColor: "whitesmoke",
                               height: 100,
                               boxShadow: "rgb(0 0 0 / 60%) 0px 1px 7px",
-                              border: "15px solid white",
+                              border: "12px solid white",
                               borderRadius: 5,
                             }}
                           >
                             {pitchDetail.data?.favorites?.length || 0}
                             <img
-                              src={click}
+                              src={mouse}
                               style={{
                                 width: 60,
                                 height: 60,
+                                position: "relative",
+                                top: 10,
+                                transform: "rotate(-30deg)",
                               }}
                               alt=""
                             />
@@ -412,7 +459,7 @@ function SetPitch() {
                       }}
                     >
                       <S.priceFrom>
-                        <div style={{ fontSize: 20, color: "red" }}>
+                        <div style={{ fontSize: 20, color: "#003a8c" }}>
                           Giá chỉ từ
                         </div>
                         <S.ItemIconContent>
@@ -467,7 +514,11 @@ function SetPitch() {
                         >
                           <S.ContentRight>
                             <div
-                              style={{ width: "100%", fontSize: 20 }}
+                              style={{
+                                width: "100%",
+                                fontSize: 20,
+                                color: "#003a8c",
+                              }}
                               dangerouslySetInnerHTML={{
                                 __html: pitchDetail.data.content,
                               }}
@@ -530,16 +581,9 @@ function SetPitch() {
                   xs={{ span: 24, order: 4 }} */
                 >
                   {userInfo.data.id && (
-                    <Card
+                    <S.WrapperWriteComment
                       size="small"
                       bordered={false}
-                      style={{
-                        backgroundColor: " #e5e5e5",
-                        border: "1px solid #820014",
-                        margin: "50px 16px 16px 16px",
-                        boxShadow: "rgb(0 0 0 / 50%) -1px 1px 10px",
-                        borderRadius: 1,
-                      }}
                       actions={<EditOutlined />}
                       title="Viết bình luận tại đây !!!"
                     >
@@ -563,11 +607,16 @@ function SetPitch() {
                             autoSize={{ maxRows: 6, minRows: 4 }}
                           />
                         </Form.Item>
-                        <Button type="primary" htmlType="submit" block>
+                        <Button
+                          type="primary"
+                          style={{ Background: "#003a8c" }}
+                          htmlType="submit"
+                          block
+                        >
                           Đăng bình luận
                         </Button>
                       </S.CustomForm>
-                    </Card>
+                    </S.WrapperWriteComment>
                   )}
                 </Col>
               </S.WrapperReview>

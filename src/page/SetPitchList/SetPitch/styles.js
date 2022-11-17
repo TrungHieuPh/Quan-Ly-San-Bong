@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Form, Button, Col, Row } from "antd";
+import { Form, Button, Col, Row, Card } from "antd";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -68,7 +68,7 @@ export const DetailsThs = styled.div`
   width: 100%;
   text-align: center;
   vertical-align: top;
-  color: #f5222d;
+  color: #a8071a;
   display: inline-flex;
   justify-content: center;
   padding: 25px 10px 40px 10px;
@@ -84,7 +84,7 @@ export const DetailsThs = styled.div`
   & div {
     font-weight: bold;
     text-align: left;
-    color: #f5222d;
+    color: #a8071a;
     font-size: 55px;
   }
 `;
@@ -267,6 +267,9 @@ export const CustomForm = styled(Form)`
   padding-bottom: 16px;
   margin-bottom: 16px;
   border-bottom: 1px solid #ccc;
+  & Button {
+    background: #003a8c;
+  }
 `;
 export const ButtonSetPitch = styled(Button)`
   font-weight: 600;
@@ -276,7 +279,7 @@ export const ButtonSetPitch = styled(Button)`
   border-radius: 5px;
 
   & > :hover {
-    background-color: red;
+    background-color: #1890ff;
   }
 `;
 /* export const ButtonSetPitchHover = styled(Button)`
@@ -356,17 +359,18 @@ export const priceFrom = styled.div`
   box-shadow: rgb(0 0 0 / 60%) 0px 1px 10px;
   align-items: center;
   flex-direction: column;
-  border: 20px solid white;
+  border: 12px solid white;
 `;
 export const ItemIconContent = styled.div`
   display: flex;
   align-items: center;
+  align-items: flex-end;
 `;
 export const ItemPrice = styled.h3`
   width: max-content;
   display: flex;
-  color: rgb(245, 34, 45);
-  font-weight: 700;
+  color: #a8071a;
+  font-weight: 900;
   font-size: 32px;
 `;
 /* export const ButtonLike = styled(Button)`
@@ -386,15 +390,31 @@ export const TotalRating = styled.div`
   align-items: flex-start;
   padding: 16px;
   font-size: 30px;
-  border: 15px solid white;
+  border: 12px solid white;
   background-color: whitesmoke;
   box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
   border-radius: 5px;
 `;
 export const TitlePanner = styled.h1`
-  color: #1890ff;
+  font-family: monospace;
+  color: #a8071a;
   font-weight: 700;
   padding-top: 40px;
   font-size: 80px;
   box-shadow: rgb(0 0 0) 0px 5px 35px;
+`;
+export const itemPanner = styled.div`
+  display: flex;
+  justify-content: center;
+  font-family: cursive;
+  width: max-content;
+  margin: 0px auto;
+`;
+export const WrapperWriteComment = styled(Card)`
+  background-color: rgb(229, 229, 229);
+  border: 1px solid rgb(130, 0, 20);
+  margin: 50px 16px 16px;
+  box-shadow: rgb(0 0 0 / 50%) -1px 1px 10px;
+  border-radius: 1px;
+  color: rgb(0, 58, 140);
 `;

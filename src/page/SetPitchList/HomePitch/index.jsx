@@ -28,6 +28,7 @@ import * as S from "./styles";
 import search from "../../../Images/search.gif";
 import locations from "../../../Images/locations.gif";
 import cashback from "../../../Images/cashback.gif";
+import note from "../../../Images/note.gif";
 import flag from "../../../Images/flag.gif";
 
 import { PITCH_LIST_LIMIT } from "../../../constants/paginations";
@@ -177,7 +178,9 @@ function HomePitch() {
     return teamList.data.map((item, index) => {
       return (
         <Col span={24} key={item.id}>
-          <Checkbox value={item.id}>{item.name}</Checkbox>
+          <Checkbox value={item.id} style={{ color: "#a8071a" }}>
+            {item.name}
+          </Checkbox>
         </Col>
       );
     });
@@ -244,29 +247,9 @@ function HomePitch() {
   }
   const renderPitchList = () => {
     return pitch.data.map((item) => {
-      /*     if (filterParams.dateSelected !== undefined) { */
       return (
-        <Col
-          span={24}
-          key={item.id}
-          style={{
-            padding: "10px 5px 15px 5px",
-            border: "1px solid white",
-            backgroundColor: "white",
-            boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
-            borderRadius: 10,
-          }}
-        >
-          <Row gutter={[16, 16]}>
-            {/*  <div
-              style={{
-                fontSize: "20px",
-                display: "flex",
-                width: "100%",
-                alignContent: "space-around",
-                justifyContent: "space-around",
-              }}
-            > */}
+        <S.ItemWrapperPitch span={24} key={item.id}>
+          <S.ItemRowWrapper gutter={[16, 16]}>
             <Col
               md={{ span: 8, order: 1 }}
               xs={{ span: 12, order: 1 }}
@@ -300,7 +283,7 @@ function HomePitch() {
                   alt=""
                   style={{ height: "50px", width: "50px" }}
                 />
-                <h2 style={{ fontSize: 26, color: "#cf1322" }}> {item.name}</h2>
+                <h2 style={{ fontSize: 32, fontWeight: 900 }}> {item.name}</h2>
               </Space>
               <div
                 style={{
@@ -327,7 +310,7 @@ function HomePitch() {
                   style={{
                     fontSize: 20,
                     display: "flex",
-                    color: "#cf1322",
+                    color: "#a8071a",
                   }}
                 >
                   <img
@@ -343,13 +326,13 @@ function HomePitch() {
               </div>
               <Row gutter={(16, 16)}>
                 <Col md={{ span: 10, order: 1 }} xs={{ span: 12, order: 1 }}>
-                  <h6>Khung giờ:</h6>
+                  <h3>Khung giờ:</h3>
                   {item.times?.map((itemTime) => {
                     return (
                       <Tag
                         onChange={(e) => setSelectedOption(e.target.value)}
                         size="small"
-                        style={{ color: "#cf1322" }}
+                        style={{ color: "#003a8c" }}
                       >
                         {itemTime.name}
                       </Tag>
@@ -358,10 +341,14 @@ function HomePitch() {
                 </Col>
                 <Col md={{ span: 14, order: 1 }} xs={{ span: 12, order: 1 }}>
                   <S.ItemPrice>
-                    <h6 style={{ fontSize: 12, color: "#cf1322" }}>
-                      Giá chỉ từ
-                    </h6>
-                    <div style={{ display: "flex", alignItems: "center" }}>
+                    <h6 style={{ color: "#003a8c" }}>Giá chỉ từ</h6>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        fontWeight: 900,
+                      }}
+                    >
                       <img
                         src={cashback}
                         style={{
@@ -413,8 +400,8 @@ function HomePitch() {
               </Row>
             </Col>
             {/* </div> */}
-          </Row>
-        </Col>
+          </S.ItemRowWrapper>
+        </S.ItemWrapperPitch>
       );
     });
   };
@@ -440,8 +427,20 @@ function HomePitch() {
                       xs={{ span: 24, order: 1 }}
                       /*   md={{ span: 24, order: 1 }} */
                     >
-                      <FaCalendarPlus />
-                      <h1>Thông tin Sân</h1>
+                      <img
+                        src={note}
+                        alt=""
+                        style={{ height: 80, width: 80 }}
+                      />
+                      <h1
+                        style={{
+                          color: " #a8071a",
+                          fontFamily: "monospace",
+                          fontSize: 50,
+                        }}
+                      >
+                        Thông tin Sân
+                      </h1>
                     </S.TitleContent>
                   </Col>
 
@@ -470,7 +469,9 @@ function HomePitch() {
                           alt=""
                           style={{ height: "50px", width: "50px" }}
                         />
-                        <h1>Tìm kiếm</h1>
+                        <h1 style={{ color: "#a8071a", fontWeight: 900 }}>
+                          Tìm kiếm
+                        </h1>
                       </div>
 
                       <Col span={24}>
@@ -513,24 +514,6 @@ function HomePitch() {
                       padding: "15px 35px",
                     }}
                   >
-                    <Row gutter={[16, 16]}>
-                      <div style={{ marginBottom: 16 }}>
-                        <Col>
-                          <Space>
-                            {renderFilterTimeShoot()}
-                            {renderFilterTeam()}
-                            {filterParams.keyword && (
-                              <Tag
-                                closable
-                                onClose={() => handleClearKeywordFilter()}
-                              >
-                                Keyword: {filterParams.keyword}
-                              </Tag>
-                            )}
-                          </Space>
-                        </Col>
-                      </div>
-                    </Row>
                     <Row
                       gutter={[24, 24]}
                       style={{ marginBottom: 16, padding: 16 }}
@@ -544,8 +527,27 @@ function HomePitch() {
                           backgroundColor: " white",
                           boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
                           borderRadius: 5,
+                          padding: "25px 10px 0px 10px",
                         }}
                       >
+                        <Row gutter={[16, 16]}>
+                          <div style={{ marginBottom: 16 }}>
+                            <Col>
+                              <Space>
+                                {renderFilterTimeShoot()}
+                                {renderFilterTeam()}
+                                {filterParams.keyword && (
+                                  <Tag
+                                    closable
+                                    onClose={() => handleClearKeywordFilter()}
+                                  >
+                                    Keyword: {filterParams.keyword}
+                                  </Tag>
+                                )}
+                              </Space>
+                            </Col>
+                          </div>
+                        </Row>
                         <Select
                           placeholder="Sắp xếp theo"
                           allowClear

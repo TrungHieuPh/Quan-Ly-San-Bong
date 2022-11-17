@@ -19,7 +19,9 @@ function About() {
                     />{" "}
                   </Col>
                   <Col xs={{ span: 24, order: 2 }} md={{ span: 20, order: 1 }}>
-                    <h3 style={{ color: "#cf1322" }}>Về chúng tôi</h3>
+                    <h3 style={{ color: "#a8071a", fontFamily: "monospace" }}>
+                      Về chúng tôi
+                    </h3>
                   </Col>
                 </Row>
               </S.Title>
@@ -27,7 +29,7 @@ function About() {
             <Col md={{ span: 24, order: 1 }} xs={{ span: 24, order: 2 }}>
               <S.Content>
                 <S.ContentImg src={imageAbout} alt="" />
-                <h2 style={{}}>Giới thiệu về Sport</h2>
+                <h2 style={{ color: "#003a8c" }}>Giới thiệu về Sport</h2>
                 <p
                   style={{
                     fontSize: 15,
@@ -40,7 +42,7 @@ function About() {
                   đội hay đối thủ để chơi một cách vui vẻ, công bằng và an toàn
                   nhất.
                 </p>
-                <h2>Thông tin về sản phẩm</h2>
+                <h2 style={{ color: "#003a8c" }}>Thông tin về sản phẩm</h2>
                 <p>
                   Công ty TNHH Sport
                   <ul>

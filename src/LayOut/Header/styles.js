@@ -57,7 +57,13 @@ export const TopWrapper = styled.div`
     color: white;
   }
 `;
-
+export const LogoWrapper = styled.div`
+  width: 10%;
+  position: relative;
+  margin: 0px auto;
+  top: -60px;
+  text-align: center;
+`;
 export const Logos = styled.h2`
   font-family: "font-sh-imogen-agnes";
 `;

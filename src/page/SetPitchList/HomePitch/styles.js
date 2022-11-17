@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Col } from "antd";
+import { Col, Row } from "antd";
 
 export const Wrapper = styled.div`
   margin: 0 auto;
@@ -25,6 +25,7 @@ export const ListWrapper = styled.div`
 export const TitleContent = styled(Col)`
   margin-top: 16px;
   display: flex;
+  align-items: stretch;
   & > svg {
     font-size: 40px;
     color: #1c6cc1;
@@ -73,4 +74,15 @@ export const ItemImagePitch = styled.img`
   height: 150px;
   border-radius: 6px;
   width: 150px;
+`;
+export const ItemWrapperPitch = styled(Col)`
+  padding-left: 5px;
+  padding-right: 5px;
+  border: 1px solid white;
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
+  border-radius: 10px;
+`;
+export const ItemRowWrapper = styled(Row)`
+  padding: 16px;
 `;
