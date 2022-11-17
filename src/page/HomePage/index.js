@@ -3,13 +3,14 @@ import { Button, Row, Col, Tag, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link, generatePath } from "react-router-dom";
 import { useEffect } from "react";
+import "antd/dist/antd.min.css";
 import Sliders from "react-slick";
 
 import { getPitchListAction } from "../../redux/actions/";
 import Slider from "../../LayOut/Slider";
 import styles from "../HomePage/style.module.css";
-import "antd/dist/antd.min.css";
 import soccerarea from "../../Images/soccerarea.gif";
+import mouse from "../../Images/mouse.gif";
 import click from "../../Images/click.gif";
 import locations from "../../Images/locations.gif";
 import yuan from "../../Images/yuan.gif";
@@ -37,7 +38,6 @@ import piture7 from "../../Images/piture7.jpg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { FaEye } from "react-icons/fa";
 import { ROUTES } from "../../constants/routers";
 
 function HomePage() {
@@ -76,7 +76,7 @@ function HomePage() {
                 className={styles.itemTitle}
               >
                 {/*   <span className={styles.new}>New</span> */}
-                <img src={soccerarea} style={{ width: 50, height: 50 }} />
+                <img src={click} style={{ width: 50, height: 50 }} />
                 <Button
                   type="link"
                   onClick={() => navigate(`/pitch/${item.id}/setPitch`)}
@@ -161,12 +161,12 @@ function HomePage() {
                       return (
                         <Tag
                           type="dashed"
-                          danger
                           style={{
                             fontSize: 12,
                             margin: 1,
                             borderRadius: 4,
                             fontFamily: "monospace",
+                            color: "#003a8c",
                           }}
                         >
                           {itemTimes.name}
@@ -197,7 +197,7 @@ function HomePage() {
     slidesToScroll: 1,
     autoplay: true,
     speed: 5000,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 3000,
     cssEase: "linear",
     responsive: [
       {
@@ -250,12 +250,14 @@ function HomePage() {
             <div className={styles.ButtonSetPitch}>
               <Col xs={{ span: 24 }}>
                 <Link to="/pitch">
-                  <span style={{ color: "#fa541c" }}>Đặt Sân</span>
+                  <span style={{ color: "whitesmoke", fontWeight: 900 }}>
+                    Đặt Sân
+                  </span>
                   <img
-                    src={click}
+                    src={mouse}
                     style={{
-                      width: 35,
-                      height: 35,
+                      width: 40,
+                      height: 40,
                     }}
                     alt=""
                   />
@@ -525,11 +527,24 @@ function HomePage() {
           {/* Abou */}
           {/*  <div className={styles.wrapperContent2}>
             <div className={styles.ContainerContent2}> */}
-          <Row gutter={[16, 16]}>
+          <Row
+            gutter={[16, 16]}
+            style={{
+              backgroundColor: "whitesmoke",
+              padding: 30,
+              margin: "0px 0px 70px 0px",
+              borderRadius: 7,
+            }}
+          >
             <Col
               md={{ span: 12, order: 1 }}
               xs={{ span: 24, order: 2 }}
-              style={{ textAlign: "center" }}
+              style={{
+                textAlign: "center",
+                backgroundColor: "#a8071a",
+                borderRadius: 5,
+                boxShadow: "rgb(0 0 0 / 60%) 0px 1px 8px",
+              }}
             >
               <Row gutter={[16, 16]} align="middle">
                 <Col md={{ span: 24, order: 2 }} xs={{ span: 24, order: 2 }}>
@@ -543,14 +558,29 @@ function HomePage() {
                     className={styles.defauBtn}
                     danger
                     type="primary"
-                    style={{ fontSize: 25 }}
+                    style={{
+                      fontSize: 25,
+                      display: "flex",
+                      width: "max-content",
+                      margin: "0 auto",
+                    }}
                   >
+                    {" "}
+                    <img
+                      src={click}
+                      alt=""
+                      style={{
+                        height: 40,
+                        width: 40,
+                        transform: "rotate(45deg)",
+                      }}
+                    />
                     Về chúng tôi
                   </Link>
                 </Col>
 
                 <Col md={{ span: 24, order: 1 }} xs={{ span: 24, order: 1 }}>
-                  <Row gutter={[16, 16]} align="middle">
+                  <Row gutter={[16, 16]} align="middle" style={{ padding: 10 }}>
                     <Col
                       md={{ span: 24, order: 1 }}
                       xs={{ span: 24, order: 1 }}

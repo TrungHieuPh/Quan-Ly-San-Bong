@@ -188,17 +188,14 @@ a {
   background-color: #00474f;
 }
 .logo {
-  height: 93px;
-  width: 98%;
-  padding: 0px;
-  font-size: 87px;
-  position: absolute;
-  margin: 0px auto;
-  top: -40px;
-  text-align: center;
+  font-size: 95px;
+  position: relative;
+  color: #a8071a;
+  top: 0px;
+  height: 50px;
 }
 .logo:hover {
-  color: #1890ff;
+  color: #003a8c;
   font-size: 110px;
   transition: 0.2s ease;
   padding: 0px 0 15px 0;

@@ -38,6 +38,8 @@ import {
 } from "react-icons/fa";
 import edit from "../../Images/edit.gif";
 import login from "../../Images/login.gif";
+import hacker from "../../Images/hacker.gif";
+
 import {
   getOderListAction,
   getPitchDetailAction,
@@ -286,13 +288,20 @@ const Profile = () => {
   });
   const historyOnDay = bookingList.data.map((item, index) => {
     if (
-      moment(item.date, "DD/MM/YYYY").valueOf() >=
+      moment(item.date, "DD/MM/YYYY").valueOf() ===
       moment(dayFormat, "DD/MM/YYYY").valueOf()
     ) {
       return item;
     }
   });
-
+  const historyReserveDay = bookingList.data.map((item, index) => {
+    if (
+      moment(item.date, "DD/MM/YYYY").valueOf() >
+      moment(dayFormat, "DD/MM/YYYY").valueOf()
+    ) {
+      return item;
+    }
+  });
   /*  console.log(
     bookingList.data.map((item, index) => {
       if (
@@ -528,27 +537,33 @@ const Profile = () => {
           key="1"
         >
           <S.ContentTop>
-            <Avatar
-              shape="square"
-              size={150}
-              icon={<UserOutlined />}
+            <div
               style={{
-                width: 280,
-                height: 290,
-                fontSize: 160,
                 boxShadow: "rgb(0 0 0 / 50%) 0px 1px 12px",
+                width: "max-content",
+                margin: "0 auto",
+                textAlign: "center",
               }}
-            />
-            <S.ContentTopItem>{userInfo.data.fullName}</S.ContentTopItem>
+            >
+              <img
+                src={hacker}
+                alt="hacker"
+                style={{
+                  width: 280,
+                  height: 290,
+                  fontSize: 160,
+                }}
+              />
+              <S.ContentTopItem>{userInfo.data.fullName}</S.ContentTopItem>
+            </div>
             <S.ButtonUpdateInfo>
               <Button
                 type="link"
-                danger
                 onClick={() => {
                   setOpen(true);
                 }}
               >
-                <FaHammer style={{ color: "#1890ff" }} />
+                <FaHammer style={{ color: "#a8071a" }} />
                 &nbsp; Cập nhập thông tin.
               </Button>
             </S.ButtonUpdateInfo>
@@ -634,10 +649,57 @@ const Profile = () => {
           key="2"
         >
           <Tabs>
-            <Tabs.TabPane tab="Sân sắp diễn ra" key="1">
+            <Tabs.TabPane tab="Sân đặt hôm nay" key="1">
               <Table
                 columns={tableColumnFollow}
                 dataSource={historyOnDay.filter((item) => item !== undefined)}
+                rowKey="id"
+                pagination={false}
+                style={{
+                  margin: 16,
+                  padding: 16,
+                  boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+                  borderRadius: 5,
+                }}
+                expandable={{
+                  expandedRowRender: (record) => (
+                    <Row gutter={20}>
+                      <Col span={6}>
+                        {" "}
+                        <Divider orientation="left">Combo</Divider>{" "}
+                        {record.comboName}
+                      </Col>
+                      <Col span={6}>
+                        {" "}
+                        <Divider orientation="left">Trọng tài</Divider>{" "}
+                        {record.arbitrationName}
+                      </Col>
+                      <Col span={6}>
+                        {" "}
+                        <Divider orientation="left">Điện thoại</Divider>{" "}
+                        {record.sdt}
+                      </Col>
+                      <Col span={6}>
+                        {" "}
+                        <Divider orientation="left">Phương thức</Divider>{" "}
+                        {record.method}
+                      </Col>
+                      <Col span={6}>
+                        {" "}
+                        <Divider orientation="left">Số tài khoản</Divider>{" "}
+                        {record.cardnumber}
+                      </Col>
+                    </Row>
+                  ),
+                }}
+              />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="Sân đặt trước" key="2">
+              <Table
+                columns={tableColumnFollow}
+                dataSource={historyReserveDay.filter(
+                  (item) => item !== undefined
+                )}
                 rowKey="id"
                 pagination={false}
                 style={{
@@ -818,6 +880,7 @@ const Profile = () => {
                 borderRadius: 5,
                 fontSize: 40,
                 display: "flex",
+                fontWeight: 900,
               }}
             >
               <img

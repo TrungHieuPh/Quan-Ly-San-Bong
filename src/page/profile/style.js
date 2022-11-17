@@ -80,14 +80,13 @@ export const ContentTop = styled.div`
   border-radius: 5px;
 `;
 export const ContentTopItem = styled.h1`
-height:0,
-  margin: 15px;
+  height: auto;
+  margin: 0 auto;
   padding: 16px;
   text-align: center;
   border-radius: 5px;
-  color: #1890ff;
-  position: relative;
-  bottom: 110px;
+  color: #a8071a;
+  width: max-content;
 `;
 export const ContentTopTitle = styled.h1`
   display: flex;
@@ -98,15 +97,15 @@ export const ContentTopTitle = styled.h1`
   width: max-content;
   text-align: center;
   border-radius: 3px;
-  color: #1890ff;
+  color: ##a8071a;
   position: relative;
   bottom: 30px;
+  font-weight: 900;
 `;
 export const ButtonUpdateInfo = styled.div`
   font-weight: bold;
-  position: relative;
-  bottom: 140px;
   font-size: 20px;
+  margin: 20px;
   height: 0;
   & :hover {
     & :after {
