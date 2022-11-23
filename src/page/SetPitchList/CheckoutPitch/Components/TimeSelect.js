@@ -17,24 +17,44 @@ import {
 } from "../../../../redux/actions";
 import { ROUTES } from "../../../../constants/routers";
 const TimeSelect = ({ setStep }) => {
+  const dayss = new Date();
   const dispatch = useDispatch();
   const { pitchDetail } = useSelector((state) => state.product);
+  console.log(
+    pitchDetail.data?.times?.map((item) => {
+      return moment(item.timeend, "HH:mm").valueOf();
+    })
+  );
+  /* moment(item.timeend, "HH:mm:ss").valueOf(); */
+  /* console.log(
+    pitchDetail.data?.times
+      ?.map((item) => {
+        return item;
+      })
+      .filter(
+        (items) =>
+          moment(items.timeend, "HH:mm:ss").valueOf() <= moment(dayss).valueOf()
+      ),
+    "aa"
+  ); */
+
+  console.log(moment(dayss).valueOf(), "hieu");
   const { pitch } = useSelector((state) => state.product);
   const { userInfo } = useSelector((state) => state.user);
   const { bookingList } = useSelector((state) => state.booking);
-  console.log(
-    bookingList.data.map((item) => {
-      return item.timeOption;
-    })
-  );
+
   const { arbitrationList } = useSelector((state) => state.arbitration);
   const { comboList } = useSelector((state) => state.combo);
 
   const { id } = useParams();
   const [form] = Form.useForm();
   const [dateSelected, setDateSelected] = useState();
-  console.log(dateSelected);
-
+  /*   console.log(
+    moment(dateSelected, "DD/MM/YYYY HH:mm").format("DD/MM/YYYY 23:59"),
+    "â "
+  ); */
+  const getTimeNow = new Date();
+  console.log(getTimeNow, "v");
   const [selectedOption, setSelectedOption] = useState();
   const [selectedOptionArbitration, setSelectedOptionArbitration] =
     useState("");
@@ -48,7 +68,7 @@ const TimeSelect = ({ setStep }) => {
   }, [id]);
 
   function handleSelectedDate(value) {
-    setDateSelected(moment(value).format("DD/MM/YYYY"));
+    setDateSelected(moment(value).format("DD/MM/YYYY HH:mm"));
   }
 
   const handleSubmitTimeSelectForm = (values) => {
@@ -223,10 +243,60 @@ const TimeSelect = ({ setStep }) => {
   /*   for (let i = 0; i < isBlock.length; i++) {
     return isBlock[i];
   } */
+
+  /*  const renderTimeOrderBlock = () => {
+    let isDisabled = false;
+    if (dateSelected)
+      Array.from(pitchDetail.data?.times).forEach((item) => {
+        if (
+          moment(item.timeend, "HH:mm").valueOf() <
+          moment(dateSelected, "HH:mm").valueOf()
+        ) {
+          isDisabled = true;
+        }
+      });
+    return (
+      <div>
+        {isDisabled && (
+          <Button
+            type="primary"
+            disabled
+            danger
+            style={{
+              margin: 10,
+              float: "right",
+              boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
+            }}
+          >
+            Tiếp tục
+          </Button>
+        )}
+        {!isDisabled && (
+          <Button
+            htmlType="submit"
+            onClick={() => form.submit()}
+            type="primary"
+            danger
+            style={{
+              margin: 10,
+              float: "right",
+              boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
+            }}
+          >
+            Tiếp tục
+          </Button>
+        )}
+      </div>
+    );
+  }; */
   const renderTimeShootOptions = useMemo(() => {
     return pitchDetail.data.times?.map((item, index) => {
       return (
         <Radio.Button
+          disabled={
+            moment(item.timeend, "HH:mm").valueOf() <
+              moment(dateSelected, "DD/MM/YYYY HH:mm").valueOf() && true
+          }
           key={item.id}
           name="option"
           value={item.id}
@@ -288,7 +358,7 @@ const TimeSelect = ({ setStep }) => {
                     disabledDate={disabledDate}
                     fullscreen={false}
                     onChange={(values) => handleSelectedDate(values)}
-                    defaultValue={dateSelected}
+                    initialValues={dateSelected}
                     style={{
                       margin: "10px 10px 10px",
                       backgroundColor: "white",

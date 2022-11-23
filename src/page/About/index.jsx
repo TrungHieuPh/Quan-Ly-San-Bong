@@ -20,7 +20,7 @@ function About() {
                   </Col>
                   <Col xs={{ span: 24, order: 2 }} md={{ span: 20, order: 1 }}>
                     <h3 style={{ color: "#a8071a", fontFamily: "monospace" }}>
-                      Về chúng tôi
+                      Liên hệ
                     </h3>
                   </Col>
                 </Row>

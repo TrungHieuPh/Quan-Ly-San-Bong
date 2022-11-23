@@ -19,6 +19,7 @@ import location from "../../Images/location.gif";
 import podium from "../../Images/podium.gif";
 import calendar from "../../Images/calendar.gif";
 import smartphone from "../../Images/smartphone.gif";
+import placeholder from "../../Images/placeholder.gif";
 
 import elite from "../../Images/elite.png";
 import rating from "../../Images/rating.png";
@@ -63,7 +64,6 @@ function HomePage() {
       return (
         <Col
           md={{ span: 11, offset: 1 }}
-          /*   sm={{ span: 18, flex: 1 }} */
           xs={24}
           key={item.id}
           className={styles.items}
@@ -76,11 +76,10 @@ function HomePage() {
                 className={styles.itemTitle}
               >
                 {/*   <span className={styles.new}>New</span> */}
-                <img src={click} style={{ width: 50, height: 50 }} />
+                <img src={placeholder} style={{ width: 50, height: 50 }} />
                 <Button
                   type="link"
                   onClick={() => navigate(`/pitch/${item.id}/setPitch`)}
-                  primary
                 >
                   {item.name}
                 </Button>
@@ -281,14 +280,14 @@ function HomePage() {
                 xs={{ span: 24, order: 1 }}
               >
                 <div className={styles.contentWrapperButton}>
-                  <h2>
+                  <div>
                     <img
                       src={location}
                       alt=""
                       style={{ width: 72, height: 72, margin: "0 auto" }}
                     />{" "}
                     <h3>Tìm kiếm và đặt sân bóng online</h3>
-                  </h2>
+                  </div>
                   <p>
                     Thông tin sân gần vị trí của bạn nhất, đặt sân online, tiện
                     lợi, dễ dàng
@@ -297,7 +296,7 @@ function HomePage() {
               </Col>
               <Col md={{ span: 8, order: 2 }} xs={{ span: 24, order: 2 }}>
                 <div className={styles.contentWrapperButton}>
-                  <h2>
+                  <div>
                     <img
                       src={calendar}
                       alt=""
@@ -305,7 +304,7 @@ function HomePage() {
                     />
 
                     <h3> Công cụ quản lý sân bóng online</h3>
-                  </h2>
+                  </div>
                   <p>
                     Quản lý lịch đặt đơn giản, tiếp nhận đặt sân online dễ dàng,
                     lấp đầy sân trống
@@ -314,14 +313,14 @@ function HomePage() {
               </Col>
               <Col md={{ span: 8, order: 2 }} xs={{ span: 24, order: 3 }}>
                 <div className={styles.contentWrapperButton}>
-                  <h2>
+                  <div>
                     <img
                       src={podium}
                       alt=""
                       style={{ width: 72, height: 72, margin: "0 auto" }}
                     />
                     <h3>Tổ chức các giải đấu với nhau</h3>
-                  </h2>
+                  </div>
                   <p>
                     Thường xuyên tổ chức các giải đấu vào hàng tháng, tạo môi
                     trường vui vẻ lành mạnh
@@ -352,16 +351,10 @@ function HomePage() {
               <Col
                 md={{ span: 12, order: 1 }}
                 xs={{ span: 24, order: 1 }}
-                style={{
-                  color: "white",
-                  width: "100%",
-                  boxShadow: "rgb(0 0 0 / 60%) 0px 27px 47px",
-                  borderRadius: 8,
-                  padding: "20px 30px 10px 30px",
-                }}
+                className={styles.contentCombo}
               >
                 <h2 className={styles.titleCombo}>Combo nước</h2>
-                <p className={styles.ContentCombo}>
+                <div className={styles.ContentCombo}>
                   Ở đây chúng tôi có bao gồm 3 combo từ nhỏ đến lớn để người
                   dùng lựa chọn tiết kiệm chi phí của đội. Mùa hè đã tới và cũng
                   là lúc việc chơi bóng trở nên khó khăn hơn dưới cái nắng chói
@@ -385,21 +378,15 @@ function HomePage() {
                       50.000{" "}
                     </li>
                   </ul>
-                </p>
+                </div>
               </Col>
               <Col
                 md={{ span: 12, order: 1 }}
                 xs={{ span: 24, order: 2 }}
-                style={{
-                  color: "white",
-                  width: "100%",
-                  boxShadow: "rgb(0 0 0 / 60%) 0px 27px 47px",
-                  borderRadius: 8,
-                  padding: "20px 30px 10px 30px",
-                }}
+                className={styles.contentCombo}
               >
                 <h2 className={styles.titleCombo}>Trọng tài</h2>
-                <p className={styles.ContentCombo}>
+                <div className={styles.ContentCombo}>
                   Trọng tài là người điều khiển một trận đấu trong bóng đá.
                   Trọng tài có những nhiệm vụ thực thi luật bóng đá để điều
                   khiển trận đấu đã được giao, là người đưa ra quyết định cuối
@@ -415,7 +402,7 @@ function HomePage() {
                   </ul>
                   <span style={{ color: "red", fontSize: 20 }}>*</span>Bạn cũng
                   có thể không thê thêm trọng tài
-                </p>
+                </div>
               </Col>
             </Row>
           </Col>
@@ -527,12 +514,13 @@ function HomePage() {
             <div className={styles.ContainerContent2}> */}
           <Row
             gutter={[16, 16]}
-            style={{
+            /*  style={{
               backgroundColor: "whitesmoke",
               padding: 30,
-              margin: "0px 0px 70px 0px",
               borderRadius: 7,
-            }}
+              margin: 30,
+            }} */
+            className={styles.WrapperContact}
           >
             <Col
               md={{ span: 12, order: 1 }}
@@ -554,7 +542,7 @@ function HomePage() {
                   <Link
                     to={ROUTES.USER.PITCH_ABOUT}
                     className={styles.defauBtn}
-                    danger
+                    danger="true"
                     type="primary"
                     style={{
                       fontSize: 25,
@@ -573,7 +561,7 @@ function HomePage() {
                         transform: "rotate(45deg)",
                       }}
                     />
-                    Về chúng tôi
+                    Liên hệ
                   </Link>
                 </Col>
 

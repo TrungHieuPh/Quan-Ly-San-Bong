@@ -131,6 +131,38 @@ const userReducer = createReducer(initialState, {
       },
     };
   },
+  [REQUEST(USER_ACTION.CHANGE_PASSWORD)]: (state) => {
+    return {
+      ...state,
+      userInfo: {
+        ...state.userInfo,
+        loading: true,
+        error: null,
+      },
+    };
+  },
+  [SUCCESS(USER_ACTION.CHANGE_PASSWORD)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      userInfo: {
+        ...state.userInfo,
+        data: data,
+        loading: false,
+      },
+    };
+  },
+  [FAIL(USER_ACTION.CHANGE_PASSWORD)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      userInfo: {
+        ...state.userInfo,
+        loading: false,
+        error: error,
+      },
+    };
+  },
 });
 
 export default userReducer;

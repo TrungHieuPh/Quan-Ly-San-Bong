@@ -65,11 +65,12 @@ export const WrapperContainer = styled.div`
   height: max-content;
   margin: 50px;
   width: 100%;
+  border-radius: 5px;
 `;
 export const ContentBottom = styled.div`
   box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
   background-color: whitesmoke;
-  margin: 16px;
+  margin: 40px;
   padding: 16px;
   border-radius: 5px;
 `;
@@ -127,6 +128,18 @@ export const ButtonUpdateInfo = styled.div`
   & Button {
     font-size: 20px;
   }
+`;
+export const WrapperAdminList = styled.div`
+  padding: 16px;
+`;
+export const WrapperAdminTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+`;
+export const AdminTitle = styled.h1`
+  font-size: 40px;
 `;
 /* .select {
   padding: 0;

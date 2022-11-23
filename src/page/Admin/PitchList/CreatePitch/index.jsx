@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Button,
   Form,
   Input,
   Card,
-  notification,
+  Space,
   DatePicker,
   Upload,
+  Select,
+  InputNumber,
+  TimePicker,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
@@ -20,16 +23,25 @@ import "react-datepicker/dist/react-datepicker.css";
 import * as S from "./styles";
 import "antd-notifications-messages/lib/styles/style.css";
 
-import { createPitchAction } from "../../../../redux/actions";
+import {
+  createPitchAction,
+  getPitchDetailAction,
+  getTeamListAction,
+} from "../../../../redux/actions";
 
 const CreatePitch = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   /* const { RangePicker } = DatePicker; */
+  const { pitchDetail } = useSelector((state) => state.product);
+  const { teamList } = useSelector((state) => state.team);
 
   const dateFormat = "YYYY-MM-DD";
   const today = new Date();
 
+  useEffect(() => {
+    dispatch(getTeamListAction());
+  }, []);
   const convertImageToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -40,11 +52,10 @@ const CreatePitch = () => {
   };
 
   const handleCreatePitch = async (values) => {
-    const { images, ...pitchValues } = values;
+    const { images, options, ...pitchValues } = values;
     const newImages = [];
     for (let i = 0; i < images.length; i++) {
       const imgBase64 = await convertImageToBase64(images[i].originFileObj);
-      console.log(imgBase64, "aaa");
       await newImages.push({
         name: images[i].name,
         type: images[i].type,
@@ -58,17 +69,24 @@ const CreatePitch = () => {
           ...pitchValues,
           slug: slug(pitchValues.name),
         },
+        options: options,
         images: newImages,
       })
     );
     navigate(-1);
+    /*   console.log(pitchValues, options, "aaaa"); */
   };
   const { createPitchData } = useSelector((state) => state.product);
-  /* Notifi */
+  const renderTeamList = useMemo(() => {
+    return teamList.data.map((item) => {
+      return (
+        <Select.Option key={item.id} value={item.id}>
+          {item.name}
+        </Select.Option>
+      );
+    });
+  }, [teamList.data]);
 
-  /* upload image */
-
-  /*  */
   return (
     <S.Wrapper>
       <S.TopWrapper>
@@ -129,20 +147,6 @@ const CreatePitch = () => {
               <Input />
             </Form.Item>
             <Form.Item
-              label="Giá"
-              name="price"
-              rules={[
-                {
-                  required: true,
-                  whitespace: true,
-                  message: "Required!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
               label="Nội dung Sân"
               name="content"
               rules={[
@@ -155,10 +159,106 @@ const CreatePitch = () => {
             >
               <Input />
             </Form.Item>
-
-            <Form.Item label="Ngày Tạo" name="date">
-              <DatePicker defaultValue={moment(today, dateFormat)} />
+            <Space>
+              <Form.Item
+                label="Giá"
+                name="price"
+                rules={[
+                  {
+                    required: true,
+                    /*  whitespace: true, */
+                    message: "Required!",
+                  },
+                ]}
+              >
+                <InputNumber
+                  formatter={(value) =>
+                    value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                  style={{ width: 200 }}
+                />
+              </Form.Item>
+              <span>VND</span>
+            </Space>
+            <Form.Item
+              label="Địa chỉ Sân"
+              name="address"
+              validateFirst
+              rules={[
+                {
+                  required: true,
+                  whitespace: true,
+                  message: "Required!",
+                },
+                {
+                  type: "string",
+                  min: 4,
+                  message: "Min is 4!",
+                },
+              ]}
+            >
+              <Input />
             </Form.Item>
+
+            <Form.Item label="Lựa chọn sân" name="teamId">
+              <Select>{renderTeamList}</Select>
+            </Form.Item>
+            <Form.Item label="Khung giờ">
+              <Form.List name="options">
+                {(fields, callback) => (
+                  <>
+                    {fields.map((field) => (
+                      <Card
+                        key={field.key}
+                        size="small"
+                        style={{ marginBottom: 16 }}
+                      >
+                        <Form.Item
+                          {...field}
+                          label="Tên khung giờ"
+                          name={[field.name, "name"]}
+                        >
+                          <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                          {...field}
+                          label="Khung thời gian bắt đầu"
+                          name={[field.name, "timestart"]}
+                        >
+                          <TimePicker minuteStep={30} secondStep={60} />
+                        </Form.Item>
+                        <Form.Item
+                          {...field}
+                          label="Khung thời gian kết thúc"
+                          name={[field.name, "timeend"]}
+                        >
+                          <TimePicker minuteStep={30} secondStep={60} />
+                        </Form.Item>
+
+                        <Button
+                          ghost
+                          danger
+                          onClick={() => callback.remove(field.name)}
+                        >
+                          Xóa
+                        </Button>
+                      </Card>
+                    ))}
+                    <Button
+                      type="dashed"
+                      block
+                      icon={<PlusOutlined />}
+                      onClick={() => callback.add()}
+                    >
+                      Thêm Khung giờ!
+                    </Button>
+                  </>
+                )}
+              </Form.List>
+            </Form.Item>
+
             <Form.Item
               label="images"
               name="images"

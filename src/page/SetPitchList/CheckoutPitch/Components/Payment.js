@@ -70,7 +70,7 @@ const Payment = ({ setStep }) => {
 
   return (
     <>
-      <S.ItemTitlePayment>Payment</S.ItemTitlePayment>
+      <S.ItemTitlePayment>Thanh toán</S.ItemTitlePayment>
       <Form
         layout="vertical"
         name="paymentForm"
@@ -103,7 +103,7 @@ const Payment = ({ setStep }) => {
             >
               <Row gutter={[16, 16]}>
                 <Col span={8}>
-                  <Radio value="cod">Thanh toán COD</Radio>
+                  <Radio value="cod">Thanh toán trả sau</Radio>
                 </Col>
                 <Col span={8}>
                   <Radio value="visa">Thanh toán bằng thẻ Visa</Radio>
@@ -323,7 +323,7 @@ const Payment = ({ setStep }) => {
                       </Col>
                       <Col span={8}>
                         <S.ItemRadioBank
-                          value="SCB"
+                          value="saccombank"
                           style={{
                             border: " 1px solid rgb(204, 204, 204)",
                             padding: 5,
@@ -336,7 +336,7 @@ const Payment = ({ setStep }) => {
                             width: "max-content",
                           }}
                         >
-                          <S.ItemImagePayment src={SCB} />
+                          <S.ItemImagePayment src={saccombank} />
                         </S.ItemRadioBank>
                       </Col>
                       <Col span={8}>

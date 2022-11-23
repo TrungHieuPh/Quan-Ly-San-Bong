@@ -36,6 +36,7 @@ function HeaderUser() {
   const handleLogout = () => {
     localStorage.removeItem("userInfo");
     dispatch(logoutAction());
+    window.location.reload();
   };
 
   useEffect(() => {

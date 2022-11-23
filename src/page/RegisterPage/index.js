@@ -48,7 +48,7 @@ const RegisterPage = () => {
   return (
     <S.LoginContainer>
       <S.LoginForm>
-        <h1>Register</h1>
+        <h1>Đăng ký</h1>
         <Form
           form={registerForm}
           name="registerForm"

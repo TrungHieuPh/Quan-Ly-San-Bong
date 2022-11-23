@@ -47,9 +47,9 @@ const CheckoutPage = () => {
         }}
       >
         <Steps.Step title="Chọn thời gian" />
-        <Steps.Step title="Info" />
-        <Steps.Step title="Payment" />
-        <Steps.Step title="Success" />
+        <Steps.Step title="Thông tin" />
+        <Steps.Step title="Thanh toán" />
+        <Steps.Step title="Hoàn thành" />
       </Steps>
 
       {renderCheckoutContent}
