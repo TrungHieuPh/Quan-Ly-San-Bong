@@ -365,6 +365,7 @@ function SetPitch() {
                                 display: "flex",
                                 alignItems: "center",
                                 alignContent: "space-around",
+                                justifyContent: "center",
                               }}
                             >
                               <img
