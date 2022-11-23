@@ -256,10 +256,9 @@ a {
   padding: 56px 24px 24px;
   border-radius: 8px;
 }
-.contentWrapperButton h2 {
+.contentWrapperButton div {
   align-items: center;
   justify-content: space-around;
-  height: 200px;
   display: flex;
   flex-direction: column;
   letter-spacing: 5px;
@@ -269,6 +268,7 @@ a {
   justify-content: center;
 }
 .contentWrapperButton h3 {
+  padding: 10px;
   color: #a8071a;
   margin: 24px 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -281,6 +281,13 @@ a {
   color: #ce7b7b;
   padding-top: 25px;
   margin-bottom: 0;
+}
+.contentCombo {
+  color: white;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 60%) 0px 27px 47px;
+  border-radius: 8px;
+  padding: 20px 30px 10px 30px;
 }
 
 img :hover {
@@ -351,4 +358,16 @@ img :hover {
   text-align: center;
   margin: 80px auto;
   border-radius: 7px;
+}
+.contentContact {
+  background-color: whitesmoke;
+  padding: 30px;
+  margin: 0px 0px 70px 0px;
+  border-radius: 7px;
+}
+.WrapperContact {
+  background-color: whitesmoke;
+  padding: 30px;
+  border-radius: 7px;
+  margin: 30px;
 }

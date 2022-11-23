@@ -112,7 +112,7 @@ function* changePasswordSaga(action) {
     yield put({
       type: FAIL(USER_ACTION.CHANGE_PASSWORD),
       payload: {
-        error: "Lấy không được",
+        error: "Sai mật khẩu cũ!",
       },
     });
   }

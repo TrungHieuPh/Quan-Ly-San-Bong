@@ -30,12 +30,10 @@ import document from "../../../Images/document.gif";
 import mouse from "../../../Images/mouse.gif";
 import click from "../../../Images/click.gif";
 
-import wink from "../../../Images/wink.gif";
 import yuan from "../../../Images/yuan.gif";
 import image from "../../../Images/image.gif";
 import pencil from "../../../Images/pencil.gif";
 import conversation from "../../../Images/conversation.gif";
-import favorite from "../../../Images/favorite.gif";
 import { FaStar } from "react-icons/fa";
 
 import {
@@ -53,14 +51,12 @@ function SetPitch() {
   const [dateSelected, setDateSelected] = useState();
 
   const { id } = useParams();
-  const { state } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.user);
   const { reviewList } = useSelector((state) => state.review);
 
   const { pitchDetail } = useSelector((state) => state.product);
-  const { pitch } = useSelector((state) => state.product);
 
   const { bookingList } = useSelector((state) => state.booking);
 
@@ -90,6 +86,40 @@ function SetPitch() {
      return {itemRate.rate}
    })
  }; */
+  const handleBlockComment = () => {
+    let isDisabled = false;
+
+    Array.from(bookingList.data).forEach((item) => {
+      if (item.userId === userInfo.data.id && parseInt(id) === item.pitchId) {
+        isDisabled = true;
+      }
+    });
+    return (
+      <>
+        {isDisabled && (
+          <Button
+            type="primary"
+            style={{ Background: "#003a8c" }}
+            htmlType="submit"
+            block
+          >
+            Đăng bình luận
+          </Button>
+        )}
+        {!isDisabled && (
+          <Button
+            disabled
+            type="primary"
+            style={{ Background: "#003a8c" }}
+            htmlType="submit"
+            block
+          >
+            Đăng bình luận
+          </Button>
+        )}
+      </>
+    );
+  };
 
   const handleToggleFavorite = () => {
     if (userInfo.data.id) {
@@ -150,7 +180,7 @@ function SetPitch() {
     console.log(id);
     dispatch(deleteReviewAction({ id: id }));
   }; */
-  const renderReviewList = useMemo(() => {
+  const renderReviewList = () => {
     if (!reviewList.data.length) return null;
     return reviewList.data?.map((item) => {
       if (parseInt(item.pitchId) === parseInt(id))
@@ -198,7 +228,7 @@ function SetPitch() {
           </div>
         );
     });
-  }, [reviewList.data]);
+  };
 
   const renderProductImages = useMemo(() => {
     if (!pitchDetail.data.images?.length) return null;
@@ -304,51 +334,53 @@ function SetPitch() {
                 <S.SearchBooking>
                   <Row gutter={[16, 16]}>
                     <Col md={{ span: 7, order: 1 }} xs={{ span: 24, order: 1 }}>
-                      <S.ButtonSetPitch
-                        style={{
-                          fontSize: 24,
-                          backgroundColor: "whitesmoke",
-                          boxShadow: "rgb(0 0 0 / 60%) 0px 3px 5px",
-                          border: "11px solid white",
-                        }}
-                        size="large"
-                        type="link"
-                        danger
-                        block
-                        onClick={() =>
-                          navigate(generatePath(ROUTES.USER.CHECKOUT, { id }))
-                        }
-                      >
-                        <div
+                      {userInfo.data.id && (
+                        <S.ButtonSetPitch
                           style={{
-                            width: "100%",
-                            margin: "5px 0px 5px 1px",
-                            padding: "5px 25px 1px 5px",
-                            borderRadius: " 7px",
-                            color: "#003a8c",
+                            fontSize: 24,
+                            backgroundColor: "whitesmoke",
+                            boxShadow: "rgb(0 0 0 / 60%) 0px 3px 5px",
+                            border: "11px solid white",
                           }}
+                          size="large"
+                          type="link"
+                          danger
+                          block
+                          onClick={() =>
+                            navigate(generatePath(ROUTES.USER.CHECKOUT, { id }))
+                          }
                         >
-                          Bạn muốn đặt sân không ?
-                          <h3
+                          <div
                             style={{
-                              display: "flex",
-                              alignItems: "center",
-                              alignContent: "space-around",
+                              width: "100%",
+                              margin: "5px 0px 5px 1px",
+                              padding: "5px 25px 1px 5px",
+                              borderRadius: " 7px",
+                              color: "#003a8c",
                             }}
                           >
-                            <img
-                              src={click}
+                            Bạn muốn đặt sân không ?
+                            <h3
                               style={{
-                                width: 60,
-                                height: 60,
-                                transform: "rotate(30deg)",
+                                display: "flex",
+                                alignItems: "center",
+                                alignContent: "space-around",
                               }}
-                              alt=""
-                            />
-                            Hãy nhấn vào đây!
-                          </h3>
-                        </div>
-                      </S.ButtonSetPitch>
+                            >
+                              <img
+                                src={click}
+                                style={{
+                                  width: 60,
+                                  height: 60,
+                                  transform: "rotate(30deg)",
+                                }}
+                                alt=""
+                              />
+                              Hãy nhấn vào đây!
+                            </h3>
+                          </div>
+                        </S.ButtonSetPitch>
+                      )}
                     </Col>
                     <Col
                       md={{ span: 10, order: 1 }}
@@ -573,7 +605,7 @@ function SetPitch() {
 
                 <div style={{ margin: 16, borderTop: "1px solid #ddd" }}>
                   {" "}
-                  {renderReviewList}
+                  {renderReviewList()}
                 </div>
                 <Col
                   span={24}
@@ -591,7 +623,16 @@ function SetPitch() {
                         layout="vertical"
                         onFinish={(values) => handlePostReview(values)}
                       >
-                        <Form.Item label="Đánh giá sao" name="rate">
+                        <Form.Item
+                          label="Đánh giá sao"
+                          name="rate"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Bạn chưa chọn sao!",
+                            },
+                          ]}
+                        >
                           <Rate />
                         </Form.Item>
                         <img
@@ -602,19 +643,34 @@ function SetPitch() {
                           }}
                           alt=""
                         />
-                        <Form.Item label="Bình luận" name="comment">
+                        <Form.Item
+                          label="Bình luận"
+                          name="comment"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Bạn chưa nhập nội dung!",
+                            },
+                            {
+                              max: 50,
+                              message: "bạn đã nhập quá ký tự!",
+                            },
+                          ]}
+                        >
                           <Input.TextArea
                             autoSize={{ maxRows: 6, minRows: 4 }}
                           />
                         </Form.Item>
-                        <Button
+
+                        {/*  <Button
                           type="primary"
                           style={{ Background: "#003a8c" }}
                           htmlType="submit"
                           block
                         >
                           Đăng bình luận
-                        </Button>
+                        </Button> */}
+                        {handleBlockComment()}
                       </S.CustomForm>
                     </S.WrapperWriteComment>
                   )}

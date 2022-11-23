@@ -1,8 +1,26 @@
 import { takeEvery, put, debounce } from "redux-saga/effects";
 import axios from "axios";
+import moment from "moment";
+import { Modal } from "antd";
 
 import { PITCH_ACTION, REQUEST, SUCCESS, FAIL } from "../constants";
-
+const countDown = () => {
+  let secondsToGo = 2;
+  const modal = Modal.success({
+    title: "Đặt sân thành công!",
+    content: `Tiếp tục trong ${secondsToGo} giây.`,
+  });
+  const timer = setInterval(() => {
+    secondsToGo -= 1;
+    modal.update({
+      content: `Tiếp tục trong ${secondsToGo} giây.`,
+    });
+  }, 1000);
+  setTimeout(() => {
+    clearInterval(timer);
+    modal.destroy();
+  }, secondsToGo * 1000);
+};
 function* getPitchListSaga(action) {
   try {
     const { params, more, dateSelected } = action.payload;
@@ -38,7 +56,7 @@ function* getPitchListSaga(action) {
           limit: params.limit,
         },
         more: more,
-        dateSelected: dateSelected,
+        /* dateSelected: dateSelected, */
       },
     });
   } catch (e) {
@@ -77,14 +95,24 @@ function* getPitchDetailSaga(action) {
 
 function* createPitchSaga(action) {
   try {
-    const { values, images } = action.payload;
+    const { values, options, images } = action.payload;
     const result = yield axios.post("http://localhost:4000/pitchs", values);
+    for (let i = 0; i < options.length; i++) {
+      yield axios.post("http://localhost:4000/times", {
+        pitchId: result.data.id,
+        name: options[i].name,
+        /*  timeSelect: options[i].timeSelect, */
+        timestart: moment(options[i].timestart).format("HH:mm:ss"),
+        timeend: moment(options[i].timeend).format("HH:mm:ss"),
+      });
+    }
     for (let j = 0; j < images.length; j++) {
       yield axios.post("http://localhost:4000/images", {
         ...images[j],
         pitchId: result.data.id,
       });
     }
+    countDown();
     yield put({
       type: SUCCESS(PITCH_ACTION.CREATE_PITCH),
       payload: {
@@ -102,7 +130,7 @@ function* createPitchSaga(action) {
 }
 
 function* updatePitchSaga(action) {
-  try {
+  /*  try {
     const { values, id } = action.payload;
     const result = yield axios.patch(
       `http://localhost:4000/pitchs/${id}`,
@@ -118,6 +146,82 @@ function* updatePitchSaga(action) {
   } catch (e) {
     yield put({
       type: "UPDATE_PRODUCT_FAIL",
+      payload: {
+        error: "Đã có lỗi xảy ra!",
+      },
+    });
+  } */
+  try {
+    const { id, values, options, initialOptionIds, images, initialImageIds } =
+      action.payload;
+    const result = yield axios.patch(
+      `http://localhost:4000/pitchs/${id}`,
+      values
+    );
+    // Options
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].id) {
+        yield axios.patch(`http://localhost:4000/times/${options[i].id}`, {
+          pitchId: result.data.id,
+          name: options[i].name,
+          timestart:
+            options[i]
+              .timeSelect[0] /*  moment(options[i].timeSelect[0]).format("HH:mm:ss"), */,
+          timeend:
+            options[i]
+              .timeSelect[1] /*  moment(options[i].timeSelect[1]).format("HH:mm:ss"), */,
+        });
+      } else {
+        yield axios.post("http://localhost:4000/times", {
+          pitchId: result.data.id,
+          name: options[i].name,
+          timestart:
+            options[i]
+              .timeSelect[0] /*  moment(options[i].timeSelect[0]).format("HH:mm:ss"), */,
+          timeend:
+            options[i]
+              .timeSelect[1] /*  moment(options[i].timeSelect[1]).format("HH:mm:ss"), */,
+        });
+      }
+    }
+    for (let j = 0; j < initialOptionIds.length; j++) {
+      const keepOption = options.find(
+        (item) => item.id && item.id === initialOptionIds[j]
+      );
+      if (!keepOption) {
+        yield axios.delete(
+          `http://localhost:4000/times/${initialOptionIds[j]}`
+        );
+      }
+    }
+    // Images
+    for (let i = 0; i < images.length; i++) {
+      if (!images[i].id) {
+        yield axios.post("http://localhost:4000/images", {
+          ...images[i],
+          pitchId: result.data.id,
+        });
+      }
+    }
+    for (let j = 0; j < initialImageIds.length; j++) {
+      const keepImage = images.find(
+        (item) => item.id && item.id === initialImageIds[j]
+      );
+      if (!keepImage) {
+        yield axios.delete(
+          `http://localhost:4000/images/${initialImageIds[j]}`
+        );
+      }
+    }
+    yield put({
+      type: SUCCESS(PITCH_ACTION.UPDATE_PITCH),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(PITCH_ACTION.UPDATE_PITCH),
       payload: {
         error: "Đã có lỗi xảy ra!",
       },
@@ -144,7 +248,7 @@ function* deletePitchSaga(action) {
 export default function* pitchSaga() {
   yield debounce(500, REQUEST(PITCH_ACTION.GET_PITCH_LIST), getPitchListSaga);
   yield takeEvery(REQUEST(PITCH_ACTION.GET_PITCH_DETAIL), getPitchDetailSaga);
-  yield takeEvery("CREATE_PITCH_REQUEST", createPitchSaga);
-  yield takeEvery("UPDATE_PITCH_REQUEST", updatePitchSaga);
-  yield takeEvery("DELETE_PITCH_REQUEST", deletePitchSaga);
+  yield takeEvery(REQUEST(PITCH_ACTION.CREATE_PITCH), createPitchSaga);
+  yield takeEvery(REQUEST(PITCH_ACTION.UPDATE_PITCH), updatePitchSaga);
+  yield takeEvery(REQUEST(PITCH_ACTION.DELETE_PITCH), deletePitchSaga);
 }

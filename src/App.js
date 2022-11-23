@@ -16,6 +16,7 @@ import PitchHistory from "./page/PitchHistory";
 import SetPitch from "./page/SetPitchList/SetPitch";
 import HomePitch from "./page/SetPitchList/HomePitch";
 import CreatePitch from "./page/Admin/PitchList/CreatePitch";
+
 import CheckoutPitch from "./page/SetPitchList/CheckoutPitch";
 import Profile from "./page/profile";
 
@@ -40,7 +41,6 @@ function App() {
       <Routes>
         <Route element={<AdminLayout />}>
           <Route path={ROUTES.ADMIN.DASHBOARD} element={<div>Dashboard</div>} />
-          <Route path={ROUTES.ADMIN.UPDATE_PITCH} element={<UpdatePitch />} />
           <Route
             path={ROUTES.ADMIN.PITCH_LIST}
             element={<AdminPitchListPage />}
@@ -54,6 +54,8 @@ function App() {
           <Route path={ROUTES.USER.PITCH_ABOUT} element={<About />} />
           <Route path={ROUTES.USER.SET_PITCH} element={<SetPitch />} />
           <Route path={ROUTES.USER.CREATE_PITCH} element={<CreatePitch />} />
+          <Route path={ROUTES.ADMIN.UPDATE_PITCH} element={<UpdatePitch />} />
+
           <Route path={ROUTES.USER.PROFILE} element={<Profile />} />
 
           <Route

@@ -40,7 +40,7 @@ const LoginPage = () => {
           password: values.password,
         },
         callback: {
-          goToDashboard: () => navigate(ROUTES.ADMIN.DASHBOARD),
+          /*   goToDashboard: () => navigate(ROUTES.ADMIN.DASHBOARD), */
           goToHome: () => navigate(state?.prevPath || ROUTES.USER.HOME),
         },
       })
