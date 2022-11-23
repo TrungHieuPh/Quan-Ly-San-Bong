@@ -11,17 +11,14 @@ import {
   Avatar,
   Modal,
   Select,
-  DatePicker,
   Divider,
   Calendar,
   Space,
-  Upload,
-  Card,
   Radio,
   Popconfirm,
   Pagination,
 } from "antd";
-import slug from "slug";
+
 import { useNavigate, Link, generatePath, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -30,7 +27,6 @@ import {
   SettingOutlined,
   CarryOutOutlined,
   UnlockOutlined,
-  PlusOutlined,
 } from "@ant-design/icons";
 import { ROUTES } from "../../constants/routers";
 import moment from "moment";
@@ -41,7 +37,6 @@ import {
   FaPhone,
   FaBirthdayCake,
   FaHammer,
-  FaUser,
 } from "react-icons/fa";
 import edit from "../../Images/edit.gif";
 import login from "../../Images/login.gif";
@@ -59,7 +54,6 @@ import {
   getFavoriteList,
   getReviewListAction,
   getPitchListAction,
-  createPitchAction,
   getTeamListAction,
   deletePitchAction,
 } from "../../redux/actions";
@@ -70,7 +64,6 @@ const CollectionCreateForm = ({ open, onCreate, onCancel }) => {
   const [form] = Form.useForm();
   const [birthday, setBirthday] = useState();
   const { userInfo } = useSelector((state) => state.user);
-  const { teamList } = useSelector((state) => state.team);
 
   function handleSelectedDate(values) {
     setBirthday(moment(values).format("DD/MM/YYYY"));
@@ -300,9 +293,6 @@ const Profile = () => {
   const { bookingList } = useSelector((state) => state.booking);
   const { teamList } = useSelector((state) => state.team);
 
-  const [selectTeam, setSelectTeam] = useState();
-  const dateFormat = "YYYY-MM-DD";
-  const today = new Date();
   const historyOffDay = bookingList.data.map((item, index) => {
     if (
       moment(item.date, "DD/MM/YYYY").valueOf() <
@@ -327,24 +317,6 @@ const Profile = () => {
       return item;
     }
   });
-  /*  console.log(
-    bookingList.data.map((item, index) => {
-      if (
-        moment(item.date, "DD/MM/YYYY").valueOf() <
-        moment(dayFormat, "DD/MM/YYYY").valueOf()
-      ) {
-        return item;
-      } else {
-        return */ /* { ...bookingList.data.filter((item) => item !== index) }; */
-  /*   }
-    }),
-    "aa"
-  ); */
-
-  /*   const newFavorites = state.pitchDetail.data.favorites?.filter(
-    (item) => item.id !== id
-  ); */
-  /*   const itemIndex = newReviewList.findIndex((item) => item.id === data.id); */
 
   const { favoriteList } = useSelector((state) => state.favorite);
   const { reviewList } = useSelector((state) => state.review);

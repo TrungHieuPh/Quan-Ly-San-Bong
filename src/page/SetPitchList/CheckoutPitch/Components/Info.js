@@ -1,11 +1,9 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Button, Card, Form, Select, Input } from "antd";
+import { Row, Col, Button, Card, Form, Input } from "antd";
 
 import {
   getCityListAction,
-  getDistrictListAction,
-  getWardListAction,
   setCheckoutInfoAction,
 } from "../../../../redux/actions";
 import * as S from "../styles";
@@ -13,10 +11,6 @@ import * as S from "../styles";
 const Info = ({ setStep }) => {
   const [infoForm] = Form.useForm();
   const dispatch = useDispatch();
-
-  const { cityList, districtList, wardList } = useSelector(
-    (state) => state.location
-  );
 
   const { userInfo } = useSelector((state) => state.user);
 
@@ -39,56 +33,14 @@ const Info = ({ setStep }) => {
 
   const handleSubmitInfoForm = (values) => {
     const { cityCode, districtCode, wardCode, ...otherValues } = values;
-    /* const cityData = cityList.data.find((item) => item.code === cityCode);
-    const districtData = districtList.data.find(
-      (item) => item.code === districtCode
-    );
 
-    const wardData = wardList.data.find((item) => item.code === wardCode); */
     dispatch(
       setCheckoutInfoAction({
         ...otherValues,
-        /*    cityId: cityData.id,
-        cityName: cityData.name,
-        districtId: districtData.id,
-        districtName: districtData.name,
-        wardId: wardData.id,
-        wardName: wardData.name, */
       })
     );
     setStep(2);
   };
-
-  const renderCityOptions = useMemo(() => {
-    return cityList.data.map((item) => {
-      return (
-        <Select.Option key={item.id} value={item.code}>
-          {item.name}
-        </Select.Option>
-      );
-    });
-  }, [cityList.data]);
-
-  const renderDistrictOptions = useMemo(() => {
-    return districtList.data.map((item) => {
-      return (
-        <Select.Option key={item.id} value={item.code}>
-          {item.name}
-        </Select.Option>
-      );
-    });
-  }, [districtList.data]);
-
-  const renderWardListOptions = useMemo(() => {
-    return wardList.data.map((item) => {
-      return (
-        <Select.Option key={item.id} value={item.code}>
-          {item.name}
-        </Select.Option>
-      );
-    });
-  }, [wardList.data]);
-
   return (
     <>
       <S.ItemTitleInfo>Thông tin</S.ItemTitleInfo>
@@ -161,70 +113,6 @@ const Info = ({ setStep }) => {
                 <Input />
               </Form.Item>
             </Col>
-            {/* <Col span={8}>
-              <Form.Item
-                label="Thành phố / Tỉnh thành"
-                name="cityCode"
-                rules={[
-                  {
-                    required: true,
-                    message: "Hãy chọn Tỉnh Thành hoặc Thành Phố !",
-                  },
-                ]}
-              >
-                <Select
-                  onChange={(value) => {
-                    dispatch(getDistrictListAction({ cityCode: value }));
-                    infoForm.setFieldsValue({
-                      districtCode: undefined,
-                      wardCode: undefined,
-                    });
-                  }}
-                >
-                  {renderCityOptions}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item
-                label="Quận / Huyện "
-                name="districtCode"
-                rules={[
-                  {
-                    required: true,
-                    message: "Hãy chọn Quận / Huyện !",
-                  },
-                ]}
-              >
-                <Select
-                  onChange={(value) => {
-                    dispatch(getWardListAction({ districtCode: value }));
-                    infoForm.setFieldsValue({
-                      wardCode: undefined,
-                    });
-                  }}
-                  disabled={!infoForm.getFieldValue("cityCode")}
-                >
-                  {renderDistrictOptions}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item
-                label="Khu vực"
-                name="wardCode"
-                rules={[
-                  {
-                    required: true,
-                    message: "Hãy chọn khu vực của bạn!",
-                  },
-                ]}
-              >
-                <Select disabled={!infoForm.getFieldValue("districtCode")}>
-                  {renderWardListOptions}
-                </Select>
-              </Form.Item>
-            </Col> */}
           </Row>
         </Form>
       </Card>

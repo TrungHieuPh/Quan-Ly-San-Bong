@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { Button, Row, Calendar, Avatar, Radio, Col, Form, Item } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Button, Row, Calendar, Radio, Col, Form } from "antd";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import moment from "moment";
 import * as S from "../styles";
 import "antd-notifications-messages/lib/styles/style.css";
@@ -15,9 +14,9 @@ import {
   getComboAction,
   setCheckoutTimeSelectAction,
 } from "../../../../redux/actions";
-import { ROUTES } from "../../../../constants/routers";
 const TimeSelect = ({ setStep }) => {
   const dayss = new Date();
+  const setdayss = moment(dayss).format("DD/MM/YYYY HH:mm");
   const dispatch = useDispatch();
   const { pitchDetail } = useSelector((state) => state.product);
   console.log(
@@ -25,21 +24,7 @@ const TimeSelect = ({ setStep }) => {
       return moment(item.timeend, "HH:mm").valueOf();
     })
   );
-  /* moment(item.timeend, "HH:mm:ss").valueOf(); */
-  /* console.log(
-    pitchDetail.data?.times
-      ?.map((item) => {
-        return item;
-      })
-      .filter(
-        (items) =>
-          moment(items.timeend, "HH:mm:ss").valueOf() <= moment(dayss).valueOf()
-      ),
-    "aa"
-  ); */
-
   console.log(moment(dayss).valueOf(), "hieu");
-  const { pitch } = useSelector((state) => state.product);
   const { userInfo } = useSelector((state) => state.user);
   const { bookingList } = useSelector((state) => state.booking);
 
@@ -48,14 +33,9 @@ const TimeSelect = ({ setStep }) => {
 
   const { id } = useParams();
   const [form] = Form.useForm();
-  const [dateSelected, setDateSelected] = useState();
-  /*   console.log(
-    moment(dateSelected, "DD/MM/YYYY HH:mm").format("DD/MM/YYYY 23:59"),
-    "â "
-  ); */
-  const getTimeNow = new Date();
-  console.log(getTimeNow, "v");
+  const [dateSelected, setDateSelected] = useState(dayss);
   const [selectedOption, setSelectedOption] = useState();
+  console.log(selectedOption, "tiep");
   const [selectedOptionArbitration, setSelectedOptionArbitration] =
     useState("");
   const [selectedOptionCombo, setSelectedOptionCombo] = useState("");
@@ -72,29 +52,6 @@ const TimeSelect = ({ setStep }) => {
   }
 
   const handleSubmitTimeSelectForm = (values) => {
-    /*    console.log(
-      {
-        ...values,
-        date: dateSelected,
-        timeoption: pitchDetail.data.times?.find(
-          (item) => item.id === selectedOption
-        ),
-        status: "block",
-        totalPrice: parseInt(productPriceCombo),
-        pitchBonus: {
-          arbitrationSelect: selectedOptionArbitration
-            ? arbitrationList.data.find(
-                (item) => item.id === selectedOptionArbitration
-              )
-            : 0,
-          comboSelect: selectedOptionCombo
-            ? comboList.data.find((item) => item.id === selectedOptionCombo)
-            : 0,
-        },
-      },
-      "av "
-    ); */
-
     dispatch(
       setCheckoutTimeSelectAction({
         ...values,
@@ -215,87 +172,26 @@ const TimeSelect = ({ setStep }) => {
     );
   };
 
-  const isBlock = pitchDetail.data.orders?.map((item) => {
-    return item.timeOption;
+  const disabledDateb = pitchDetail.data.times?.map((item, index) => {
+    return moment(item.timeend, "HH:mm").valueOf() <=
+      moment(setdayss, "DD/MM/YYYY HH:mm").valueOf() &&
+      moment(dateSelected, "DD/MM/YYYY").valueOf() ===
+        moment(setdayss, "DD/MM/YYYY").valueOf()
+      ? true
+      : false;
   });
-
-  const isDayBlock = bookingList.data.map((item) => {
-    if (
-      moment(item.date, "DD/MM/YYYY").valueOf() ===
-        moment(dateSelected, "DD/MM/YYYY").valueOf() &&
-      parseInt(id) === item.pitchId
-    ) {
-      return item.id;
-    }
-  });
-  /*    className={
-            isBlock.includes((items) => items === item.id) &&
-            isDayBlock.every((items) => items === true)
-              ? true
-              : false
-          } */
-  /*  console.log(
-    isBlock.map((item) => {
-      return item;
-    }),
-    "isBloc"
-  ); */
-  /*   for (let i = 0; i < isBlock.length; i++) {
-    return isBlock[i];
-  } */
-
-  /*  const renderTimeOrderBlock = () => {
-    let isDisabled = false;
-    if (dateSelected)
-      Array.from(pitchDetail.data?.times).forEach((item) => {
-        if (
-          moment(item.timeend, "HH:mm").valueOf() <
-          moment(dateSelected, "HH:mm").valueOf()
-        ) {
-          isDisabled = true;
-        }
-      });
-    return (
-      <div>
-        {isDisabled && (
-          <Button
-            type="primary"
-            disabled
-            danger
-            style={{
-              margin: 10,
-              float: "right",
-              boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
-            }}
-          >
-            Tiếp tục
-          </Button>
-        )}
-        {!isDisabled && (
-          <Button
-            htmlType="submit"
-            onClick={() => form.submit()}
-            type="primary"
-            danger
-            style={{
-              margin: 10,
-              float: "right",
-              boxShadow: "rgb(0 0 0 / 80%) -5px 5px 10px",
-            }}
-          >
-            Tiếp tục
-          </Button>
-        )}
-      </div>
-    );
-  }; */
+  console.log(disabledDateb, "a");
   const renderTimeShootOptions = useMemo(() => {
     return pitchDetail.data.times?.map((item, index) => {
       return (
         <Radio.Button
           disabled={
-            moment(item.timeend, "HH:mm").valueOf() <
-              moment(dateSelected, "DD/MM/YYYY HH:mm").valueOf() && true
+            moment(item.timeend, "HH:mm").valueOf() <=
+              moment(setdayss, "DD/MM/YYYY HH:mm").valueOf() &&
+            moment(dateSelected, "DD/MM/YYYY").valueOf() ===
+              moment(setdayss, "DD/MM/YYYY").valueOf()
+              ? true
+              : false
           }
           key={item.id}
           name="option"
@@ -306,7 +202,7 @@ const TimeSelect = ({ setStep }) => {
         </Radio.Button>
       );
     });
-  }, [pitchDetail.data]);
+  }, [pitchDetail.data && dateSelected]);
 
   const day = new Date();
   const dayFormat = moment(day).format("DD/MM/YYYY");
@@ -335,7 +231,6 @@ const TimeSelect = ({ setStep }) => {
           <Row gutter={[16, 16]}>
             <Col md={{ span: 10, order: 1 }} xs={{ span: 24, order: 1 }}>
               <S.div1>
-                {/*   <Avatar size={100} icon={<UserOutlined />} /> */}
                 <S.ItemTitleTimeSelect>
                   Bạn ơi, chọn ngày ở đây !
                 </S.ItemTitleTimeSelect>
@@ -358,7 +253,7 @@ const TimeSelect = ({ setStep }) => {
                     disabledDate={disabledDate}
                     fullscreen={false}
                     onChange={(values) => handleSelectedDate(values)}
-                    initialValues={dateSelected}
+                    initialValue={dateSelected}
                     style={{
                       margin: "10px 10px 10px",
                       backgroundColor: "white",
@@ -387,7 +282,7 @@ const TimeSelect = ({ setStep }) => {
                       padding: 10,
                       textAlign: "center",
                       display: "flex",
-                      flexdirection: "column",
+                      flexDirection: "column",
                       boxShadow: "rgb(0 0 0 / 50%) -1px 1px 7px",
                       backgroundColor: "whitesmoke",
                       borderRadius: 5,

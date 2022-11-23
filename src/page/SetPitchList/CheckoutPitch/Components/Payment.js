@@ -29,26 +29,6 @@ const Payment = ({ setStep }) => {
   const dispatch = useDispatch();
   const [paymentForm] = Form.useForm();
   const handleSubmitPaymentForm = (values) => {
-    /*  console.log(
-      {
-        ...values,
-        ...checkoutInfo,
-        userId: userInfo.data.id,
-        date: CheckoutTimeSelect.date,
-        status: CheckoutTimeSelect.status,
-        timeOption: CheckoutTimeSelect.timeoption,
-        PitchOrder: {
-          pitchId: parseInt(id),
-          pitchName: pitchDetail.data.name,
-          arbitrationName:
-            CheckoutTimeSelect.pitchBonus?.arbitrationSelect?.name ||
-            "Không có ",
-          comboName:
-            CheckoutTimeSelect.pitchBonus.comboSelect?.name || "Không có",
-        },
-      },
-      "values1"
-    ); */
     dispatch(
       bookingPitchAction({
         ...values,
