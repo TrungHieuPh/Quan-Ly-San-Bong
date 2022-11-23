@@ -266,17 +266,15 @@ function HomePage() {
             </div>
           </div>
 
-          <Col md={24} sm={24} xs={24}>
-            <Slider />
-          </Col>
+          <Slider />
 
-          <Col xs={24} md={24} className={styles.WrapperMaxim}>
+          <div className={styles.WrapperMaxim}>
             <div>
               <h1>Tại sao lại cần Sport?</h1>
               <p>NỀN TẢNG ĐẶT SÂN - TÌM ĐỐI ĐẦU TIÊN TẠI VIỆT NAM</p>
             </div>
 
-            <Row gutter={[16, 16]}>
+            <Row gutter={[24, 24]}>
               <Col
                 md={{ span: 8, order: 2 }}
                 sm={{ span: 24, order: 2 }}
@@ -287,7 +285,7 @@ function HomePage() {
                     <img
                       src={location}
                       alt=""
-                      style={{ width: 100, height: 100, margin: "0 auto" }}
+                      style={{ width: 72, height: 72, margin: "0 auto" }}
                     />{" "}
                     <h3>Tìm kiếm và đặt sân bóng online</h3>
                   </h2>
@@ -303,7 +301,7 @@ function HomePage() {
                     <img
                       src={calendar}
                       alt=""
-                      style={{ width: 100, height: 100, margin: "0 auto" }}
+                      style={{ width: 72, height: 72, margin: "0 auto" }}
                     />
 
                     <h3> Công cụ quản lý sân bóng online</h3>
@@ -320,7 +318,7 @@ function HomePage() {
                     <img
                       src={podium}
                       alt=""
-                      style={{ width: 100, height: 100, margin: "0 auto" }}
+                      style={{ width: 72, height: 72, margin: "0 auto" }}
                     />
                     <h3>Tổ chức các giải đấu với nhau</h3>
                   </h2>
@@ -331,7 +329,7 @@ function HomePage() {
                 </div>
               </Col>
             </Row>
-          </Col>
+          </div>
           <Col xs={24} className={styles.WrapperQuickView}>
             <h2>
               <img src={smartphone} alt="" /> Xem nhanh sân

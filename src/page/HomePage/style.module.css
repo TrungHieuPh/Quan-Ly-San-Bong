@@ -84,9 +84,7 @@
 }
 video {
   display: flex;
-  padding: 0 5px 5px 5px;
   margin: 0 auto;
-  max-width: 1265px;
   width: 100%;
   object-fit: cover;
 }
@@ -252,15 +250,11 @@ a {
 }
 
 .contentWrapperButton {
-  width: 90%;
-  border-right: 1px solid #ddd;
-  border-left: 1px solid #ddd;
-  background-color: whitesmoke;
+  background-color: #ebebeb;
   margin: 0 auto;
   text-align: center;
-  padding: 30px;
-  border-radius: 7px;
-  box-shadow: rgb(0 0 0 / 60%) 0px 0px 3px;
+  padding: 56px 24px 24px;
+  border-radius: 8px;
 }
 .contentWrapperButton h2 {
   align-items: center;
@@ -270,20 +264,23 @@ a {
   flex-direction: column;
   letter-spacing: 5px;
   text-transform: uppercase;
-  font-size: 27px;
+  font-size: 24px;
   font-weight: 600;
   justify-content: center;
 }
 .contentWrapperButton h3 {
   color: #a8071a;
-  box-shadow: 0 0 2px rgb(0 0 0 / 30%);
-  border-radius: 5px;
+  margin: 24px 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+.contentWrapperButton img {
+  margin-bottom: 24;
 }
 .contentWrapperButton p {
   color: #ce7b7b;
   padding-top: 25px;
+  margin-bottom: 0;
 }
 
 img :hover {
@@ -312,14 +309,15 @@ img :hover {
 
 .WrapperMaxim {
   margin: -125px 0px 0 0px;
-  padding: 32px;
+  padding: 24px;
   background-color: white;
   text-align: center;
-  border-radius: 7px;
+  border-radius: 8px;
 }
 .WrapperMaxim h1 {
+  margin-bottom: 0;
   color: #a8071a;
-  font-size: 90px;
+  font-size: 72px;
   font-family: avenida;
 }
 .WrapperMaxim p {
@@ -339,7 +337,7 @@ img :hover {
   justify-content: center;
   align-items: center;
   color: #a8071a;
-  font-size: 90px;
+  font-size: 72px;
   font-family: Avenida;
 }
 

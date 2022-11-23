@@ -50,7 +50,7 @@ export const TopWrapper = styled.div`
   top: 0;
   width: 100%;
   position: sticky;
-  background-color: #e5e5e5;
+  background-color: white;
   z-index: 10;
   width: 100%;
   & > h2 & h4 {
