@@ -73,7 +73,7 @@ export const ContainerWrapper = styled.header`
   top: 0;
   position: sticky;
   z-index: 99;
-  box-shadow: rgb(0 0 0 / 60%) 0px 4px 5px;
+  box-shadow: 4px 6px 10px 0 rgba(0, 0, 0, 0.3);
 
   /*  @media screen and (max-width: 768px) {
   }

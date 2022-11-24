@@ -7,7 +7,7 @@ function Footer(props) {
         <Row gutter={[16, 16]}>
           <Col md={{ span: 24, order: 1 }} xs={{ span: 24, order: 1 }}>
             <Row gutter={[16, 16]}>
-              <Col md={{ span: 6, order: 1 }} xs={{ span: 24, order: 1 }}>
+              <Col md={{ span: 7, order: 1 }} xs={{ span: 24, order: 1 }}>
                 <div
                   style={{
                     fontSize: "20px",
@@ -18,7 +18,7 @@ function Footer(props) {
                   Đăng ký nhận bản tin của chúng tôi
                 </div>
               </Col>
-              <Col md={{ span: 14, order: 2 }} xs={{ span: 24, order: 2 }}>
+              <Col md={{ span: 13, order: 2 }} xs={{ span: 24, order: 2 }}>
                 <Input
                   placeholder="Email của bạn!"
                   style={{ width: "100%", borderRadius: 6 }}

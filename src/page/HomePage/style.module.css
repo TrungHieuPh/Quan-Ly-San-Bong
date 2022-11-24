@@ -64,13 +64,16 @@
   font-family: "myFirstFont";
   color: #003a8c;
   font-size: 100px;
+  margin-bottom: 0;
+  line-height: 100px;
+  transform: translateY(20px);
 }
 .ContentCombo {
   color: #a8071a;
-  background-color: #e5e5e5;
-  box-shadow: rgb(0 0 0 / 60%) 0px 4px 5px;
   border-radius: 8px;
   padding: 20px 30px 10px 30px;
+  text-align: left;
+  font-size: 15px;
 }
 .Images {
   /* position: absolute; */
@@ -134,19 +137,17 @@ li {
 }
 
 .items {
-  margin: 0 auto;
-  border: 1px solid #938888;
-  height: auto;
-  width: 31%;
-  justify-content: space-evenly;
   transition: all 0.4s ease 0s;
-  background-color: #e5e5e5;
-  box-shadow: rgb(0 0 0 / 60%) 0px 4px 5px;
+  background-color: #ebebeb;
   border-radius: 8px;
-  padding: 5px 5px 5px 0px;
+  padding: 16px;
+  text-align: left;
 }
 .items:hover {
-  background-color: #d89614;
+  box-shadow: 3px 4px 10px 0 rgba(0, 0, 0, 0.2);
+}
+.items h3 {
+  margin-bottom: 0;
 }
 
 .itemTitle {
@@ -156,28 +157,28 @@ li {
   /*  box-shadow: rgb(0 0 0 / 50%) -1px 1px 5px;
   border-radius: 3px; */
 }
-.itemTitle button {
-  font-size: 32px;
+.itemTitle {
+  font-size: 24px;
   font-weight: 600;
-  padding: 2px;
   color: #a8071a;
-  font-family: ui-monospace;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.itemTitle:hover {
+  color: #a8071a;
 }
 .itemPrice {
   color: #003a8c;
   display: flex;
-  font-family: "slick";
   align-items: center;
-  font-size: 30px;
-  padding: 0 20px 0 20px;
+  font-size: 24px;
+  padding: 4px 16px;
   width: max-content;
-  box-shadow: rgb(0 0 0 / 50%) 0px 0px 3px;
-  border-radius: 3px;
+  background-color: white;
+  border-radius: 8px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .itemTitle :hover {
-  background-color: bluebird;
-  text-decoration: underline 0.5px;
   font-weight: 600;
   transition: all 0.1s ease 0s;
 }
@@ -285,9 +286,13 @@ a {
 .contentCombo {
   color: white;
   width: 100%;
-  box-shadow: rgb(0 0 0 / 60%) 0px 27px 47px;
+  height: 100%;
   border-radius: 8px;
-  padding: 20px 30px 10px 30px;
+  padding: 0 0 0 20px;
+  background-color: #ebebeb;
+}
+.contentCombo ul {
+  margin-top: 16px;
 }
 
 img :hover {
@@ -333,19 +338,20 @@ img :hover {
   color: #164c7e;
 }
 .WrapperQuickView {
-  padding: 32px;
+  padding: 24px;
   background-color: white;
   text-align: center;
   margin: 80px auto;
   border-radius: 7px;
+  width: 100%;
 }
 .WrapperQuickView h2 {
   display: flex;
   justify-content: center;
-  align-items: center;
   color: #a8071a;
   font-size: 72px;
   font-family: Avenida;
+  margin-bottom: 0;
 }
 
 .WrapperQuickView img {
@@ -353,7 +359,7 @@ img :hover {
   width: 80px;
 }
 .WrapperCombo {
-  padding: 32px;
+  padding: 24px;
   background-color: white;
   text-align: center;
   margin: 80px auto;
