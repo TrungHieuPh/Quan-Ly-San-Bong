@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 import AdminLayout from "./LayOut/AdminLayout";
 import LoginLayout from "./LayOut/LoginLayout";
@@ -29,6 +30,7 @@ import styles from "./App.module.css";
 
 function App() {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
@@ -36,6 +38,10 @@ function App() {
       dispatch(getUserInfoAction({ id: decodeInfo.sub }));
     }
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
   return (
     <div className={styles.globalContainer}>
       <Routes>
