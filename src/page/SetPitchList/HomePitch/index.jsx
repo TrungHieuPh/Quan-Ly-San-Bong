@@ -315,8 +315,8 @@ function HomePitch() {
                     display: "flex",
                     color: "#a8071a",
                     justifyContent: "space-evenly",
-                    margin: " 0 auto",
-                    border: "1px outset ",
+                    margin: "5px auto",
+                    borderBottom: "1px outset ",
                   }}
                 >
                   <img

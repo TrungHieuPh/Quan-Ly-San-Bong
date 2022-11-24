@@ -148,7 +148,7 @@ export const itemPricePitch = styled.div`
 export const ColIcon = styled(Col)`
   display: flex;
   height: auto;
-  border: 1px outset;
+  border-bottom: 1px outset;
   margin: 5px;
   justify-content: space-evenly;
   align-content: center;
