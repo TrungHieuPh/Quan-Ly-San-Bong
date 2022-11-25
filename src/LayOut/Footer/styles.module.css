@@ -4,7 +4,7 @@
   margin: 0 auto;
   bottom: 0;
   z-index: 10;
-  padding-top: 24px;
+  padding: 24px;
   /* margin: 28px 0px; */
   /* border-radius: 5px; */
 }
@@ -12,10 +12,10 @@
   background: #003a8c;
 }
 .footer {
+  display: flex;
+  align-items: center;
   width: 100%;
 }
 .copyRight {
-  padding: 7px;
   font-size: 12px;
-  margin: 15px;
 }

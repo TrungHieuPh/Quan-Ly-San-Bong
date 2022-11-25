@@ -2,10 +2,11 @@ import styled, { css } from "styled-components";
 
 export const Wrapper = styled.div`
   margin: 0 auto;
-
-  max-width: 1252px;
+  padding: 0 16px;
+  max-width: 1280px;
   width: 100%;
   display: flex;
+  padding-bottom: 64px;
 `;
 export const MainContainer = styled.div`
   position: relative;

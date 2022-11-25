@@ -29,6 +29,7 @@ import locations from "../../../Images/locations.gif";
 import cashback from "../../../Images/cashback.gif";
 import note from "../../../Images/note.gif";
 import flag from "../../../Images/flag.gif";
+import stopwatch from "../../../Images/stopwatch.gif";
 
 import { PITCH_LIST_LIMIT } from "../../../constants/paginations";
 import { ROUTES } from "../../../constants/routers";
@@ -118,6 +119,12 @@ function HomePitch() {
         <Tag
           key={filterItem}
           closable
+          style={{
+            padding: "4px 8px",
+            fontSize: 14,
+            backgroundColor: "white",
+            borderRadius: 6,
+          }}
           onClose={() => handleClearTimeShootFilter(filterItem)}
         >
           {timeShootData.name}
@@ -177,9 +184,7 @@ function HomePitch() {
     return teamList.data.map((item, index) => {
       return (
         <Col span={24} key={item.id}>
-          <Checkbox value={item.id} style={{ color: "#a8071a" }}>
-            {item.name}
-          </Checkbox>
+          <Checkbox value={item.id}>{item.name}</Checkbox>
         </Col>
       );
     });
@@ -194,6 +199,12 @@ function HomePitch() {
       return (
         <Tag
           key={filterItem}
+          style={{
+            padding: "4px 8px",
+            fontSize: 14,
+            backgroundColor: "white",
+            borderRadius: 6,
+          }}
           closable
           onClose={() => handleClearTeamFilter(filterItem)}
         >
@@ -247,311 +258,263 @@ function HomePitch() {
   const renderPitchList = () => {
     return pitch.data.map((item) => {
       return (
-        <S.ItemWrapperPitch span={24} key={item.id}>
-          <S.ItemRowWrapper gutter={[16, 16]}>
-            <Col
-              md={{ span: 8, order: 1 }}
-              xs={{ span: 12, order: 1 }}
-              style={{ width: "100%" }}
-            >
-              <S.ItemImage
-                key={item.images[0]?.id}
-                src={item.images[0]?.url}
-                alt={item.images[0]?.name}
-              />
-            </Col>
-            <Col
-              md={{ span: 16, order: 1 }}
-              xs={{ span: 24, order: 1 }}
-              style={{ width: "100%" }}
-            >
-              <Space
-                style={{
-                  alignItems: "start",
-                }}
-              >
-                <img
-                  src={flag}
-                  alt=""
-                  style={{ height: "50px", width: "50px" }}
+        <Col xs={24} key={item.id}>
+          <S.ItemWrapperPitch>
+            <Row gutter={[16, 16]}>
+              <Col md={7} xs={24}>
+                <S.ItemImage
+                  key={item.images[0]?.id}
+                  src={item.images[0]?.url}
+                  alt={item.images[0]?.name}
                 />
-                <h2 style={{ fontSize: 32, fontWeight: 900 }}> {item.name}</h2>
-              </Space>
-              <Row
-                style={{
-                  display: "flex",
-                  alignContent: "center",
-                  justifyContent: "space-evenly",
-                  width: "100%",
-                }}
-              >
-                <S.ColIcon
-                  md={{ span: 10, order: 1 }}
-                  xs={{ span: 12, order: 1 }}
-                >
-                  <h2 style={{ fontFamily: "cursive" }}>
-                    {item.reviews
-                      .map((item) => {
-                        return item.rate;
-                      })
-                      .reduce((total, rate) => total + rate, 0) /
-                      item.reviews.length || 0}
-                    <FaStar style={{ color: "#faad14" }} />
-                  </h2>
-                  <h2 style={{ fontFamily: "cursive" }}>
-                    {item.reviews.length}
-                    <FaCommentDots style={{ color: "#8c8c8c" }} />
-                  </h2>
-                  <h2 style={{ fontFamily: "cursive" }}>
-                    {item.favorites.length}
-                    <FaHeart style={{ color: "#f5222d" }} />
-                  </h2>
-                </S.ColIcon>
-                <Col
-                  md={{ span: 10, order: 1 }}
-                  xs={{ span: 12, order: 1 }}
-                  style={{
-                    fontSize: 20,
-                    display: "flex",
-                    color: "#a8071a",
-                    justifyContent: "space-evenly",
-                    margin: "5px auto",
-                    borderBottom: "1px outset ",
-                  }}
-                >
-                  <img
-                    src={locations}
-                    style={{
-                      width: 30,
-                      height: 30,
-                    }}
-                    alt=""
-                  />
-                  {item.address}
-                </Col>
-              </Row>
-              <S.WrapperPriceAndTimes gutter={(16, 16)}>
-                <Col
-                  md={{ span: 10, order: 1 }}
-                  xs={{ span: 12, order: 1 }}
-                  style={{ border: "1px ridge" }}
-                >
-                  <h3>Khung giờ:</h3>
-                  {item.times?.map((itemTime) => {
-                    return (
-                      <Tag
-                        onChange={(e) => setSelectedOption(e.target.value)}
-                        size="small"
-                        style={{ color: "#003a8c" }}
-                      >
-                        {itemTime.name}
-                      </Tag>
-                    );
-                  })}
-                </Col>
-                <Col md={{ span: 14, order: 1 }} xs={{ span: 12, order: 1 }}>
-                  <S.ItemPrice>
-                    <h6 style={{ color: "#003a8c" }}>Giá chỉ từ</h6>
-                    <S.itemPricePitch>
-                      <img
-                        src={cashback}
-                        style={{
-                          width: 40,
-                          height: 40,
-                        }}
-                        alt=""
-                      />
-                      {parseFloat(item.price).toLocaleString()}đ
-                    </S.itemPricePitch>
-                  </S.ItemPrice>
-                </Col>
-              </S.WrapperPriceAndTimes>
-              <Row>
-                <Col span={24}>
-                  <Row gutter={[16, 16]}>
-                    <Col
-                      md={{ span: 12, order: 1 }}
-                      xs={{ span: 24, order: 1 }}
+              </Col>
+              <Col md={17} xs={24}>
+                <div>
+                  <Space>
+                    <img src={flag} alt="" style={{ height: 42, width: 42 }} />
+                    <h2
+                      style={{ fontSize: 28, fontWeight: 900, marginBottom: 0 }}
                     >
-                      <Button
-                        type="primary"
-                        block
-                        danger
-                        onClick={() => navigate(`/pitch/${item.id}/setpitch`)}
-                      >
-                        Chi tiết
-                      </Button>
-                    </Col>
-                    <Col
-                      md={{ span: 12, order: 1 }}
-                      xs={{ span: 24, order: 2 }}
+                      {item.name}
+                    </h2>
+                  </Space>
+                </div>
+                <Row gutter={[16, 16]}>
+                  <Col md={12} xs={24}>
+                    <div>
+                      <Space>
+                        <img
+                          src={locations}
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          alt=""
+                        />
+                        <h3
+                          style={{
+                            fontSize: 16,
+                            color: "#a8071a",
+                            marginBottom: 0,
+                          }}
+                        >
+                          Địa chỉ: {item.address}
+                        </h3>
+                      </Space>
+                    </div>
+                    <div>
+                      <Space>
+                        <img
+                          src={stopwatch}
+                          style={{
+                            width: 20,
+                            height: 20,
+                          }}
+                          alt=""
+                        />
+                        <h3
+                          style={{
+                            fontSize: 16,
+                            color: "#a8071a",
+                            marginBottom: 0,
+                          }}
+                        >
+                          Khung giờ:
+                        </h3>
+                      </Space>
+                      <div>
+                        {item.times?.map((itemTime) => {
+                          return (
+                            <Tag
+                              onChange={(e) =>
+                                setSelectedOption(e.target.value)
+                              }
+                              size="small"
+                              style={{ color: "#003a8c" }}
+                            >
+                              {itemTime.name}
+                            </Tag>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <Space size={32} style={{ marginTop: 16 }}>
+                      <Space align="baseline">
+                        <FaStar style={{ fontSize: 20, color: "#faad14" }} />
+                        <h2 style={{ fontFamily: "cursive", marginBottom: 0 }}>
+                          {item.reviews
+                            .map((item) => {
+                              return item.rate;
+                            })
+                            .reduce((total, rate) => total + rate, 0) /
+                            item.reviews.length || 0}
+                        </h2>
+                      </Space>
+                      <Space align="baseline">
+                        <FaCommentDots
+                          style={{ fontSize: 20, color: "#8c8c8c" }}
+                        />
+                        <h2 style={{ fontFamily: "cursive", marginBottom: 0 }}>
+                          {item.reviews.length}
+                        </h2>
+                      </Space>
+                      <Space align="baseline">
+                        <FaHeart style={{ fontSize: 20, color: "#f5222d" }} />
+                        <h2 style={{ fontFamily: "cursive", marginBottom: 0 }}>
+                          {item.favorites.length}
+                        </h2>
+                      </Space>
+                    </Space>
+                  </Col>
+                  <Col md={12} xs={24}>
+                    <S.ItemPrice>
+                      <h6 style={{ color: "#003a8c" }}>Giá chỉ từ:</h6>
+                      <S.itemPricePitch>
+                        <img
+                          src={cashback}
+                          style={{
+                            width: 40,
+                            height: 40,
+                          }}
+                          alt=""
+                        />
+                        {parseFloat(item.price).toLocaleString()}đ
+                      </S.itemPricePitch>
+                    </S.ItemPrice>
+                  </Col>
+                </Row>
+                <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+                  <Col md={12} xs={24}>
+                    <Button
+                      type="primary"
+                      block
+                      danger
+                      onClick={() => navigate(`/pitch/${item.id}/setpitch`)}
                     >
-                      <Button
-                        type="primary"
-                        block
-                        danger
-                        onClick={() => {
-                          userInfo.data.id
-                            ? navigate(
-                                generatePath(ROUTES.USER.CHECKOUT, {
-                                  id: item.id,
-                                })
-                              )
-                            : info();
-                        }}
-                      >
-                        Đặt sân
-                      </Button>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </Col>
-            {/* </div> */}
-          </S.ItemRowWrapper>
-        </S.ItemWrapperPitch>
+                      Chi tiết
+                    </Button>
+                  </Col>
+                  <Col md={12} xs={24}>
+                    <Button
+                      type="primary"
+                      block
+                      danger
+                      onClick={() => {
+                        userInfo.data.id
+                          ? navigate(
+                              generatePath(ROUTES.USER.CHECKOUT, {
+                                id: item.id,
+                              })
+                            )
+                          : info();
+                      }}
+                    >
+                      Đặt sân
+                    </Button>
+                  </Col>
+                </Row>
+              </Col>
+              {/* </div> */}
+            </Row>
+          </S.ItemWrapperPitch>
+        </Col>
       );
     });
   };
 
   return (
     <S.Wrapper>
-      <Form>
-        <Row gutter={[16, 16]}>
-          <Col span={24}>
-            <S.WrapperCard size="small" bordered="false">
-              <Row gutter={[16, 16]}>
-                <Col>
-                  <S.TitleContent
-                    xs={{ span: 24, order: 1 }}
-                    /*   md={{ span: 24, order: 1 }} */
-                  >
-                    <img src={note} alt="" style={{ height: 80, width: 80 }} />
-                    <h1
+      <S.TitleContent>
+        <img src={note} alt="" style={{ height: 56, width: 56 }} />
+        <h1
+          style={{
+            color: " #a8071a",
+            fontFamily: "monospace",
+            fontSize: 36,
+          }}
+        >
+          Thông tin Sân
+        </h1>
+      </S.TitleContent>
+      <Row gutter={[24, 24]}>
+        <Col lg={6} xs={24}>
+          <S.FilterWrapper>
+            <h2>Sắp xếp theo</h2>
+            <S.SelectPriceFilter
+              placeholder="Sắp xếp theo"
+              allowClear
+              onChange={(value) => handleChangeSort(value)}
+            >
+              <Select.Option value="asc">Giá tăng dần </Select.Option>
+              <Select.Option value="desc">Giá giảm dần</Select.Option>
+            </S.SelectPriceFilter>
+            <h2 style={{ marginTop: 16 }}>Lọc Theo</h2>
+            <Checkbox.Group
+              onChange={(value) => handleFilter("teamId", value)}
+              value={filterParams.teamId}
+            >
+              <Row>{renderTeamOptions()}</Row>
+            </Checkbox.Group>
+          </S.FilterWrapper>
+        </Col>
+        <Col lg={18} xs={24}>
+          <Row gutter={[24, 24]}>
+            <Col xs={24}>
+              <S.WrapperContent>
+                <h2>Tìm kiếm</h2>
+                <Input
+                  placeholder="Nhập từ khóa tìm kiếm"
+                  onChange={(e) => handleFilter("keyword", e.target.value)}
+                  value={filterParams.keyword}
+                  prefix={<SearchOutlined />}
+                  style={{ width: "100%" }}
+                />
+              </S.WrapperContent>
+            </Col>
+            {(filterParams.keyword ||
+              !!filterParams.teamId.length ||
+              !!filterParams.timeShootId.length) && (
+              <Col xs={24}>
+                <Space>
+                  {renderFilterTimeShoot()}
+                  {renderFilterTeam()}
+                  {filterParams.keyword && (
+                    <Tag
                       style={{
-                        color: " #a8071a",
-                        fontFamily: "monospace",
-                        fontSize: 50,
+                        padding: "4px 8px",
+                        fontSize: 14,
+                        backgroundColor: "white",
+                        borderRadius: 6,
                       }}
+                      closable
+                      onClose={() => handleClearKeywordFilter()}
                     >
-                      Thông tin Sân
-                    </h1>
-                  </S.TitleContent>
-                </Col>
+                      Từ khóa: {filterParams.keyword}
+                    </Tag>
+                  )}
+                </Space>
+              </Col>
+            )}
 
-                <Col md={24} xs={{ span: 24, order: 1 }}>
-                  <S.WrapperContent gutter={[16, 16]}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-evenly",
-                      }}
+            <Col xs={24}>
+              <Spin spinning={pitch.loading}>
+                <Row gutter={[24, 24]}>{renderPitchList()}</Row>
+
+                {pitch.data.length !== pitch.meta.total && (
+                  <Row justify="center">
+                    <Button
+                      style={{ margin: 16 }}
+                      onClick={() => handleShowMore()}
                     >
-                      <img
-                        src={search}
-                        alt=""
-                        style={{ height: "50px", width: "50px" }}
-                      />
-                      <h1 style={{ color: "#a8071a", fontWeight: 900 }}>
-                        Tìm kiếm
-                      </h1>
-                    </div>
-
-                    <Col span={24}>
-                      <Form.Item
-                        label=""
-                        name="date"
-                        /*   rules={[
-                            {
-                              required: true,
-                              message: "Bạn chưa chọn ngày!",
-                            },
-                          ]} */
-                      >
-                        <Input
-                          placeholder="Nhập từ khóa tìm kiếm"
-                          onChange={(e) =>
-                            handleFilter("keyword", e.target.value)
-                          }
-                          value={filterParams.keyword}
-                          prefix={<SearchOutlined />}
-                          style={{
-                            backgroundColor: "white",
-                            boxShadow: " rgb(0 0 0 / 50%) -1px 1px 8px",
-                            margin: "0px 0px 10px 0px",
-                          }}
-                        />
-                      </Form.Item>
-                    </Col>
-                  </S.WrapperContent>
-                </Col>
-
-                <S.WrapperCol1
-                  md={{ span: 24, order: 2 }}
-                  xs={{ span: 24, order: 1 }}
-                >
-                  <S.WrapperRow1 gutter={[24, 24]}>
-                    <S.WrapperCol2Filter md={6} xs={24}>
-                      <Row gutter={[16, 16]}>
-                        <div style={{ marginBottom: 16 }}>
-                          <Col>
-                            <Space>
-                              {renderFilterTimeShoot()}
-                              {renderFilterTeam()}
-                              {filterParams.keyword && (
-                                <Tag
-                                  closable
-                                  onClose={() => handleClearKeywordFilter()}
-                                >
-                                  Keyword: {filterParams.keyword}
-                                </Tag>
-                              )}
-                            </Space>
-                          </Col>
-                        </div>
-                      </Row>
-                      <S.SelectPriceFilter
-                        placeholder="Sắp xếp theo"
-                        allowClear
-                        onChange={(value) => handleChangeSort(value)}
-                      >
-                        <Select.Option value="asc">Giá tăng dần </Select.Option>
-                        <Select.Option value="desc">Giá giảm dần</Select.Option>
-                      </S.SelectPriceFilter>
-
-                      <Checkbox.Group
-                        onChange={(value) => handleFilter("teamId", value)}
-                        value={filterParams.teamId}
-                      >
-                        <Row>
-                          <h3>Lọc Theo</h3>
-                          {renderTeamOptions()}
-                        </Row>
-                      </Checkbox.Group>
-                    </S.WrapperCol2Filter>
-                    <Col md={18} xs={24}>
-                      <Spin spinning={pitch.loading}>
-                        <Row gutter={[16, 16]}>{renderPitchList()}</Row>
-
-                        {pitch.data.length !== pitch.meta.total && (
-                          <Row justify="center">
-                            <Button
-                              style={{ margin: 16 }}
-                              onClick={() => handleShowMore()}
-                            >
-                              Xem Thêm
-                            </Button>
-                          </Row>
-                        )}
-                      </Spin>
-                    </Col>
-                  </S.WrapperRow1>
-                </S.WrapperCol1>
-              </Row>
-            </S.WrapperCard>
-          </Col>
-        </Row>
-      </Form>
+                      Xem Thêm
+                    </Button>
+                  </Row>
+                )}
+              </Spin>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
     </S.Wrapper>
   );
 }

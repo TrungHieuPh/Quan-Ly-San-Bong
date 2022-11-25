@@ -18,21 +18,15 @@ export const FormWrapper = styled.div`
   margin-top: 16px;
 `;
 export const BgTitle = styled.div`
-  display: inline-block;
-  margin-bottom: 0px;
-  color: #000;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  /* font-size: 23px; */
-
-  border: 1px solid #ddd;
-  box-shadow: 4px 4px 0 rgb(0 0 0 / 10%);
-  padding: 5px;
+  position: relative;
+  margin: 24px 0;
   width: 100%;
-  text-align: center;
   background: url(https://labola.jp/labostatic/img/cover/banner_top.png);
-  height: 300px;
+  background-position: 50% -24px;
+  background-repeat: no-repeat;
   background-size: cover;
+  border-radius: 8px;
+  overflow: hidden;
 `;
 export const Items = styled.div`
   display: flex;
@@ -65,17 +59,11 @@ export const DetailsTh = styled.div`
   text-align: left;
 `;
 export const DetailsThs = styled.div`
-  width: 100%;
   text-align: center;
-  vertical-align: top;
   color: #a8071a;
   display: inline-flex;
   justify-content: center;
-  padding: 25px 10px 40px 10px;
-  margin: 16px 0 0 0;
-  background-color: whitesmoke;
-  border-radius: 7px;
-  box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
+  align-items: center;
 
   & img {
     height: 50px;
@@ -83,9 +71,8 @@ export const DetailsThs = styled.div`
   }
   & div {
     font-weight: bold;
-    text-align: left;
     color: #a8071a;
-    font-size: 55px;
+    font-size: 36px;
   }
 `;
 export const DetailsTd = styled.td`
@@ -264,9 +251,6 @@ export const CartContainer = styled.div`
   }
 `;
 export const CustomForm = styled(Form)`
-  padding-bottom: 16px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid #ccc;
   & Button {
     background: #003a8c;
   }
@@ -274,12 +258,11 @@ export const CustomForm = styled(Form)`
 export const ButtonSetPitch = styled(Button)`
   font-weight: 600;
   padding: 10px;
-  margin: 10px 0 0 0;
   height: max-content;
-  border-radius: 5px;
+  border-radius: 8px;
 
-  & > :hover {
-    background-color: #1890ff;
+  &:hover {
+    background-color: #e9846f !important;
   }
 `;
 /* export const ButtonSetPitchHover = styled(Button)`
@@ -295,16 +278,9 @@ export const ButtonHover = styled(Col)`
 `;
 export const SearchBooking = styled.div`
   width: 100%;
-  padding: 15px 10px 15px 10px;
-  display: flex;
-  position: relative;
-  bottom: 20px;
-  border: "1px solid #ddd";
-  justify-content: space-around;
-  align-items: center;
+  padding: 16px;
   background-color: white;
-  box-shadow: rgb(0 0 0 / 50%) 0px 1px 1px;
-  border-radius: 5px;
+  border-radius: 8px;
 `;
 export const SearchItem = styled.div`
   border-right: "1px solid #ddd";
@@ -335,12 +311,9 @@ export const ContentLeft = styled.div`
 export const ContentRight = styled.div`
   width: 100%;
   background-color: whitesmoke;
-  text-align: center;
   padding: 16px;
-  margin: 8px;
-  box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
   height: max-content;
-  border-radius: 15px;
+  border-radius: 8px;
 `;
 export const WrapperReview = styled.div`
   margin: 15px 0 50px 0;
@@ -350,28 +323,28 @@ export const WrapperReview = styled.div`
   border-radius: 5px;
 `;
 export const priceFrom = styled.div`
+  padding: 16px;
   display: flex;
-  font-size: 35px;
-  padding: 10px 0px 0px 10px;
+  font-size: 32px;
   background-color: whitesmoke;
-  border-radius: 5px;
-  width: max-content;
-  box-shadow: rgb(0 0 0 / 60%) 0px 1px 10px;
+  border-radius: 8px;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
-  border: 12px solid white;
+  height: 100%;
+  width: 100%;
 `;
 export const ItemIconContent = styled.div`
   display: flex;
   align-items: center;
-  align-items: flex-end;
 `;
 export const ItemPrice = styled.h3`
-  width: max-content;
   display: flex;
+  align-items: center;
   color: #a8071a;
   font-weight: 900;
   font-size: 32px;
+  margin-bottom: 0;
 `;
 /* export const ButtonLike = styled(Button)`
  display: flex;
@@ -386,22 +359,24 @@ export const ItemPrice = styled.h3`
 `; */
 export const TotalRating = styled.div`
   display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 16px;
   font-size: 30px;
-  border: 12px solid white;
   background-color: whitesmoke;
-  box-shadow: rgb(0 0 0 / 60%) 0px 3px 5px;
-  border-radius: 5px;
+  border-radius: 8px;
+  height: 100%;
 `;
 export const TitlePanner = styled.h1`
+  padding: 16px 24px;
   font-family: monospace;
   color: #a8071a;
   font-weight: 700;
-  padding-top: 40px;
-  font-size: 80px;
-  box-shadow: rgb(0 0 0) 0px 5px 35px;
+  font-size: 64px;
+  text-align: center;
+  margin-bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
 `;
 export const itemPanner = styled.div`
   display: flex;
@@ -411,10 +386,9 @@ export const itemPanner = styled.div`
   margin: 0px auto;
 `;
 export const WrapperWriteComment = styled(Card)`
-  background-color: rgb(229, 229, 229);
-  border: 1px solid rgb(130, 0, 20);
-  margin: 50px 16px 16px;
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 10px;
-  border-radius: 1px;
-  color: rgb(0, 58, 140);
+  max-width: 700px;
+  width: 100%;
+  margin-top: 16px;
+  background-color: whitesmoke;
+  border-radius: 8px;
 `;

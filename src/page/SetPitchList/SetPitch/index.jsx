@@ -187,16 +187,14 @@ function SetPitch() {
         return (
           <div
             style={{
-              margin: 16,
-              borderBottom: ".2px solid #e0dddd8f",
+              padding: "16px 0",
+              borderBottom: ".5px solid #e0dddd8f",
               color: "#003a8c",
             }}
           >
             <Space align="center">
-              <h3>
-                <FaUser />
-                {item.user.fullName}
-              </h3>
+              <FaUser style={{ color: "#ab0f21" }} />
+              <h3 style={{ marginBottom: 0 }}>{item.user.fullName}</h3>
               {userInfo.data.id === item.userId && (
                 <Popconfirm
                   title="Bạn có chắc muốn xóa sản phẩm này không?"
@@ -222,7 +220,7 @@ function SetPitch() {
               </div>
             </Space>
             <div>
-              <Rate value={item.rate} disabled style={{ fontSize: 12 }} />
+              <Rate value={item.rate} disabled style={{ fontSize: 14 }} />
             </div>
             <div>{item.comment}</div>
           </div>
@@ -234,17 +232,18 @@ function SetPitch() {
     if (!pitchDetail.data.images?.length) return null;
     return pitchDetail.data.images?.map((item) => {
       return (
-        <img
-          key={item.id}
-          src={item.url}
-          alt={item.name}
-          style={{
-            width: "80%",
-            height: "250px",
-            margin: 16,
-            objectFit: "cover",
-          }}
-        />
+        <Col xs={24} key={item.id}>
+          <img
+            src={item.url}
+            alt={item.name}
+            style={{
+              width: "100%",
+              height: "250px",
+              objectFit: "cover",
+              borderRadius: 8,
+            }}
+          />
+        </Col>
       );
     });
   }, [pitchDetail.data]);
@@ -252,418 +251,272 @@ function SetPitch() {
   return (
     <S.Wrapper>
       <S.Main>
-        <Row gutter={[16, 16]}>
-          <Col md={{ span: 24, order: 1 }} xs={{ span: 24, order: 1 }}>
-            <S.Center>
-              <S.BgTitle>
-                <S.TitlePanner>{pitchDetail.data?.name}</S.TitlePanner>
+        <S.BgTitle>
+          <S.TitlePanner>{pitchDetail.data?.name}</S.TitlePanner>
+        </S.BgTitle>
 
-                <S.itemPanner>
-                  <div>
-                    <Button
-                      type="link"
-                      style={{
-                        float: "left",
-                        color: "#f5222d",
-                        fontSize: "large",
-                        fontWeight: 800,
-                      }}
-                      onClick={() => navigate(-1 || ROUTES.USER.HOME)}
-                    >
-                      <FaArrowLeft />
-                      Quay lại
-                    </Button>
-                    <img
-                      src={click}
-                      alt=""
-                      style={{
-                        height: 50,
-                        width: 50,
-                        position: "relative",
-                        bottom: 65,
-                        transform: "rotate(-180deg)",
-                      }}
-                    />
+        <Spin spinning={pitchDetail.loading} style={{ width: "100%" }}>
+          <S.SearchBooking>
+            <Row gutter={[16, 16]}>
+              <Col lg={5} xs={12}>
+                <S.TotalRating>
+                  <div
+                    style={{
+                      fontSize: 20,
+                      color: "#003a8c",
+                    }}
+                  >
+                    Đánh giá
                   </div>
-                  <h5
+                  <div
                     style={{
-                      color: "white",
-                      position: "relative",
-                      fontSize: 45,
-                      bottom: 20,
+                      fontSize: 25,
+                      fontFamily: "monospace",
                       display: "flex",
-                      justifyContent: "center",
                       alignItems: "center",
+                      color: "#a8071a",
                     }}
                   >
-                    Bóng đá
-                  </h5>
-                  <h5
-                    style={{
-                      color: "white",
-                      position: "relative",
-                      fontSize: 45,
-                      bottom: 20,
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <FaGripLinesVertical style={{ color: "#1890ff" }} />
-                    {countAverageRating.toFixed()}
+                    {countAverageRating.toFixed(1)}/5.0
                     <FaStar
                       style={{
-                        width: 45,
-                        height: 70,
-                        color: "#ffc53d",
+                        width: 24,
+                        height: 24,
+                        color: "#faad14",
+                        marginLeft: 8,
                       }}
                       alt=""
                     />
-                  </h5>
-                </S.itemPanner>
-              </S.BgTitle>
-            </S.Center>
-          </Col>
-          <Col
-            md={{ span: 24, order: 1 }}
-            xs={{ span: 24, order: 2 }}
-            style={{ width: "100%" }}
-          >
-            <Spin spinning={pitchDetail.loading} style={{ width: "100%" }}>
-              <div style={{ width: "100%" }}>
-                <S.SearchBooking>
-                  <Row gutter={[16, 16]}>
-                    <Col md={{ span: 7, order: 1 }} xs={{ span: 24, order: 1 }}>
-                      {userInfo.data.id && (
-                        <S.ButtonSetPitch
-                          style={{
-                            fontSize: 24,
-                            backgroundColor: "whitesmoke",
-                            boxShadow: "rgb(0 0 0 / 60%) 0px 3px 5px",
-                            border: "11px solid white",
-                          }}
-                          size="large"
-                          type="link"
-                          danger
-                          block
-                          onClick={() =>
-                            navigate(generatePath(ROUTES.USER.CHECKOUT, { id }))
-                          }
-                        >
-                          <div
-                            style={{
-                              width: "100%",
-                              margin: "5px 0px 5px 1px",
-                              padding: "5px 25px 1px 5px",
-                              borderRadius: " 7px",
-                              color: "#003a8c",
-                            }}
-                          >
-                            Bạn muốn đặt sân không ?
-                            <h3
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                alignContent: "space-around",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <img
-                                src={click}
-                                style={{
-                                  width: 60,
-                                  height: 60,
-                                  transform: "rotate(30deg)",
-                                }}
-                                alt=""
-                              />
-                              Hãy nhấn vào đây!
-                            </h3>
-                          </div>
-                        </S.ButtonSetPitch>
-                      )}
-                    </Col>
-                    <Col
-                      md={{ span: 10, order: 1 }}
-                      xs={{ span: 24, order: 2 }}
-                    >
-                      <Row
-                        gutter={[16, 16]}
-                        style={{
-                          display: "flex",
-                          flexWrap: "nowrap",
-                          justifyContent: "center",
-                          width: "98%",
-                        }}
-                      >
-                        <Col
-                          md={{ span: 14, order: 1 }}
-                          xs={{ span: 14, order: 1 }}
-                          style={{
-                            margin: 24,
-                            fontSize: 20,
-                          }}
-                        >
-                          <S.TotalRating>
-                            <div
-                              style={{
-                                fontSize: 15,
-                                color: "#003a8c",
-                                justifyContent: "space-around",
-                                alignItems: "flex-start",
-                              }}
-                            >
-                              {" "}
-                              Đánh giá
-                            </div>
-                            <div
-                              style={{
-                                fontSize: 25,
-                                fontFamily: "monospace",
-                                display: "flex",
-                                alignItems: "center",
-                                color: "#a8071a",
-                              }}
-                            >
-                              {countAverageRating.toFixed(1)} / 5
-                              <FaStar
-                                style={{
-                                  width: 30,
-                                  height: 30,
-                                  color: "#faad14",
-                                }}
-                                alt=""
-                              />
-                            </div>
-                          </S.TotalRating>
-                        </Col>
-                        <Col
-                          md={{ span: 8, order: 2 }}
-                          xs={{ span: 10, order: 1 }}
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-around",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Button
-                            size="large"
-                            type="link"
-                            danger={isLike}
-                            bordered="false"
-                            icon={isLike ? <HeartFilled /> : <HeartOutlined />}
-                            onClick={() => handleToggleFavorite()}
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "space-around",
-                              fontSize: 30,
-                              backgroundColor: "whitesmoke",
-                              height: 100,
-                              boxShadow: "rgb(0 0 0 / 60%) 0px 1px 7px",
-                              border: "12px solid white",
-                              borderRadius: 5,
-                            }}
-                          >
-                            {pitchDetail.data?.favorites?.length || 0}
-                            <img
-                              src={mouse}
-                              style={{
-                                width: 60,
-                                height: 60,
-                                position: "relative",
-                                top: 10,
-                                transform: "rotate(-30deg)",
-                              }}
-                              alt=""
-                            />
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col
-                      md={{ span: 7, order: 1 }}
-                      xs={{ span: 24, order: 3 }}
+                  </div>
+                </S.TotalRating>
+              </Col>
+              <Col lg={5} xs={12}>
+                <Button
+                  size="large"
+                  danger={isLike}
+                  bordered="false"
+                  onClick={() => handleToggleFavorite()}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 30,
+                    backgroundColor: "whitesmoke",
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 8,
+                    border: "none",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: 20,
+                      color: "#003a8c",
+                    }}
+                  >
+                    Yêu thích
+                  </div>
+                  <Space>
+                    {isLike ? <HeartFilled /> : <HeartOutlined />}
+                    {pitchDetail.data?.favorites?.length || 0} lượt
+                    <img
+                      src={mouse}
                       style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
+                        width: 60,
+                        height: 60,
+                        position: "relative",
+                        transform: "rotate(-30deg)",
                       }}
-                    >
-                      <S.priceFrom>
-                        <div style={{ fontSize: 20, color: "#003a8c" }}>
-                          Giá chỉ từ
-                        </div>
-                        <S.ItemIconContent>
-                          <img
-                            src={yuan}
-                            style={{
-                              width: 80,
-                              height: 80,
-                            }}
-                            alt=""
-                          />
-                          <S.ItemPrice>
-                            <div style={{ fontSize: 25 }}>đ &nbsp;</div>
-                            {parseFloat(
-                              pitchDetail.data.price
-                            ).toLocaleString()}{" "}
-                            VNĐ
-                          </S.ItemPrice>
-                        </S.ItemIconContent>
-                      </S.priceFrom>
-                    </Col>
-                  </Row>
-                </S.SearchBooking>
-              </div>
-              <Row gutter={[16, 16]}>
-                <S.WrapperContent>
-                  <Col md={{ span: 24, order: 1 }} xs={{ span: 24, order: 1 }}>
-                    <S.DetailsThs>
-                      <img
-                        src={document}
-                        style={{
-                          width: 80,
-                          height: 80,
-                        }}
-                        alt=""
-                      />
-                      <div> Hồ sơ của {pitchDetail.data?.name}</div>
-                    </S.DetailsThs>
-                  </Col>
-                  <Col md={{ span: 24, order: 2 }} xs={{ span: 24, order: 2 }}>
+                      alt=""
+                    />
+                  </Space>
+                </Button>
+              </Col>
+              <Col
+                lg={7}
+                md={12}
+                xs={24}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <S.priceFrom>
+                  <div style={{ fontSize: 20, color: "#003a8c" }}>
+                    Giá chỉ từ
+                  </div>
+                  <S.ItemIconContent>
+                    <img
+                      src={yuan}
+                      style={{
+                        width: 64,
+                        height: 64,
+                      }}
+                      alt=""
+                    />
+                    <S.ItemPrice>
+                      &nbsp;&nbsp;
+                      {parseFloat(pitchDetail.data.price).toLocaleString()}
+                      <div style={{ fontSize: 25 }}>&nbsp;đ</div>
+                    </S.ItemPrice>
+                  </S.ItemIconContent>
+                </S.priceFrom>
+              </Col>
+              <Col lg={7} md={12} xs={24}>
+                {userInfo.data.id && (
+                  <S.ButtonSetPitch
+                    style={{
+                      fontSize: 24,
+                      backgroundColor: "whitesmoke",
+                    }}
+                    size="large"
+                    type="link"
+                    danger
+                    block
+                    onClick={() =>
+                      navigate(generatePath(ROUTES.USER.CHECKOUT, { id }))
+                    }
+                  >
                     <div
                       style={{
-                        display: "flex",
                         width: "100%",
-                        marginBottom: 50,
+                        margin: "5px 0px 5px 1px",
+                        padding: "5px 25px 1px 5px",
+                        borderRadius: " 7px",
+                        color: "#003a8c",
                       }}
                     >
-                      <Row gutter={[16, 16]}>
-                        <Col
-                          md={{ span: 10, order: 1 }}
-                          xs={{ span: 24, order: 1 }}
-                        >
-                          <S.ContentRight>
-                            <div
-                              style={{
-                                width: "100%",
-                                fontSize: 20,
-                                color: "#003a8c",
-                              }}
-                              dangerouslySetInnerHTML={{
-                                __html: pitchDetail.data.content,
-                              }}
-                            ></div>
-                          </S.ContentRight>
-                        </Col>
-                        <Col
-                          md={{ span: 14, order: 1 }}
-                          xs={{ span: 24, order: 2 }}
-                        >
-                          <S.ContentLeft>
-                            <h2
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                border: "5px solid white",
-                                boxShadow: "rgb(0 0 0 / 50%) 0px 1px 2px",
-                                margin: 6,
-                                padding: 6,
-                              }}
-                            >
-                              <img
-                                src={image}
-                                style={{
-                                  width: 50,
-                                  height: 50,
-                                }}
-                                alt=""
-                              />
-                              Hình ảnh sân
-                            </h2>
-                            {renderProductImages}
-                          </S.ContentLeft>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Col>
-                </S.WrapperContent>
-              </Row>
-              <S.WrapperReview>
-                <div style={{ display: "flex" }}>
-                  <img
-                    src={conversation}
-                    style={{
-                      width: 50,
-                      height: 50,
-                    }}
-                    alt=""
-                  />
-                  <h2>Bình luận</h2>
-                </div>
-
-                <div style={{ margin: 16, borderTop: "1px solid #ddd" }}>
-                  {" "}
-                  {renderReviewList()}
-                </div>
-                <Col
-                  span={24}
-                  /*   md={{ span: 16, order: 4 }}
-                  xs={{ span: 24, order: 4 }} */
-                >
-                  {userInfo.data.id && (
-                    <S.WrapperWriteComment
-                      size="small"
-                      bordered={false}
-                      actions={<EditOutlined />}
-                      title="Viết bình luận tại đây !!!"
-                    >
-                      <S.CustomForm
-                        layout="vertical"
-                        onFinish={(values) => handlePostReview(values)}
+                      Bạn muốn đặt sân không ?
+                      <h3
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          alignContent: "space-around",
+                          justifyContent: "center",
+                        }}
                       >
-                        <Form.Item
-                          label="Đánh giá sao"
-                          name="rate"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Bạn chưa chọn sao!",
-                            },
-                          ]}
-                        >
-                          <Rate />
-                        </Form.Item>
                         <img
-                          src={pencil}
+                          src={click}
                           style={{
-                            width: 40,
-                            height: 40,
+                            width: 60,
+                            height: 60,
+                            transform: "rotate(30deg)",
                           }}
                           alt=""
                         />
-                        <Form.Item
-                          label="Bình luận"
-                          name="comment"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Bạn chưa nhập nội dung!",
-                            },
-                            {
-                              max: 50,
-                              message: "bạn đã nhập quá ký tự!",
-                            },
-                          ]}
-                        >
-                          <Input.TextArea
-                            autoSize={{ maxRows: 6, minRows: 4 }}
-                          />
-                        </Form.Item>
+                        Hãy nhấn vào đây!
+                      </h3>
+                    </div>
+                  </S.ButtonSetPitch>
+                )}
+              </Col>
+            </Row>
+          </S.SearchBooking>
+          <S.SearchBooking style={{ marginTop: 24 }}>
+            <S.DetailsThs>
+              <img
+                src={document}
+                style={{
+                  width: 64,
+                  height: 64,
+                }}
+                alt=""
+              />
+              <div>Hồ sơ của sân</div>
+            </S.DetailsThs>
+            <Row gutter={[16, 16]}>
+              <Col md={12} xs={24}>
+                <S.ContentRight>
+                  <div
+                    style={{
+                      width: "100%",
+                      fontSize: 20,
+                      color: "#003a8c",
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: pitchDetail.data.content,
+                    }}
+                  ></div>
+                </S.ContentRight>
+              </Col>
+              <Col md={12} xs={24}>
+                <Row gutter={[16, 16]}>{renderProductImages}</Row>
+              </Col>
+            </Row>
+          </S.SearchBooking>
 
-                        {/*  <Button
+          <S.SearchBooking style={{ marginTop: 24 }}>
+            <S.DetailsThs>
+              <img
+                src={conversation}
+                style={{
+                  width: 64,
+                  height: 64,
+                }}
+                alt=""
+              />
+              <div>Bình luận</div>
+            </S.DetailsThs>
+
+            <div style={{ borderTop: "1px solid #ddd" }}>
+              {renderReviewList()}
+            </div>
+            {userInfo.data.id && (
+              <S.WrapperWriteComment
+                size="small"
+                bordered={false}
+                actions={<EditOutlined />}
+                title={
+                  <Space>
+                    <img
+                      src={pencil}
+                      style={{
+                        width: 24,
+                        height: 24,
+                      }}
+                      alt=""
+                    />
+                    <h2 style={{ margin: 0 }}>Viết bình luận tại đây !!!</h2>
+                  </Space>
+                }
+              >
+                <S.CustomForm
+                  layout="vertical"
+                  onFinish={(values) => handlePostReview(values)}
+                >
+                  <Form.Item
+                    label="Đánh giá sao"
+                    name="rate"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Bạn chưa chọn sao!",
+                      },
+                    ]}
+                  >
+                    <Rate />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Bình luận"
+                    name="comment"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Bạn chưa nhập nội dung!",
+                      },
+                      {
+                        max: 50,
+                        message: "bạn đã nhập quá ký tự!",
+                      },
+                    ]}
+                  >
+                    <Input.TextArea autoSize={{ maxRows: 6, minRows: 4 }} />
+                  </Form.Item>
+
+                  {/*  <Button
                           type="primary"
                           style={{ Background: "#003a8c" }}
                           htmlType="submit"
@@ -671,15 +524,12 @@ function SetPitch() {
                         >
                           Đăng bình luận
                         </Button> */}
-                        {handleBlockComment()}
-                      </S.CustomForm>
-                    </S.WrapperWriteComment>
-                  )}
-                </Col>
-              </S.WrapperReview>
-            </Spin>
-          </Col>
-        </Row>
+                  {handleBlockComment()}
+                </S.CustomForm>
+              </S.WrapperWriteComment>
+            )}
+          </S.SearchBooking>
+        </Spin>
       </S.Main>
     </S.Wrapper>
   );

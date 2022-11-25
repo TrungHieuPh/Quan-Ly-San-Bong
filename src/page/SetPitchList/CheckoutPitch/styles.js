@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { Form, Radio } from "antd";
 
 export const Wrapper = styled.div`
-  padding: 50px 50px;
+  margin-top: 24px;
+  padding: 24px;
   background-color: white;
   border-radius: 5px;
   width: 100%;
@@ -22,32 +23,26 @@ export const CustomForm = styled(Form)`
 `;
 export const WrapperLeft = styled.div`
   padding: 10px;
-  border: 1px solid white;
   background-color: white;
 `;
 export const ItemArbitration = styled.div`
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 7px;
   background-color: whitesmoke;
   border-radius: 5px;
   margin: 0px;
   padding: 10px;
 `;
 export const ItemCombo = styled.div`
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 7px;
   background-color: whitesmoke;
   border-radius: 5px;
   margin: 15px 0px 0px 0px;
   padding: 13px;
 `;
 export const ItemReceipt = styled.div`
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 7px;
   background-color: whitesmoke;
   border-radius: 5px;
-  margin: 15px 0px 0px 0px;
-  padding: 13px;
+  padding: 16px;
 `;
 export const ItemTitle = styled.h2`
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 7px;
   background-color: whitesmoke;
   border-radius: 5px;
   margin: 15px 0px 0px 0px;
@@ -57,15 +52,11 @@ export const ItemTitle = styled.h2`
 `;
 export const ItemTitleTimeSelect = styled.h2`
   color: white;
-  padding: 10px;
-  margin-top: 0;
-  margin-bottom: 0.5em;
-
+  margin-bottom: 16px;
   font-weight: 500;
 `;
 export const ItemTitleInfo = styled.h2`
   font-size: 30px;
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 7px;
   background-color: whitesmoke;
   border-radius: 5px;
   margin: 15px 0px 10px -20px;
@@ -81,7 +72,6 @@ export const ItemTitleInfo = styled.h2`
 `;
 export const ItemTitlePayment = styled.h2`
   font-size: 30px;
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 7px;
   background-color: whitesmoke;
   border-radius: 5px;
   margin: 15px 0px 10px -20px;
@@ -113,9 +103,17 @@ export const ItemRadioBank = styled(Radio)`
   width: max-content;
 `;
 export const div1 = styled.div`
-  border-radius: 5;
-  padding-bottom: 100px;
+  border-radius: 8px;
+  padding: 16px;
   background-color: #425b76;
   text-align: center;
-  box-shadow: rgb(0 0 0 / 80%) -5px 5px 10px;
+`;
+export const TitleContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & > h1 {
+    padding-left: 14px;
+    margin-bottom: 0;
+  }
 `;

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import "moment/locale/vi";
 
 import AdminLayout from "./LayOut/AdminLayout";
 import LoginLayout from "./LayOut/LoginLayout";
