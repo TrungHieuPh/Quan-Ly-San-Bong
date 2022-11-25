@@ -63,7 +63,7 @@ function HomePage() {
       return <Spin size="small" style={{ textAlign: "center" }} />;
     return pitch.data.map((item, index) => {
       return (
-        <Col md={12} xs={24} key={item.id}>
+        <Col lg={12} xs={24} key={item.id}>
           <Link to={generatePath(ROUTES.USER.SET_PITCH, { id: item.id })}>
             <div className={styles.items}>
               <Space align="center" style={{ marginLeft: -8 }}>
@@ -247,11 +247,7 @@ function HomePage() {
         </div>
 
         <Row gutter={[24, 24]}>
-          <Col
-            md={{ span: 8, order: 2 }}
-            sm={{ span: 24, order: 2 }}
-            xs={{ span: 24, order: 1 }}
-          >
+          <Col md={8} xs={24}>
             <div className={styles.contentWrapperButton}>
               <div>
                 <img
@@ -267,7 +263,7 @@ function HomePage() {
               </p>
             </div>
           </Col>
-          <Col md={{ span: 8, order: 2 }} xs={{ span: 24, order: 2 }}>
+          <Col md={8} xs={24}>
             <div className={styles.contentWrapperButton}>
               <div>
                 <img
@@ -284,7 +280,7 @@ function HomePage() {
               </p>
             </div>
           </Col>
-          <Col md={{ span: 8, order: 2 }} xs={{ span: 24, order: 3 }}>
+          <Col md={8} xs={24}>
             <div className={styles.contentWrapperButton}>
               <div>
                 <img

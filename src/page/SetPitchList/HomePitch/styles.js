@@ -22,16 +22,23 @@ export const TopWrapper = styled.div`
 export const ListWrapper = styled.div`
   margin-top: 16px;
 `;
-export const TitleContent = styled(Col)`
-  margin-top: 16px;
+export const TitleContent = styled.div`
+  margin-top: 24px;
+  padding: 16px;
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 8px;
+  margin-bottom: 24px;
+
   & > svg {
     font-size: 40px;
     color: #1c6cc1;
   }
   & > h1 {
     padding-left: 14px;
+    margin-bottom: 0;
   }
   & > Button {
     position: relative;
@@ -58,14 +65,13 @@ export const FilterContainer = styled.div`
   overflow: hidden;
 `;
 export const ItemPrice = styled.div`
-  font-size: 40px;
+  font-size: 28px;
   display: flex;
   flex-direction: column;
   color: #cf1322;
-  box-shadow: rgb(0 0 0 / 50%) -1px 0px 3px;
-  background-color: whitesmoke;
-  border-radius: 3px;
-  padding: 5px;
+  background-color: #ebebeb;
+  border-radius: 8px;
+  padding: 16px;
   width: 100%;
 `;
 export const ItemImagePitch = styled.img`
@@ -74,23 +80,20 @@ export const ItemImagePitch = styled.img`
   border-radius: 6px;
   width: 150px;
 `;
-export const ItemWrapperPitch = styled(Col)`
-  padding-left: 5px;
-  padding-right: 5px;
-  border: 1px solid white;
+export const ItemWrapperPitch = styled.div`
+  padding: 16px;
   background-color: white;
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
-  border-radius: 7px;
+  border-radius: 8px;
 `;
 export const ItemRowWrapper = styled(Row)`
   padding: 16px;
 `;
 export const ItemImage = styled.img`
-  width: 220px;
-  height: 220px;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
   object-fit: cover;
-  margin: 16px;
-  border-radius: 6px;
+  border-radius: 8px;
 `;
 export const WrapperCol2Filter = styled(Col)`
   border: 1px solid white;
@@ -113,27 +116,41 @@ export const WrapperRow1 = styled(Row)`
   padding: 16px;
 `;
 export const SelectPriceFilter = styled(Select)`
-  background-color: white;
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
-  margin: 0px 0px 10px 0px;
   width: 100%;
-  border-radius: 5px;
 `;
 export const WrapperCard = styled(Card)`
   margin: 16px 0 32px 0;
   word-wrap: break-word;
   background-color: #e5e5e5;
 `;
-export const WrapperContent = styled(Row)`
-  padding: 10px;
-  border: 1px solid white;
-  margin: 0 auto;
+export const WrapperContent = styled.div`
+  padding: 16px;
+  border-radius: 8px;
+  width: 100%;
   background-color: white;
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
-  align-items: baseline;
-  justify-content: space-between;
-  align-content: center;
-  border-radius: 5px;
+  display: flex;
+  align-items: center;
+
+  & h2 {
+    font-size: 20px;
+    color: "#a8071a";
+    font-weight: 600;
+    margin-bottom: 0;
+    width: 120px;
+  }
+`;
+export const FilterWrapper = styled.div`
+  padding: 16px;
+  border-radius: 8px;
+  width: 100%;
+  background-color: white;
+
+  & h2 {
+    font-size: 20px;
+    color: "#a8071a";
+    font-weight: 600;
+    margin-bottom: 0;
+  }
 `;
 export const WrapperPriceAndTimes = styled(Row)`
   padding: 10px;
@@ -144,6 +161,7 @@ export const itemPricePitch = styled.div`
   font-weight: 900;
   margin: 0 auto;
   width: max-content;
+  font-size: 32px;
 `;
 export const ColIcon = styled(Col)`
   display: flex;

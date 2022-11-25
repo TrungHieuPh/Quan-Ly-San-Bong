@@ -37,13 +37,23 @@ const CheckoutPage = () => {
 
   return (
     <S.Wrapper>
+      <S.TitleContent>
+        <h1
+          style={{
+            color: " #a8071a",
+            fontFamily: "monospace",
+            fontSize: 36,
+          }}
+        >
+          Đặt sân
+        </h1>
+      </S.TitleContent>
       <Steps
         current={step}
         style={{
-          boxShadow: "rgb(0 0 0 / 50%) 0px 0px 5px",
-          padding: "15px 20px 15px 20px",
+          padding: 16,
           backgroundColor: " whitesmoke",
-          borderRadius: 5,
+          borderRadius: 8,
         }}
       >
         <Steps.Step title="Chọn thời gian" />
