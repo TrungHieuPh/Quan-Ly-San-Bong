@@ -347,7 +347,7 @@ const Profile = () => {
         callback: {
           clearForm: () => changePasswordForm.resetFields(),
           goToHome: () => navigate(state?.prevPath || ROUTES.USER.HOME),
-          reload: () => window.location.reload(),
+          reload: window.location.reload(),
         },
       })
     );
@@ -670,10 +670,10 @@ const Profile = () => {
             <S.ContentTop>
               <div
                 style={{
-                  boxShadow: "rgb(0 0 0 / 50%) 0px 1px 12px",
                   width: "max-content",
                   margin: "0 auto",
                   textAlign: "center",
+                  backgroundColor: "whitesmoke",
                 }}
               >
                 {userInfo.data.role === "admin" ? (
@@ -804,7 +804,7 @@ const Profile = () => {
                   style={{
                     margin: 16,
                     padding: 16,
-                    boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+                    backgroundColor: "whitesmoke",
                     borderRadius: 5,
                   }}
                   expandable={{
@@ -846,7 +846,7 @@ const Profile = () => {
                   style={{
                     margin: 16,
                     padding: 16,
-                    boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+                    backgroundColor: "whitesmoke",
                     borderRadius: 5,
                   }}
                   expandable={{
@@ -901,7 +901,7 @@ const Profile = () => {
                   style={{
                     margin: 16,
                     padding: 16,
-                    boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+                    backgroundColor: "whitesmoke",
                     borderRadius: 5,
                   }}
                   expandable={{
@@ -955,7 +955,7 @@ const Profile = () => {
                   style={{
                     margin: 16,
                     padding: 16,
-                    boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+                    backgroundColor: "whitesmoke",
                     borderRadius: 5,
                   }}
                 />
@@ -971,7 +971,7 @@ const Profile = () => {
                   style={{
                     margin: 16,
                     padding: 16,
-                    boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+                    backgroundColor: "whitesmoke",
                     borderRadius: 5,
                   }}
                   expandable={{
@@ -1009,7 +1009,6 @@ const Profile = () => {
               style={{
                 padding: 16,
                 margin: 16,
-                boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
                 borderRadius: 5,
               }}
             >
@@ -1018,7 +1017,7 @@ const Profile = () => {
                   width: "45%",
                   padding: 16,
                   margin: " 0 auto",
-                  boxShadow: "rgb(0 0 0 / 50%) -1px 1px 8px",
+                  backgroundColor: "whitesmoke",
                   borderRadius: 5,
                   fontSize: 40,
                   display: "flex",

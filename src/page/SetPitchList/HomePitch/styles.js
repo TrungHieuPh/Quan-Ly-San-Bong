@@ -172,3 +172,8 @@ export const ColIcon = styled(Col)`
   align-content: center;
   align-items: stretch;
 `;
+export const team = styled.h3`
+  background: whitesmoke;
+  border-radius: 3px;
+  margin: -3px;
+`;

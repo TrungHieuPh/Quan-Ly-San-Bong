@@ -377,3 +377,8 @@ img :hover {
   border-radius: 7px;
   margin: 30px;
 }
+.team {
+  background: white;
+  border-radius: 3px;
+  margin: -3px;
+}

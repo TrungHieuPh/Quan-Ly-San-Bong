@@ -10,6 +10,7 @@ import {
   Spin,
   Checkbox,
   message,
+  notification,
 } from "antd";
 import React from "react";
 import { useEffect } from "react";
@@ -26,7 +27,7 @@ import {
 import * as S from "./styles";
 import search from "../../../Images/search.gif";
 import locations from "../../../Images/locations.gif";
-import cashback from "../../../Images/cashback.gif";
+import yuan from "../../../Images/yuan.gif";
 import note from "../../../Images/note.gif";
 import flag from "../../../Images/flag.gif";
 import stopwatch from "../../../Images/stopwatch.gif";
@@ -46,8 +47,6 @@ function HomePitch() {
     timeShootId: [],
     dateSelected: undefined,
   });
-
-  const [selectedOption, setSelectedOption] = useState();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -80,7 +79,7 @@ function HomePitch() {
       ...filterParams,
       [key]: value,
     });
-    /*  console.log(value, "handleFilter"); */
+    console.log(filterParams, "handleFilter");
     dispatch(
       getPitchListAction({
         params: {
@@ -230,31 +229,7 @@ function HomePitch() {
       })
     );
   };
-  /* const day = new Date();
-  const dateTime =
-    day.setHours("23") +
-    ":" +
-    day.setMinutes("59") +
-    ":" +
-    day.setSeconds("59");
-  day.setDate(day.getDate());
-  const disabledDate = (current) => {
-    return current && current.valueOf() < day;
-  };
 
-  function handleSelectedDate(value) {
-    if (value != null) {
-      setFilterParams({
-        ...filterParams,
-        dateSelected: moment(value).format("DD/MM/YYYY"),
-      });
-    } else {
-      setFilterParams({
-        ...filterParams,
-        dateSelected: null,
-      });
-    }
-  } */
   const renderPitchList = () => {
     return pitch.data.map((item) => {
       return (
@@ -277,6 +252,7 @@ function HomePitch() {
                     >
                       {item.name}
                     </h2>
+                    <S.team>{item.team.name}</S.team>
                   </Space>
                 </div>
                 <Row gutter={[16, 16]}>
@@ -325,13 +301,7 @@ function HomePitch() {
                       <div>
                         {item.times?.map((itemTime) => {
                           return (
-                            <Tag
-                              onChange={(e) =>
-                                setSelectedOption(e.target.value)
-                              }
-                              size="small"
-                              style={{ color: "#003a8c" }}
-                            >
+                            <Tag size="small" style={{ color: "#003a8c" }}>
                               {itemTime.name}
                             </Tag>
                           );
@@ -371,10 +341,10 @@ function HomePitch() {
                       <h6 style={{ color: "#003a8c" }}>Giá chỉ từ:</h6>
                       <S.itemPricePitch>
                         <img
-                          src={cashback}
+                          src={yuan}
                           style={{
-                            width: 40,
-                            height: 40,
+                            width: 50,
+                            height: 50,
                           }}
                           alt=""
                         />
@@ -406,7 +376,7 @@ function HomePitch() {
                                 id: item.id,
                               })
                             )
-                          : info();
+                          : notification.warn({ message: "Bạn cần đăng nhập" });
                       }}
                     >
                       Đặt sân

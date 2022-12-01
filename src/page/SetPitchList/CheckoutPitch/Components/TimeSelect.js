@@ -15,16 +15,9 @@ import {
   setCheckoutTimeSelectAction,
 } from "../../../../redux/actions";
 const TimeSelect = ({ setStep }) => {
-  const dayss = new Date();
-  const setdayss = moment(dayss).format("DD/MM/YYYY HH:mm");
   const dispatch = useDispatch();
   const { pitchDetail } = useSelector((state) => state.product);
-  console.log(
-    pitchDetail.data?.times?.map((item) => {
-      return moment(item.timeend, "HH:mm").valueOf();
-    })
-  );
-  console.log(moment(dayss).valueOf(), "hieu");
+
   const { userInfo } = useSelector((state) => state.user);
   const { bookingList } = useSelector((state) => state.booking);
 
@@ -33,7 +26,7 @@ const TimeSelect = ({ setStep }) => {
 
   const { id } = useParams();
   const [form] = Form.useForm();
-  const [dateSelected, setDateSelected] = useState(dayss);
+  const [dateSelected, setDateSelected] = useState();
   const [selectedOption, setSelectedOption] = useState();
   console.log(selectedOption, "tiep");
   const [selectedOptionArbitration, setSelectedOptionArbitration] =
@@ -75,11 +68,13 @@ const TimeSelect = ({ setStep }) => {
     );
     setStep(1);
   };
-
+  //Biến selectedOptionData được gán khi tìm  id trong bảng arbitration(trọng tài) = id người dùng chọn trọng tài
   const selectedOptionData = arbitrationList.data?.find(
     (item) => item.id === selectedOptionArbitration
   );
+  //Nếu có selectedOptionData thì bonusPrice = bonusPrice trong arbitrationList
   const bonusPrice = selectedOptionData ? selectedOptionData?.bonusPrice : 0;
+  //pitchDetail.data.price:Giá gốc của sân + giá trọng tài
   const productPrice =
     parseInt(pitchDetail.data.price || 0) + parseInt(bonusPrice);
 
@@ -169,25 +164,27 @@ const TimeSelect = ({ setStep }) => {
       </>
     );
   };
-
-  const disabledDateb = pitchDetail.data.times?.map((item, index) => {
+  const dayNow = new Date();
+  const setDayNow = moment(dayNow).format("DD/MM/YYYY HH:mm");
+  /*  const disabledDateb = pitchDetail.data.times?.map((item, index) => {
     return moment(item.timeend, "HH:mm").valueOf() <=
-      moment(setdayss, "DD/MM/YYYY HH:mm").valueOf() &&
+      moment(setDayNow, "DD/MM/YYYY HH:mm").valueOf() &&
       moment(dateSelected, "DD/MM/YYYY").valueOf() ===
-        moment(setdayss, "DD/MM/YYYY").valueOf()
+        moment(setDayNow, "DD/MM/YYYY").valueOf()
       ? true
       : false;
-  });
-  console.log(disabledDateb, "a");
+  }); */
+
   const renderTimeShootOptions = useMemo(() => {
     return pitchDetail.data.times?.map((item, index) => {
       return (
         <Radio.Button
           disabled={
+            // Nếu thời gian kết thúc  < = thời gian hiện tại và Ngày dateSelected(ngày người dùng chọn) === Ngày hiện tại sẽ = true
             moment(item.timeend, "HH:mm").valueOf() <=
-              moment(setdayss, "DD/MM/YYYY HH:mm").valueOf() &&
+              moment(setDayNow, "DD/MM/YYYY HH:mm").valueOf() &&
             moment(dateSelected, "DD/MM/YYYY").valueOf() ===
-              moment(setdayss, "DD/MM/YYYY").valueOf()
+              moment(setDayNow, "DD/MM/YYYY").valueOf()
               ? true
               : false
           }
@@ -245,7 +242,7 @@ const TimeSelect = ({ setStep }) => {
                     disabledDate={disabledDate}
                     fullscreen={false}
                     onChange={(values) => handleSelectedDate(values)}
-                    initialValue={dateSelected}
+                    defaultValue={moment()}
                     style={{
                       margin: "10px 10px 10px",
                       backgroundColor: "white",
@@ -307,6 +304,7 @@ const TimeSelect = ({ setStep }) => {
                 </Radio.Group>
               </S.ItemCombo>
             </Col>
+            {/* Hiển thị Giá ra giao diện */}
             <Col md={{ span: 5, order: 1 }} xs={{ span: 24, order: 3 }}>
               <S.ItemReceipt>
                 <h2 style={{ borderBottom: "1px solid #ccc " }}> Hóa đơn</h2>

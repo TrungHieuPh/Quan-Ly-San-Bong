@@ -68,7 +68,6 @@ export const WrapperContainer = styled.div`
   border-radius: 5px;
 `;
 export const ContentBottom = styled.div`
-  box-shadow: rgb(0 0 0 / 50%) -1px 1px 8px;
   background-color: whitesmoke;
   margin: 40px;
   padding: 16px;

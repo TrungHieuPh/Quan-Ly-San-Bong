@@ -23,7 +23,7 @@ const countDown = () => {
 };
 function* getPitchListSaga(action) {
   try {
-    const { params, more, dateSelected } = action.payload;
+    const { params, more } = action.payload;
     const result = yield axios.get(`http://localhost:4000/pitchs`, {
       params: {
         _expand: "team",

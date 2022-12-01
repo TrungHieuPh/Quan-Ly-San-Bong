@@ -365,52 +365,52 @@ function SetPitch() {
                 </S.priceFrom>
               </Col>
               <Col lg={7} md={12} xs={24}>
-                {userInfo.data.id && (
-                  <S.ButtonSetPitch
+                <S.ButtonSetPitch
+                  style={{
+                    fontSize: 24,
+                    backgroundColor: "whitesmoke",
+                  }}
+                  size="large"
+                  type="link"
+                  danger
+                  block
+                  onClick={() =>
+                    userInfo.data.id
+                      ? navigate(generatePath(ROUTES.USER.CHECKOUT, { id }))
+                      : notification.warn({ message: "Bạn cần đăng nhập" })
+                  }
+                >
+                  <div
                     style={{
-                      fontSize: 24,
-                      backgroundColor: "whitesmoke",
+                      width: "100%",
+                      margin: "5px 0px 5px 1px",
+                      padding: "5px 25px 1px 5px",
+                      borderRadius: " 7px",
+                      color: "#003a8c",
                     }}
-                    size="large"
-                    type="link"
-                    danger
-                    block
-                    onClick={() =>
-                      navigate(generatePath(ROUTES.USER.CHECKOUT, { id }))
-                    }
                   >
-                    <div
+                    Bạn muốn đặt sân không ?
+                    <h3
                       style={{
-                        width: "100%",
-                        margin: "5px 0px 5px 1px",
-                        padding: "5px 25px 1px 5px",
-                        borderRadius: " 7px",
-                        color: "#003a8c",
+                        display: "flex",
+                        alignItems: "center",
+                        alignContent: "space-around",
+                        justifyContent: "center",
                       }}
                     >
-                      Bạn muốn đặt sân không ?
-                      <h3
+                      <img
+                        src={click}
                         style={{
-                          display: "flex",
-                          alignItems: "center",
-                          alignContent: "space-around",
-                          justifyContent: "center",
+                          width: 60,
+                          height: 60,
+                          transform: "rotate(30deg)",
                         }}
-                      >
-                        <img
-                          src={click}
-                          style={{
-                            width: 60,
-                            height: 60,
-                            transform: "rotate(30deg)",
-                          }}
-                          alt=""
-                        />
-                        Hãy nhấn vào đây!
-                      </h3>
-                    </div>
-                  </S.ButtonSetPitch>
-                )}
+                        alt=""
+                      />
+                      Hãy nhấn vào đây!
+                    </h3>
+                  </div>
+                </S.ButtonSetPitch>
               </Col>
             </Row>
           </S.SearchBooking>

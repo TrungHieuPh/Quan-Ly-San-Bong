@@ -158,7 +158,9 @@ function HeaderUser() {
                     }}
                   >
                     <UserOutlined style={{ color: "#ad2102" }} />
-                    <div style={{ color: "#003a8c" }}>{userInfo.data.name}</div>
+                    <div style={{ color: "#003a8c" }}>
+                      {userInfo.data.fullName}
+                    </div>
                   </Space>
                 </Dropdown>
               ) : (

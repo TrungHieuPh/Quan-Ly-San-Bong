@@ -69,6 +69,7 @@ function HomePage() {
               <Space align="center" style={{ marginLeft: -8 }}>
                 <img src={placeholder} style={{ width: 50, height: 50 }} />
                 <h3 className={styles.itemTitle}>{item.name}</h3>
+                <h5 className={styles.team}>{item.team.name}</h5>
               </Space>
               <Row gutter={[16, 16]}>
                 <Col xs={10}>
