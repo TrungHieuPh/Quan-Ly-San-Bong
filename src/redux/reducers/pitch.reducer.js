@@ -134,7 +134,7 @@ const pitchReducers = createReducer(initialState, {
     };
   },
 
-  UPDATE_PRODUCT_REQUEST: (state, action) => {
+  [REQUEST(PITCH_ACTION.UPDATE_PITCH)]: (state, action) => {
     return {
       ...state,
       updatePitchData: {
@@ -144,7 +144,7 @@ const pitchReducers = createReducer(initialState, {
       },
     };
   },
-  UPDATE_PITCH_SUCCESS: (state, action) => {
+  [SUCCESS(PITCH_ACTION.UPDATE_PITCH)]: (state, action) => {
     return {
       ...state,
       updatePitchData: {
@@ -153,7 +153,7 @@ const pitchReducers = createReducer(initialState, {
       },
     };
   },
-  UPDATE_PRODUCT_FAIL: (state, action) => {
+  [FAIL(PITCH_ACTION.UPDATE_PITCH)]: (state, action) => {
     const { error } = action.payload;
     return {
       ...state,
@@ -165,7 +165,7 @@ const pitchReducers = createReducer(initialState, {
     };
   },
 
-  DELETE_PRODUCT_REQUEST: (state, action) => {
+  [REQUEST(PITCH_ACTION.DELETE_PITCH)]: (state, action) => {
     return {
       ...state,
       deletePitchData: {
@@ -175,7 +175,7 @@ const pitchReducers = createReducer(initialState, {
       },
     };
   },
-  DELETE_PRODUCT_SUCCESS: (state, action) => {
+  [SUCCESS(PITCH_ACTION.DELETE_PITCH)]: (state, action) => {
     return {
       ...state,
       deletePitchData: {
@@ -184,7 +184,7 @@ const pitchReducers = createReducer(initialState, {
       },
     };
   },
-  DELETE_PRODUCT_FAIL: (state, action) => {
+  [FAIL(PITCH_ACTION.DELETE_PITCH)]: (state, action) => {
     const { error } = action.payload;
     return {
       ...state,

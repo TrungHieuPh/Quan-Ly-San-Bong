@@ -2,7 +2,7 @@ import {
   Button,
   Space,
   Form,
-  Spin,
+  Skeleton,
   Input,
   Rate,
   notification,
@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { ROUTES } from "../../../constants/routers";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
-import { FaUser, FaGripLinesVertical, FaArrowLeft } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 
 import * as S from "./styles";
 import document from "../../../Images/document.gif";
@@ -47,9 +47,6 @@ import {
   deleteReviewAction,
 } from "../../../redux/actions";
 function SetPitch() {
-  const [selectedOption, setSelectedOption] = useState();
-  const [dateSelected, setDateSelected] = useState();
-
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -255,7 +252,7 @@ function SetPitch() {
           <S.TitlePanner>{pitchDetail.data?.name}</S.TitlePanner>
         </S.BgTitle>
 
-        <Spin spinning={pitchDetail.loading} style={{ width: "100%" }}>
+        <Skeleton loading={pitchDetail.loading} active>
           <S.SearchBooking>
             <Row gutter={[16, 16]}>
               <Col lg={5} xs={12}>
@@ -515,21 +512,12 @@ function SetPitch() {
                   >
                     <Input.TextArea autoSize={{ maxRows: 6, minRows: 4 }} />
                   </Form.Item>
-
-                  {/*  <Button
-                          type="primary"
-                          style={{ Background: "#003a8c" }}
-                          htmlType="submit"
-                          block
-                        >
-                          Đăng bình luận
-                        </Button> */}
                   {handleBlockComment()}
                 </S.CustomForm>
               </S.WrapperWriteComment>
             )}
           </S.SearchBooking>
-        </Spin>
+        </Skeleton>
       </S.Main>
     </S.Wrapper>
   );

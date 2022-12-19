@@ -386,7 +386,6 @@ export const itemPanner = styled.div`
   margin: 0px auto;
 `;
 export const WrapperWriteComment = styled(Card)`
-  max-width: 700px;
   width: 100%;
   margin-top: 16px;
   background-color: whitesmoke;

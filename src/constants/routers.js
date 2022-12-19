@@ -13,6 +13,11 @@ export const ROUTES = {
     PROFILE: "/profile",
     CHANGE_PASSWORD: "/changepassword",
     CHECKOUT: "/checkout/:id",
+    EVENT: "/event",
+    BLOG: "/blog",
+    BLOGGING: "/blogging",
+    BLOG_DETAIL: "/blogging/:id/blogDetail",
+    USER_PAGE: "/UserPage/:id",
   },
   ADMIN: {
     DASHBOARD: "/admin/dashboard",

@@ -13,3 +13,4 @@ export const changePasswordAction = createAction(
 export const updateAddressUser = createAction(
   REQUEST(USER_ACTION.UPDATE_ADDRESS_USER)
 );
+export const getUserPage = createAction(REQUEST(USER_ACTION.GET_USER_PAGE));

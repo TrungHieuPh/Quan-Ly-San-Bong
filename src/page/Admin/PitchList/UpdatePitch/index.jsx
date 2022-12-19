@@ -11,7 +11,7 @@ import {
   Select,
   TimePicker,
 } from "antd";
-
+import dayjs from "dayjs";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPitchDetailAction } from "../../../../redux/actions/pitch.action";
@@ -19,6 +19,7 @@ import ReactQuill from "react-quill";
 import { PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
 
+import { ROUTES } from "../../../../constants/routers";
 import * as S from "./styles";
 
 import "antd/dist/antd.min.css";
@@ -39,6 +40,12 @@ const UpdatePitch = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { pitchDetail } = useSelector((state) => state.product);
+  /*  console.log(
+    "🚀 ~ file: index.jsx:43 ~ UpdatePitch ~ pitchDetail",
+    pitchDetail.data.times?.map((item) => {
+      return moment(item.timestart).utc(item.timestart);
+    })
+  ); */
   const { teamList } = useSelector((state) => state.team);
   const { timeShootList } = useSelector((state) => state.timeShoot);
 
@@ -55,6 +62,12 @@ const UpdatePitch = () => {
       setImagesField(pitchDetail.data.images);
     }
   }, [pitchDetail.data]);
+
+  /*   useEffect(() => {
+    if (pitchDetail.data.id) {
+      updateForm.setFieldValue({});
+    }
+  }, [pitchDetail.data]); */
 
   const setImagesField = async (images) => {
     const newImages = [];
@@ -78,6 +91,28 @@ const UpdatePitch = () => {
     }
     await updateForm.setFieldValue("images", newImages);
   };
+  /*  const setOptionsField = async (times) => {
+    const newOptions = [];
+
+    for (let i = 0; i < times.length; i++) {
+      const imageFile = await convertBase64ToImage(
+        images[i].url,
+        images[i].name,
+        images[i].type
+      );
+      await newOptions.push({
+        id: images[i].id,
+        lastModified: imageFile.lastModified,
+        lastModifiedDate: imageFile.lastModifiedDate,
+        name: imageFile.name,
+        size: imageFile.size,
+        type: imageFile.type,
+        thumbUrl: images[i].thumbUrl,
+        originFileObj: imageFile,
+      });
+    }
+    await updateForm.setFieldValue("images", newImages);
+  }; */
   const renderTeamOptions = useMemo(() => {
     return teamList.data.map((item) => {
       return (
@@ -106,11 +141,7 @@ const UpdatePitch = () => {
     navigate(-1);
   }; */
   const handleUpdatePitch = async (values) => {
-    const { options, images, ...productValues } = values;
-    console.log(
-      "🚀 ~ file: index.jsx ~ line 114 ~ handleUpdateProduct ~ images",
-      images
-    );
+    const { options, images, ...pitchValues } = values;
     const newImages = [];
     for (let i = 0; i < images.length; i++) {
       const imgBase64 = await convertImageToBase64(images[i].originFileObj);
@@ -122,25 +153,21 @@ const UpdatePitch = () => {
         url: imgBase64,
       });
     }
-    console.log(
-      "🚀 ~ file: index.jsx ~ line 108 ~ handleUpdateProduct ~ newImages",
-      newImages
-    );
     dispatch(
       updatePitchAction({
         id: id,
-        values: productValues,
+        values: pitchValues,
         options: options,
         initialOptionIds: pitchDetail.data.times.map((item) => item.id),
         images: newImages,
         initialImageIds: pitchDetail.data.images.map((item) => item.id),
-        /*  callback: {
-         goToList: () => navigate(ROUTES.ADMIN.PRODUCT_LIST),
-       }, */
+        callback: {
+          goToList: () => navigate(ROUTES.ADMIN.PRODUCT_LIST),
+        },
       })
     );
-    /*   console.log(values, "await"); */
   };
+
   return (
     <S.Wrapper>
       <S.TopWrapper>
@@ -168,7 +195,7 @@ const UpdatePitch = () => {
               content: pitchDetail.data?.content,
               date: pitchDetail.data?.date,
               teamId: pitchDetail.data?.teamId,
-              /*   options: pitchDetail.data?.times, */
+              options: pitchDetail.data?.times,
             }}
             onFinish={(values) => handleUpdatePitch(values)}
           >
@@ -224,23 +251,25 @@ const UpdatePitch = () => {
                           >
                             <Input />
                           </Form.Item>
+
                           <Form.Item
                             {...field}
                             label="Khung thời gian bắt đầu"
                             name={[field.name, "timestart"]}
                           >
-                            <TimePicker
-                              minuteStep={30}
-                              secondStep={60}
-                              defaultValue={moment()}
-                            />
+                            <Input />
                           </Form.Item>
                           <Form.Item
                             {...field}
                             label="Khung thời gian kết thúc"
                             name={[field.name, "timeend"]}
                           >
-                            <TimePicker minuteStep={30} secondStep={60} />
+                            {/*   <TimePicker
+                              minuteStep={30}
+                              secondStep={60}
+                              value={field.timeend}
+                            /> */}
+                            {/*   <Input /> */}
                           </Form.Item>
 
                           <Button

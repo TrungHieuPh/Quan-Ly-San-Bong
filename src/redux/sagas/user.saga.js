@@ -141,6 +141,29 @@ function* updateAddressUser(action) {
     });
   }
 }
+function* getUserPage(action) {
+  try {
+    const { id } = action.payload;
+    const result = yield axios.get(`http://localhost:4000/users/${id}`, {
+      params: {
+        _embed: ["imageBlogs", "reviewBlogs", "favoriteBlogs", "blogs"],
+      },
+    });
+    yield put({
+      type: SUCCESS(USER_ACTION.GET_USER_PAGE),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(USER_ACTION.GET_USER_PAGE),
+      payload: {
+        error: "Đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
 
 export default function* userSaga() {
   yield takeEvery(REQUEST(USER_ACTION.LOGIN), loginSaga);
@@ -148,4 +171,5 @@ export default function* userSaga() {
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_INFO), getUserInfoSaga);
   yield takeEvery(REQUEST(USER_ACTION.CHANGE_PASSWORD), changePasswordSaga);
   yield takeEvery(REQUEST(USER_ACTION.UPDATE_ADDRESS_USER), updateAddressUser);
+  yield takeEvery(REQUEST(USER_ACTION.GET_USER_PAGE), getUserPage);
 }

@@ -3,7 +3,13 @@ import axios from "axios";
 import moment from "moment";
 import { Modal } from "antd";
 
-import { PITCH_ACTION, REQUEST, SUCCESS, FAIL } from "../constants";
+import {
+  PITCH_ACTION,
+  REQUEST,
+  SUCCESS,
+  FAIL,
+  BLOG_ACTION,
+} from "../constants";
 const countDown = () => {
   let secondsToGo = 2;
   const modal = Modal.success({
@@ -96,6 +102,7 @@ function* getPitchDetailSaga(action) {
 function* createPitchSaga(action) {
   try {
     const { values, options, images } = action.payload;
+    console.log(values, options, images, "a");
     const result = yield axios.post("http://localhost:4000/pitchs", values);
     for (let i = 0; i < options.length; i++) {
       yield axios.post("http://localhost:4000/times", {
@@ -112,7 +119,7 @@ function* createPitchSaga(action) {
         pitchId: result.data.id,
       });
     }
-    countDown();
+
     yield put({
       type: SUCCESS(PITCH_ACTION.CREATE_PITCH),
       payload: {
@@ -154,6 +161,11 @@ function* updatePitchSaga(action) {
   try {
     const { id, values, options, initialOptionIds, images, initialImageIds } =
       action.payload;
+    console.log(
+      "🚀 ~ file: pitch.saga.js:157 ~ function*updatePitchSaga ~ options",
+      options
+    );
+
     const result = yield axios.patch(
       `http://localhost:4000/pitchs/${id}`,
       values
@@ -164,23 +176,15 @@ function* updatePitchSaga(action) {
         yield axios.patch(`http://localhost:4000/times/${options[i].id}`, {
           pitchId: result.data.id,
           name: options[i].name,
-          timestart:
-            options[i]
-              .timeSelect[0] /*  moment(options[i].timeSelect[0]).format("HH:mm:ss"), */,
-          timeend:
-            options[i]
-              .timeSelect[1] /*  moment(options[i].timeSelect[1]).format("HH:mm:ss"), */,
+          timestart: options[i].timestart,
+          timeend: options[i].timeend,
         });
       } else {
         yield axios.post("http://localhost:4000/times", {
           pitchId: result.data.id,
           name: options[i].name,
-          timestart:
-            options[i]
-              .timeSelect[0] /*  moment(options[i].timeSelect[0]).format("HH:mm:ss"), */,
-          timeend:
-            options[i]
-              .timeSelect[1] /*  moment(options[i].timeSelect[1]).format("HH:mm:ss"), */,
+          timestart: options[i].timestart,
+          timeend: options[i].timeend,
         });
       }
     }
@@ -233,11 +237,11 @@ function* deletePitchSaga(action) {
   try {
     const { id } = action.payload;
     yield axios.delete(`http://localhost:4000/pitchs/${id}`);
-    yield put({ type: "DELETE_PRODUCT_SUCCESS" });
-    yield put({ type: "GET_PRODUCT_LIST_REQUEST" });
+    yield put({ type: SUCCESS(PITCH_ACTION.DELETE_PITCH) });
+    yield put({ type: REQUEST(PITCH_ACTION.GET_PITCH_LIST) });
   } catch (e) {
     yield put({
-      type: "DELETE_PRODUCT_FAIL",
+      type: FAIL(PITCH_ACTION.DELETE_PITCH),
       payload: {
         error: "Đã có lỗi xảy ra!",
       },

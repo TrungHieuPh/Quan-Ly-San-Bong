@@ -17,6 +17,7 @@ import {
   Radio,
   Popconfirm,
   Pagination,
+  Upload,
 } from "antd";
 
 import { useNavigate, Link, generatePath, useLocation } from "react-router-dom";
@@ -27,6 +28,8 @@ import {
   SettingOutlined,
   CarryOutOutlined,
   UnlockOutlined,
+  FormOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { ROUTES } from "../../constants/routers";
 import moment from "moment";
@@ -56,6 +59,9 @@ import {
   getPitchListAction,
   getTeamListAction,
   deletePitchAction,
+  getBlogListAction,
+  browserBlogAction,
+  deleteBlogAction,
 } from "../../redux/actions";
 import * as S from "./style";
 import { ADMIN_TABLE_LIMIT } from "../../constants/paginations";
@@ -73,11 +79,22 @@ const CollectionCreateForm = ({ open, onCreate, onCancel }) => {
     dispatch(getPitchDetailAction());
     dispatch(getCityListAction());
     dispatch(getPitchListAction());
+    dispatch(getBlogListAction());
     dispatch(getTeamListAction());
   }, []);
   useEffect(() => {
     dispatch(
       getPitchListAction({
+        params: {
+          page: 1,
+          limit: PITCH_LIST_LIMIT,
+        },
+      })
+    );
+  }, []);
+  useEffect(() => {
+    dispatch(
+      getBlogListAction({
         params: {
           page: 1,
           limit: PITCH_LIST_LIMIT,
@@ -260,6 +277,22 @@ const CollectionCreateForm = ({ open, onCreate, onCancel }) => {
         >
           <Input />
         </Form.Item>
+        <Form.Item
+          label="Hình ảnh sân"
+          name="images"
+          valuePropName="fileList"
+          getValueFromEvent={(e) => {
+            if (Array.isArray(e)) return e;
+            return e?.fileList;
+          }}
+        >
+          <Upload listType="picture-card" beforeUpload={Upload.LIST_IGNORE}>
+            <div>
+              <PlusOutlined />
+              <div style={{ marginTop: 8 }}>Upload</div>
+            </div>
+          </Upload>
+        </Form.Item>
         <Form.Item name="date" label="Ngày sinh">
           {/*  <DatePicker
             onChange={(values) => setBirthday(values)}
@@ -322,19 +355,66 @@ const Profile = () => {
   const { reviewList } = useSelector((state) => state.review);
   const { createPitchData } = useSelector((state) => state.product);
   const { pitch } = useSelector((state) => state.product);
+  const { blogList } = useSelector((state) => state.blog);
+
   const tableData = pitch.data.map((item) => ({ ...item, key: item.id }));
+
   const { cityList, districtList, wardList } = useSelector(
     (state) => state.location
   );
-
-  const onCreate = (values) => {
-    const { cityCode, districtCode, wardCode, ...otherValues } = values;
-    const cityData = cityList.data.find((item) => item.code === cityCode);
-    const districtData = districtList.data.find(
+  /*  const handleUpdatePitch = async (values) => {
+   const { options, images, ...pitchValues } = values;
+   const newImages = [];
+   for (let i = 0; i < images.length; i++) {
+     const imgBase64 = await convertImageToBase64(images[i].originFileObj);
+     await newImages.push({
+       ...(images[i].id && { id: images[i].id }),
+       name: images[i].name,
+       type: images[i].type,
+       thumbUrl: images[i].thumbUrl,
+       url: imgBase64,
+     });
+   }
+   dispatch(
+     updatePitchAction({
+       id: id,
+       values: pitchValues,
+       options: options,
+       initialOptionIds: pitchDetail.data.times.map((item) => item.id),
+       images: newImages,
+       initialImageIds: pitchDetail.data.images.map((item) => item.id),
+       callback: {
+         goToList: () => navigate(ROUTES.ADMIN.PRODUCT_LIST),
+       },
+     })
+   );
+ }; */
+  const onCreate = async (values) => {
+    const { images, cityCode, districtCode, wardCode, ...otherValues } = values;
+    const newImages = [];
+    for (let i = 0; i < images.length; i++) {
+      const imgBase64 = await convertImageToBase64(images[i].originFileObj);
+      await newImages.push({
+        ...(images[i].id && { id: images[i].id }),
+        name: images[i].name,
+        type: images[i].type,
+        thumbUrl: images[i].thumbUrl,
+        url: imgBase64,
+      });
+    }
+    const cityData = await cityList.data.find((item) => item.code === cityCode);
+    const districtData = await districtList.data.find(
       (item) => item.code === districtCode
     );
-    const wardData = wardList.data.find((item) => item.code === wardCode);
-    dispatch(
+    const wardData = await wardList.data.find((item) => item.code === wardCode);
+
+    console.log(
+      ...otherValues,
+
+      newImages,
+      "aaaa"
+    );
+    /*  dispatch(
       updateAddressUser({
         id: userInfo.data.id,
         ...otherValues,
@@ -344,22 +424,41 @@ const Profile = () => {
         districtName: districtData.name,
         wardId: wardData.id,
         wardName: wardData.name,
+        images: newImages,
         callback: {
           clearForm: () => changePasswordForm.resetFields(),
           goToHome: () => navigate(state?.prevPath || ROUTES.USER.HOME),
           reload: window.location.reload(),
         },
       })
-    );
+    ); */
 
     setOpen(false);
   };
-
+  /*  useEffect(() => {
+    dispatch(
+      getBlogListAction({
+        params: {
+          page: 1,
+          limit: BLOG_LIST_LIMIT,
+        },
+      })
+    );
+  }, [blogList.data]); */
   useEffect(() => {
     if (userInfo.data.id) {
       dispatch(getOderListAction({ userId: userInfo.data.id }));
       dispatch(getFavoriteList({ userId: userInfo.data.id }));
       dispatch(getReviewListAction({ userId: userInfo.data.id }));
+      /*   dispatch(
+        getBlogListAction({
+          userId: userInfo.data.id,
+          params: {
+            page: 1,
+            limit: BLOG_LIST_LIMIT,
+          },
+        })
+      ); */
     }
   }, [userInfo.data]);
   useEffect(() => {
@@ -405,9 +504,19 @@ const Profile = () => {
       })
     );
   };
-  const handleChangePage = (page) => {
+  const handleChangePagePitch = (page) => {
     dispatch(
       getPitchListAction({
+        params: {
+          page: page,
+          limit: ADMIN_TABLE_LIMIT,
+        },
+      })
+    );
+  };
+  const handleChangePageBlog = (page) => {
+    dispatch(
+      getBlogListAction({
         params: {
           page: page,
           limit: ADMIN_TABLE_LIMIT,
@@ -451,7 +560,7 @@ const Profile = () => {
     console.log(values, "values");
   };
 
-  const tableColumns = [
+  const tableColumnsHistory = [
     {
       title: "Số thứ tự",
       dataIndex: "id",
@@ -579,7 +688,7 @@ const Profile = () => {
       render: (createdAt) => moment(createdAt).format("DD/MM/YYYY HH:mm"),
     },
   ];
-  const tableColumn = [
+  const tableColumnPitchListAdmin = [
     {
       title: "Tên",
       dataIndex: "name",
@@ -636,6 +745,168 @@ const Profile = () => {
               </Button>
             </Popconfirm>
           </Space>
+          /* pitch.data.map((item, index) => {
+            return (
+              <Link
+                to={generatePath(ROUTES.ADMIN.UPDATE_PITCH, { id: item.id })}
+              >
+                Update
+              </Link>
+            );
+          }) */
+        );
+      },
+    },
+  ];
+  const tableColumnBlogListAdmin = [
+    {
+      title: "Tên blog",
+      dataIndex: "title",
+      key: "title",
+      /*  render: (_, record) => {
+        return (
+          <Space>
+            <Avatar />
+            <h3>{record.name}</h3>
+          </Space>
+        );
+      }, */
+    },
+
+    {
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        if (status === 1) {
+          return "Chờ duyệt";
+        } else if (status === 2) {
+          return "Đã duyệt";
+        }
+      },
+    },
+
+    {
+      title: "Ngày tạo",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (createdAt) => moment(createdAt).format("HH:mm DD/MM/YYYY"),
+    },
+    {
+      title: "Duyệt Blog",
+      dataIndex: "id",
+      key: "action",
+      render: (id) => {
+        return (
+          <Space>
+            {blogList.data.map((item) => {
+              if (item.id === id && item.status === 1)
+                return (
+                  <Popconfirm
+                    title="Bạn có chắc muốn duyệt bài viết này không?"
+                    onConfirm={() => dispatch(browserBlogAction({ id: id }))}
+                    okText="Có"
+                    cancelText="Không"
+                  >
+                    <Button danger type="link">
+                      Duyệt
+                    </Button>
+                  </Popconfirm>
+                );
+            })}
+          </Space>
+        );
+      },
+    },
+
+    {
+      title: "Chức năng",
+      dataIndex: "id",
+      key: "action",
+      render: (id) => {
+        return (
+          <Space>
+            <Link
+              style={{ color: "#a0d911" }}
+              to={generatePath(ROUTES.USER.BLOG_DETAIL, { id: id })}
+            >
+              Xem chi tiết
+            </Link>
+            <Popconfirm
+              title="Bạn có chắc muốn xóa sản phẩm này không?"
+              onConfirm={() => dispatch(deleteBlogAction({ id: id }))}
+              okText="Có"
+              cancelText="Không"
+            >
+              <Button danger type="link">
+                Delete
+              </Button>
+            </Popconfirm>
+          </Space>
+          /* pitch.data.map((item, index) => {
+            return (
+              <Link
+                to={generatePath(ROUTES.ADMIN.UPDATE_PITCH, { id: item.id })}
+              >
+                Update
+              </Link>
+            );
+          }) */
+        );
+      },
+    },
+  ];
+  const tableColumnBlog = [
+    {
+      title: "Tên",
+      dataIndex: "title",
+      key: "title",
+      render: (_, record) => {
+        return (
+          <Space>
+            <Avatar />
+            <h3>{record.title}</h3>
+          </Space>
+        );
+      },
+    },
+
+    {
+      title: "Ngày tạo",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (createdAt) => moment(createdAt).format("HH:mm DD/MM/YYYY "),
+    },
+    {
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "status",
+      render: (status) =>
+        (status === 1 && "Đang chờ duyệt") ||
+        (status === 2 && "Đang hoạt động"),
+    },
+
+    {
+      title: "Chức năng",
+      dataIndex: "id",
+      key: "action",
+      render: (id) => {
+        return (
+          <Space>
+            <Link
+              style={{ color: "#a0d911" }}
+              to={generatePath(ROUTES.ADMIN.UPDATE_PITCH, { id: id })}
+            >
+              Update
+            </Link>
+            <Link
+              style={{ color: "#a0d911" }}
+              to={generatePath(ROUTES.USER.BLOG_DETAIL, { id: id })}
+            >
+              Chi tiết
+            </Link>
+          </Space>
+
           /* pitch.data.map((item, index) => {
             return (
               <Link
@@ -785,6 +1056,42 @@ const Profile = () => {
               />
             </S.ContentBottom>
           </Tabs.TabPane>
+
+          {/* Blog */}
+          <Tabs.TabPane
+            style={{ padding: 0 }}
+            tab={
+              <span>
+                <FormOutlined />
+                Blog
+              </span>
+            }
+            key="2"
+          >
+            <S.WrapperAdminList>
+              <S.WrapperAdminTitle>
+                <S.AdminTitle>Danh sách Blog</S.AdminTitle>
+                <Button type="primary" onClick={() => navigate(`/blogging`)}>
+                  Thêm mới
+                </Button>
+              </S.WrapperAdminTitle>
+              <Table
+                columns={tableColumnBlog}
+                dataSource={blogList.data.filter((item) => {
+                  return item.userId === userInfo.data.id;
+                })}
+                pagination={false}
+                style={{ flex: 1 }}
+              />
+              <Pagination
+                current={blogList.meta.page}
+                pageSize={ADMIN_TABLE_LIMIT}
+                total={blogList.meta.total}
+                onChange={(page) => handleChangePageBlog(page)}
+                style={{ margin: "16px auto 0" }}
+              />
+            </S.WrapperAdminList>
+          </Tabs.TabPane>
           <Tabs.TabPane
             tab={
               <span>
@@ -792,7 +1099,7 @@ const Profile = () => {
                 Theo dõi lịch trình
               </span>
             }
-            key="2"
+            key="3"
           >
             <Tabs>
               <Tabs.TabPane tab="Lịch trình hôm nay" key="1">
@@ -887,12 +1194,12 @@ const Profile = () => {
                 Lịch sử
               </span>
             }
-            key="3"
+            key="4"
           >
             <Tabs>
               <Tabs.TabPane tab="Lịch sử đặt sân" key="1">
                 <Table
-                  columns={tableColumns}
+                  columns={tableColumnsHistory}
                   dataSource={historyOffDay.filter(
                     (item) => item !== undefined
                   )}
@@ -994,7 +1301,7 @@ const Profile = () => {
                 Đổi mật khẩu
               </span>
             }
-            key="4"
+            key="5"
           >
             <Form
               form={changePasswordForm}
@@ -1099,32 +1406,79 @@ const Profile = () => {
                   Dành cho Admin
                 </span>
               }
-              key="5"
+              key="6"
             >
-              <S.WrapperAdminList>
-                <S.WrapperAdminTitle>
-                  <S.AdminTitle>Danh sách Sân</S.AdminTitle>
-                  <Button
-                    type="primary"
-                    onClick={() => navigate(`/pitch/createpitch`)}
-                  >
-                    Thêm mới
-                  </Button>
-                </S.WrapperAdminTitle>
-                <Table
-                  columns={tableColumn}
-                  dataSource={tableData}
-                  pagination={false}
-                  style={{ flex: 1 }}
-                />
-                <Pagination
-                  current={pitch.meta.page}
-                  pageSize={ADMIN_TABLE_LIMIT}
-                  total={pitch.meta.total}
-                  onChange={(page) => handleChangePage(page)}
-                  style={{ margin: "16px auto 0" }}
-                />
-              </S.WrapperAdminList>
+              {" "}
+              <Tabs>
+                <Tabs.TabPane
+                  tab={
+                    <span>
+                      <UnlockOutlined />
+                      Dành cho Admin
+                    </span>
+                  }
+                  key="1"
+                >
+                  <S.WrapperAdminList>
+                    <S.WrapperAdminTitle>
+                      <S.AdminTitle>Danh sách Sân</S.AdminTitle>
+                      <Button
+                        type="primary"
+                        onClick={() => navigate(`/pitch/createpitch`)}
+                      >
+                        Thêm mới
+                      </Button>
+                    </S.WrapperAdminTitle>
+                    <Table
+                      columns={tableColumnPitchListAdmin}
+                      dataSource={tableData}
+                      pagination={false}
+                      style={{ flex: 1 }}
+                    />
+                    <Pagination
+                      current={pitch.meta.page}
+                      pageSize={ADMIN_TABLE_LIMIT}
+                      total={pitch.meta.total}
+                      onChange={(page) => handleChangePagePitch(page)}
+                      style={{ margin: "16px auto 0" }}
+                    />
+                  </S.WrapperAdminList>
+                </Tabs.TabPane>
+                <Tabs.TabPane
+                  tab={
+                    <span>
+                      <UnlockOutlined />
+                      Blog
+                    </span>
+                  }
+                  key="2"
+                >
+                  <S.WrapperAdminList>
+                    <S.WrapperAdminTitle>
+                      <S.AdminTitle>Danh sách Blog</S.AdminTitle>
+                      <Button
+                        type="primary"
+                        onClick={() => navigate(ROUTES.USER.BLOGGING)}
+                      >
+                        Thêm mới
+                      </Button>
+                    </S.WrapperAdminTitle>
+                    <Table
+                      columns={tableColumnBlogListAdmin}
+                      dataSource={blogList.data}
+                      pagination={false}
+                      style={{ flex: 1 }}
+                    />
+                    <Pagination
+                      current={blogList.meta.page}
+                      pageSize={ADMIN_TABLE_LIMIT}
+                      total={blogList.meta.total}
+                      onChange={(page) => handleChangePageBlog(page)}
+                      style={{ margin: "16px auto 0" }}
+                    />
+                  </S.WrapperAdminList>
+                </Tabs.TabPane>
+              </Tabs>
             </Tabs.TabPane>
           )}
         </Tabs>

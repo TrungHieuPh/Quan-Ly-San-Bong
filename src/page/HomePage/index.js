@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { Button, Row, Col, Tag, Spin, Space } from "antd";
+import { Button, Row, Col, Tag, Skeleton, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link, generatePath } from "react-router-dom";
 import { useEffect } from "react";
@@ -59,8 +59,7 @@ function HomePage() {
   }, []);
 
   const renderPitch = () => {
-    if (pitch.loading)
-      return <Spin size="small" style={{ textAlign: "center" }} />;
+    if (pitch.loading) return <Skeleton loading={pitch.loading} active />;
     return pitch.data.map((item, index) => {
       return (
         <Col lg={12} xs={24} key={item.id}>

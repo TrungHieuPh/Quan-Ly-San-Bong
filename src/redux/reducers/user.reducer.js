@@ -8,6 +8,11 @@ const initialState = {
     loading: true,
     error: null,
   },
+  userPage: {
+    data: {},
+    loading: true,
+    error: null,
+  },
   loginData: {
     loading: false,
     error: null,
@@ -158,6 +163,38 @@ const userReducer = createReducer(initialState, {
       ...state,
       userInfo: {
         ...state.userInfo,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+  [REQUEST(USER_ACTION.GET_USER_PAGE)]: (state) => {
+    return {
+      ...state,
+      userPage: {
+        ...state.userPage,
+        loading: true,
+        error: null,
+      },
+    };
+  },
+  [SUCCESS(USER_ACTION.GET_USER_PAGE)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      userPage: {
+        ...state.userPage,
+        data: data,
+        loading: false,
+      },
+    };
+  },
+  [FAIL(USER_ACTION.GET_USER_PAGE)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      userPage: {
+        ...state.userPage,
         loading: false,
         error: error,
       },
