@@ -7,6 +7,12 @@ export const getPitchListAction = createAction(
 export const getPitchDetailAction = createAction(
   REQUEST(PITCH_ACTION.GET_PITCH_DETAIL)
 );
-export const createPitchAction = createAction("CREATE_PITCH_REQUEST");
-export const updatePitchAction = createAction("UPDATE_PITCH_REQUEST");
-export const deletePitchAction = createAction("DELETE_PITCH_REQUEST");
+export const createPitchAction = createAction(
+  REQUEST(PITCH_ACTION.CREATE_PITCH)
+);
+export const updatePitchAction = createAction(
+  REQUEST(PITCH_ACTION.UPDATE_PITCH)
+);
+export const deletePitchAction = createAction(
+  REQUEST(PITCH_ACTION.DELETE_PITCH)
+);

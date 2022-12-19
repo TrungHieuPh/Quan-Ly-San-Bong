@@ -10,6 +10,7 @@ import locationSaga from "./location.saga";
 import arbitrationSaga from "./arbitration.saga";
 import comboSaga from "./combo.saga";
 import teamSaga from "./team.saga";
+import blogSaga from "./blog.saga";
 
 export default function* rootSaga() {
   yield fork(pitchSaga);
@@ -22,4 +23,5 @@ export default function* rootSaga() {
   yield fork(arbitrationSaga);
   yield fork(comboSaga);
   yield fork(teamSaga);
+  yield fork(blogSaga);
 }

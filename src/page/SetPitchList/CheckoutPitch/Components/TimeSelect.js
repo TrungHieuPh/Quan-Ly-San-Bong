@@ -28,6 +28,10 @@ const TimeSelect = ({ setStep }) => {
   const [form] = Form.useForm();
   const [dateSelected, setDateSelected] = useState();
   const [selectedOption, setSelectedOption] = useState();
+  console.log(
+    "🚀 ~ file: TimeSelect.js:31 ~ TimeSelect ~ selectedOption",
+    selectedOption
+  );
   console.log(selectedOption, "tiep");
   const [selectedOptionArbitration, setSelectedOptionArbitration] =
     useState("");
@@ -45,6 +49,10 @@ const TimeSelect = ({ setStep }) => {
   }
 
   const handleSubmitTimeSelectForm = (values) => {
+    console.log(
+      "🚀 ~ file: TimeSelect.js:48 ~ handleSubmitTimeSelectForm ~ values",
+      values
+    );
     dispatch(
       setCheckoutTimeSelectAction({
         ...values,

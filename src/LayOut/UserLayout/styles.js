@@ -16,7 +16,7 @@ export const MainContainer = styled.div`
   /*  float: left;
   transform: scale(1.5); */
   margin: 0 auto;
-  background-image: url("https://img.freepik.com/premium-vector/red-football-background_7450-471.jpg?w=2000");
+  background-image: url("https://vanhoahoc.vn/wp-content/uploads/hinh-nen-bong-da.jpg?w=2000");
 `;
 
 export const Header = styled.div`

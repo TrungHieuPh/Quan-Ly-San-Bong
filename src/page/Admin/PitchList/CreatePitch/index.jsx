@@ -35,7 +35,7 @@ const CreatePitch = () => {
   /* const { RangePicker } = DatePicker; */
   const { pitchDetail } = useSelector((state) => state.product);
   const { teamList } = useSelector((state) => state.team);
-
+  const { createPitchData } = useSelector((state) => state.product);
   const dateFormat = "YYYY-MM-DD";
   const today = new Date();
 
@@ -74,9 +74,10 @@ const CreatePitch = () => {
       })
     );
     navigate(-1);
-    /*   console.log(pitchValues, options, "aaaa"); */
+    console.log(moment.utc());
+    console.log(images, "aaaa");
   };
-  const { createPitchData } = useSelector((state) => state.product);
+
   const renderTeamList = useMemo(() => {
     return teamList.data.map((item) => {
       return (
@@ -91,7 +92,7 @@ const CreatePitch = () => {
     <S.Wrapper>
       <S.TopWrapper>
         <h3>Tạo Mới Sân</h3>
-        <Button onClick={() => navigate(-1)}>Back</Button>
+        <Button onClick={() => navigate(-1)}>Quay lại</Button>
       </S.TopWrapper>
       <S.FormWrapper>
         <Card size="small">

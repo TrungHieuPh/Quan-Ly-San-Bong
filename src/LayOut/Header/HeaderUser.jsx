@@ -11,6 +11,7 @@ import {
   FaCalendarAlt,
   FaPhone,
   FaFacebook,
+  FaBlogger,
 } from "react-icons/fa";
 import { logoutAction } from "../../redux/actions/";
 import { ROUTES } from "../../constants/routers";
@@ -101,6 +102,30 @@ function HeaderUser() {
             style={{ position: "absolute", zIndex: 2, top: 15, right: 15 }}
           >
             <nav className={isShowNavBar ? styles.selectActive : styles.select}>
+              <li style={{ fontSize: 19, color: "#003a8c" }}>
+                <Link
+                  style={{ display: "flex" }}
+                  className={styles.isActive}
+                  to={ROUTES.USER.BLOG}
+                >
+                  <FaBlogger
+                    style={{ height: 20, width: 20, color: "#ad2102" }}
+                  />
+                  Blog
+                  <img
+                    src={mouse}
+                    alt=""
+                    style={{
+                      position: "relative",
+                      right: 4,
+                      top: 2,
+                      height: 35,
+                      width: 35,
+                      transform: "rotate(315deg)",
+                    }}
+                  />
+                </Link>
+              </li>
               <li style={{ fontSize: 19, color: "#003a8c" }}>
                 <Link
                   style={{ display: "flex" }}

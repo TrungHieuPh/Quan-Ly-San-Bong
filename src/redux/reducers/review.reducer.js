@@ -21,6 +21,11 @@ const initialState = {
     loading: false,
     error: "",
   },
+  reviewBlogList: {
+    data: [],
+    loading: false,
+    error: "",
+  },
 };
 
 const reviewReducer = createReducer(initialState, {
@@ -122,6 +127,101 @@ const reviewReducer = createReducer(initialState, {
     };
   },
   [FAIL(REVIEW_ACTION.DELETE_REVIEW)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      deleteReviewData: {
+        ...state.deleteReviewData,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+  /*  */
+  [REQUEST(REVIEW_ACTION.GET_REVIEW_LIST_BLOG)]: (state, action) => {
+    return {
+      ...state,
+      reviewBlogList: {
+        ...state.reviewBlogList,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(REVIEW_ACTION.GET_REVIEW_LIST_BLOG)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      reviewBlogList: {
+        ...state.reviewBlogList,
+        data: data,
+        loading: false,
+      },
+    };
+  },
+  [FAIL(REVIEW_ACTION.GET_REVIEW_LIST_BLOG)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      reviewBlogList: {
+        ...state.reviewBlogList,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+
+  [REQUEST(REVIEW_ACTION.POST_REVIEW_BLOG)]: (state, action) => {
+    return {
+      ...state,
+      postReviewData: {
+        ...state.postReviewData,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(REVIEW_ACTION.POST_REVIEW_BLOG)]: (state, action) => {
+    return {
+      ...state,
+      postReviewData: {
+        ...state.postReviewData,
+        loading: false,
+      },
+    };
+  },
+  [FAIL(REVIEW_ACTION.POST_REVIEW_BLOG)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      postReviewData: {
+        ...state.postReviewData,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+
+  [REQUEST(REVIEW_ACTION.DELETE_REVIEW_BLOG)]: (state, action) => {
+    return {
+      ...state,
+      deleteReviewData: {
+        ...state.deleteReviewData,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(REVIEW_ACTION.DELETE_REVIEW_BLOG)]: (state, action) => {
+    return {
+      ...state,
+      deleteReviewData: {
+        ...state.deleteReviewData,
+        loading: false,
+      },
+    };
+  },
+  [FAIL(REVIEW_ACTION.DELETE_REVIEW_BLOG)]: (state, action) => {
     const { error } = action.payload;
     return {
       ...state,

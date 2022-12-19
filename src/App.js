@@ -18,6 +18,11 @@ import PitchHistory from "./page/PitchHistory";
 import SetPitch from "./page/SetPitchList/SetPitch";
 import HomePitch from "./page/SetPitchList/HomePitch";
 import CreatePitch from "./page/Admin/PitchList/CreatePitch";
+import EventPage from "./page/EventPage";
+import Blog from "./page/Blog";
+import Blogging from "./page/Blog/Blogging";
+import BlogDetail from "./page/Blog/BlogDetail";
+import UserPage from "./page/UserPage";
 
 import CheckoutPitch from "./page/SetPitchList/CheckoutPitch";
 import Profile from "./page/profile";
@@ -60,7 +65,13 @@ function App() {
           <Route path={ROUTES.USER.PITCH_HISTORY} element={<PitchHistory />} />
           <Route path={ROUTES.USER.PITCH_ABOUT} element={<About />} />
           <Route path={ROUTES.USER.SET_PITCH} element={<SetPitch />} />
+          <Route path={ROUTES.USER.EVENT} element={<EventPage />} />
+          <Route path={ROUTES.USER.BLOG} element={<Blog />} />
+          <Route path={ROUTES.USER.BLOG_DETAIL} element={<BlogDetail />} />
+          <Route path={ROUTES.USER.USER_PAGE} element={<UserPage />} />
+
           <Route path={ROUTES.USER.CREATE_PITCH} element={<CreatePitch />} />
+          <Route path={ROUTES.USER.BLOGGING} element={<Blogging />} />
           <Route path={ROUTES.ADMIN.UPDATE_PITCH} element={<UpdatePitch />} />
 
           <Route path={ROUTES.USER.PROFILE} element={<Profile />} />
